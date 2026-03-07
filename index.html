@@ -62,7 +62,6 @@
             background-position: center;
             filter: grayscale(100%);
             z-index: 0;
-            /* Transição de zoom suave infinita */
             animation: slowZoom 20s ease-in-out infinite alternate;
         }
 
@@ -75,15 +74,6 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(0,0,0,0.1);
-        }
-
-        /* Card de login com transparência elegante */
-        .login-glass {
-            background: rgba(0, 0, 0, 0.45); /* Vidro escuro transparente */
-            backdrop-filter: blur(8px); /* Desfoque suave para a imagem ficar aparente */
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
         }
 
         /* Responsividade para Smart TVs */
@@ -182,36 +172,36 @@
 
     <!-- LOGIN SCREEN -->
     <div id="login-container" class="min-h-screen flex items-center justify-center relative overflow-hidden bg-login-animated z-50">
-        <!-- O painel de login fica acima da animação de fundo por causa do z-index: 10 -->
-        <div class="login-glass p-8 sm:p-12 rounded-2xl z-10 w-full max-w-md mx-4 relative">
+        <!-- Aumentada a transparência (bg-white/30) e ajustados os contornos -->
+        <div class="bg-white/30 backdrop-blur-xl p-8 sm:p-12 rounded-2xl shadow-2xl z-10 w-full max-w-md border border-white/30 mx-4 relative">
             <div class="text-center mb-8">
-                <div class="bg-white text-black w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <div class="bg-black/90 text-white w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg backdrop-blur-md">
                     <i class="fa-solid fa-van-shuttle text-3xl"></i>
                 </div>
-                <h2 class="text-3xl font-bold text-white uppercase tracking-tight">MicroBus Hub</h2>
-                <p class="text-gray-200 mt-2 font-medium">Acesso ao Sistema Corporativo</p>
+                <h2 class="text-3xl font-bold text-black uppercase tracking-tight">MicroBus Hub</h2>
+                <p class="text-gray-900 mt-2 font-medium">Acesso ao Sistema Corporativo</p>
             </div>
             
             <form id="loginForm" class="space-y-5" onsubmit="event.preventDefault(); fazerLoginGestor();">
                 <div>
-                    <label class="block text-sm font-bold text-gray-100 mb-2">Usuário (Gestor)</label>
-                    <input type="text" id="loginUser" class="w-full px-4 py-3 bg-white/90 border border-gray-300 rounded-md focus:ring-2 focus:ring-white focus:border-white outline-none transition-all placeholder-gray-500 text-black" placeholder="Digite seu usuário">
+                    <label class="block text-sm font-bold text-gray-900 mb-2">Usuário (Gestor)</label>
+                    <input type="text" id="loginUser" class="w-full px-4 py-3 bg-white/40 border border-white/40 rounded-md focus:ring-2 focus:ring-black focus:bg-white/90 outline-none transition-all placeholder-gray-700 font-medium text-black" placeholder="Digite seu usuário">
                 </div>
                 <div>
-                    <label class="block text-sm font-bold text-gray-100 mb-2">Senha</label>
-                    <input type="password" id="loginPass" class="w-full px-4 py-3 bg-white/90 border border-gray-300 rounded-md focus:ring-2 focus:ring-white focus:border-white outline-none transition-all placeholder-gray-500 text-black" placeholder="••••••••">
+                    <label class="block text-sm font-bold text-gray-900 mb-2">Senha</label>
+                    <input type="password" id="loginPass" class="w-full px-4 py-3 bg-white/40 border border-white/40 rounded-md focus:ring-2 focus:ring-black focus:bg-white/90 outline-none transition-all placeholder-gray-700 font-medium text-black" placeholder="••••••••">
                 </div>
-                <button type="submit" class="w-full py-3 mt-2 bg-white text-black font-bold rounded-md hover:bg-gray-200 transition-colors shadow-lg flex items-center justify-center gap-2">
+                <button type="submit" class="w-full py-3 mt-2 bg-black/90 hover:bg-black text-white font-bold rounded-md transition-colors shadow-lg flex items-center justify-center gap-2 backdrop-blur-sm">
                     <i class="fa-solid fa-user-tie"></i> Entrar como Gestor
                 </button>
                 
                 <div class="relative flex items-center py-4">
-                    <div class="flex-grow border-t border-white/20"></div>
-                    <span class="flex-shrink-0 mx-4 text-gray-300 text-xs font-bold uppercase tracking-wider">Acesso de Leitura</span>
-                    <div class="flex-grow border-t border-white/20"></div>
+                    <div class="flex-grow border-t border-gray-600/30"></div>
+                    <span class="flex-shrink-0 mx-4 text-gray-900 text-xs font-bold uppercase tracking-wider">Acesso de Leitura</span>
+                    <div class="flex-grow border-t border-gray-600/30"></div>
                 </div>
                 
-                <button type="button" onclick="fazerLoginVisitante()" class="w-full py-3 bg-black/40 backdrop-blur-md text-white font-bold rounded-md border border-white/30 hover:bg-black/60 transition-colors flex items-center justify-center gap-2">
+                <button type="button" onclick="fazerLoginVisitante()" class="w-full py-3 bg-white/20 hover:bg-white/40 text-black font-bold rounded-md border border-black/60 hover:border-black transition-colors flex items-center justify-center gap-2 backdrop-blur-sm">
                     <i class="fa-regular fa-eye"></i> Entrar como Visitante
                 </button>
             </form>
@@ -652,16 +642,34 @@
         </div>
     </div>
 
+    <!-- Modal Visualização do Dia (Calendário) -->
+    <div id="modalDia" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4 hidden glass-panel">
+        <div class="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-gray-300">
+            <div class="bg-black px-6 py-4 flex justify-between items-center rounded-t-xl shrink-0">
+                <h3 class="text-xl font-bold text-white" id="tituloModalDia">Demandas do Dia</h3>
+                <button onclick="fecharModalDia()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            
+            <div class="p-6 bg-gray-50 overflow-y-auto flex-1" id="conteudoModalDia">
+                <!-- Conteúdo injetado via JS -->
+            </div>
+            
+            <div class="px-6 py-4 bg-white border-t border-gray-200 flex justify-end rounded-b-xl shrink-0">
+                <button onclick="fecharModalDia()" class="px-6 py-2 bg-black text-white rounded-md font-bold hover:bg-gray-800 transition-colors">Fechar Calendário</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Configuração do seu Firebase conectado
+        // Configuração do seu Firebase (Substitua com suas próprias credenciais)
         const firebaseConfig = {
-            apiKey: "AIzaSyDEvUYtoX6I1UCwDj3cGg83uIcUtJ0yCBU",
-            authDomain: "demandas-de-micro-onibus.firebaseapp.com",
-            projectId: "demandas-de-micro-onibus",
-            storageBucket: "demandas-de-micro-onibus.firebasestorage.app",
-            messagingSenderId: "290370030937",
-            appId: "1:290370030937:web:77be250e6ab8e07932d048",
-            measurementId: "G-C9EKH0V13X"
+            apiKey: "SUA_API_KEY_AQUI",
+            authDomain: "SEU_PROJECT_ID.firebaseapp.com",
+            projectId: "SEU_PROJECT_ID",
+            storageBucket: "SEU_PROJECT_ID.appspot.com",
+            messagingSenderId: "SEU_MESSAGING_SENDER_ID",
+            appId: "SEU_APP_ID",
+            measurementId: "SEU_MEASUREMENT_ID"
         };
 
         const isFirebaseConfigured = firebaseConfig.projectId !== "SEU_PROJECT_ID";
@@ -1014,7 +1022,7 @@
             catch (e) { mostrarMensagem('Erro', 'error'); }
         }
 
-        // Calendário
+        // Calendário e Modal do Dia
         function navegarMes(dir) {
             mesAtual += dir; if(mesAtual>11){mesAtual=0;anoAtual++;} else if(mesAtual<0){mesAtual=11;anoAtual--;} updateCalendario();
         }
@@ -1030,11 +1038,12 @@
             for (let i = 0; i < diaSemanaInicio; i++) { grid.innerHTML += `<div class="h-24 bg-gray-50/50"></div>`; }
             
             for (let dia = 1; dia <= diasNoMes; dia++) {
-                const dataStr = new Date(anoAtual, mesAtual, dia).toISOString().split('T')[0];
+                // Adicionando padStart para garantir formato YYYY-MM-DD
+                const dataStr = `${anoAtual}-${String(mesAtual + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
                 const dDia = demandas.filter(d => d.dataDemanda === dataStr);
                 
-                let b= `<div class="h-24 p-2 relative bg-white hover:bg-gray-50 transition-colors border-b border-r border-gray-100 cursor-pointer">
-                            <div class="text-sm font-bold text-gray-700">${dia}</div>`;
+                let b= `<div onclick="abrirModalDia('${dataStr}')" class="h-24 p-2 relative bg-white hover:bg-gray-100 transition-colors border-b border-r border-gray-200 cursor-pointer group">
+                            <div class="text-sm font-bold text-gray-700 group-hover:text-black">${dia}</div>`;
                 if(dDia.length > 0) {
                     b += `<div class="mt-1 flex flex-wrap gap-1">`;
                     dDia.slice(0,3).forEach(d => {
@@ -1048,7 +1057,67 @@
             }
         }
 
-        // Funções de Edição/Exclusão
+        // NOVO: Funções do Modal do Dia (Calendário)
+        function abrirModalDia(data) {
+            document.getElementById('tituloModalDia').textContent = `Fretamentos: ${formatarDataBrasil(data)}`;
+            
+            const demandasDoDia = demandas.filter(d => d.dataDemanda === data).sort((a,b) => a.horario.localeCompare(b.horario));
+            const container = document.getElementById('conteudoModalDia');
+            
+            if(demandasDoDia.length === 0) {
+                container.innerHTML = '<div class="text-center py-10"><i class="fa-regular fa-calendar-xmark text-4xl text-gray-300 mb-3"></i><p class="text-gray-500 font-medium">Nenhuma demanda agendada para esta data.</p></div>';
+            } else {
+                let html = '<div class="space-y-4">';
+                demandasDoDia.forEach(d => {
+                    const stClasses = getStatusClasses(d.status);
+                    
+                    // Se for gestor, permite editar a demanda a partir do modal do dia
+                    const botoesGestao = currentUserRole === 'gestor' ? `
+                        <div class="mt-4 pt-3 border-t border-gray-100 flex justify-end">
+                            <button onclick="fecharModalDia(); editarDemanda('${d.id}')" class="text-xs bg-gray-100 hover:bg-gray-200 text-black px-3 py-1.5 rounded font-bold transition-colors flex items-center gap-1">
+                                <i class="fa-solid fa-pen-to-square"></i> Editar Demanda
+                            </button>
+                        </div>
+                    ` : '';
+
+                    html += `
+                        <div class="bg-white border border-gray-200 p-5 rounded-lg shadow-sm border-l-4 border-l-black">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <span class="text-xl font-black text-black flex items-center gap-2"><i class="fa-regular fa-clock text-gray-400"></i> ${d.horario}</span>
+                                    <p class="font-bold text-gray-800 mt-1">${d.solicitante} <span class="text-sm text-gray-500 font-normal">(${d.setor})</span></p>
+                                </div>
+                                <span class="px-3 py-1 text-xs font-bold rounded-full border ${stClasses}">${d.status}</span>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-600 mt-4 bg-gray-50 p-3 rounded">
+                                <div>
+                                    <p class="font-semibold text-gray-800 mb-1"><i class="fa-solid fa-map-location-dot mr-1 text-gray-400"></i> Trajeto</p>
+                                    <p>${d.partida}</p>
+                                    <p class="text-xs text-gray-400 my-0.5">até</p>
+                                    <p>${d.destino}</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-800 mb-1"><i class="fa-solid fa-id-card-clip mr-1 text-gray-400"></i> Designação</p>
+                                    <p>${d.nomeMotorista || 'Profissional a definir'}</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">${d.placaVeiculo ? '['+d.placaVeiculo+']' : 'Sem placa alocada'}</p>
+                                </div>
+                            </div>
+                            ${botoesGestao}
+                        </div>
+                    `;
+                });
+                html += '</div>';
+                container.innerHTML = html;
+            }
+            
+            document.getElementById('modalDia').classList.remove('hidden');
+        }
+
+        function fecharModalDia() {
+            document.getElementById('modalDia').classList.add('hidden');
+        }
+
+        // Funções de Edição/Exclusão Padrões
         function editarDemanda(id) {
             if(currentUserRole !== 'gestor') return;
             const d = demandas.find(x => x.id === id); if(!d) return;
