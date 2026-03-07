@@ -1,0 +1,1237 @@
+<!doctype html>
+<html lang="pt-BR" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MicroBus Hub | Gestão de Demandas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#000000',     // Preto
+                        secondary: '#4b5563',   // Cinza médio
+                        accent: '#9ca3af',      // Cinza claro
+                        success: '#111827',     // Preto suave (Concluído)
+                        warning: '#6b7280',     // Cinza (Em andamento)
+                        danger: '#e5e7eb'       // Cinza muito claro (Pendente)
+                    },
+                    screens: {
+                        'tv-sm': '1366px',
+                        'tv-md': '1920px',
+                        'tv-lg': '2560px',
+                        'tablet': '768px',
+                        'mobile': '480px'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            box-sizing: border-box;
+            font-size: 16px;
+            font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+            background-color: #f3f4f6;
+        }
+        
+        /* B&W Aesthetic - Cabeçalho do Sistema */
+        .bg-bw-photo {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), url('https://i.ibb.co/hFmx4zGs/1772839070965.png');
+            background-size: cover;
+            background-position: center;
+            filter: grayscale(100%);
+        }
+
+        /* B&W Aesthetic - Fundo Animado da Tela de Login */
+        .bg-login-animated {
+            position: relative;
+            background-color: #000;
+        }
+        
+        .bg-login-animated::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9)), url('https://i.ibb.co/gbMr6pL0/1772841480807.png');
+            background-size: cover;
+            background-position: center;
+            filter: grayscale(100%);
+            z-index: 0;
+            /* Transição de zoom suave infinita */
+            animation: slowZoom 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes slowZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15); }
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        /* Card de login com transparência elegante */
+        .login-glass {
+            background: rgba(0, 0, 0, 0.45); /* Vidro escuro transparente */
+            backdrop-filter: blur(8px); /* Desfoque suave para a imagem ficar aparente */
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Responsividade para Smart TVs */
+        @media screen and (min-width: 1366px) {
+            body { font-size: 18px; }
+            .tv-text-lg { font-size: 1.5rem; }
+            .tv-text-xl { font-size: 2rem; }
+            .tv-text-2xl { font-size: 2.5rem; }
+            .tv-text-3xl { font-size: 3rem; }
+            .tv-padding { padding: 2rem; }
+            .tv-margin { margin: 1.5rem; }
+        }
+        
+        @media screen and (min-width: 1920px) {
+            body { font-size: 20px; }
+            .tv-text-lg { font-size: 1.75rem; }
+            .tv-text-xl { font-size: 2.25rem; }
+            .tv-text-2xl { font-size: 2.75rem; }
+            .tv-text-3xl { font-size: 3.5rem; }
+            .tv-padding { padding: 2.5rem; }
+            .tv-margin { margin: 2rem; }
+        }
+        
+        /* Otimizações para tablets */
+        @media screen and (min-width: 768px) and (max-width: 1365px) {
+            .tablet-grid { grid-template-columns: repeat(2, 1fr); }
+            .tablet-text { font-size: 1.1rem; }
+            .tablet-padding { padding: 1.5rem; }
+        }
+        
+        /* Otimizações para dispositivos móveis */
+        @media screen and (max-width: 767px) {
+            .mobile-grid { grid-template-columns: 1fr; }
+            .mobile-text { font-size: 0.9rem; }
+            .mobile-padding { padding: 1rem; }
+            .mobile-scroll { overflow-x: auto; }
+        }
+        
+        /* Botões maiores para TV */
+        .tv-button {
+            min-height: 48px;
+            min-width: 120px;
+            font-weight: 600;
+            border-radius: 8px;
+        }
+        
+        .card-shadow {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+        
+        .status-indicator {
+            animation: blink 2s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+        
+        .timeline-item {
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #e5e7eb; /* Linha cinza clara */
+        }
+        
+        .timeline-item:last-child::before {
+            display: none;
+        }
+        
+        /* Scrollbar monocromática */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #9ca3af;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4b5563;
+        }
+    </style>
+</head>
+<body class="h-full text-gray-800">
+
+    <!-- LOGIN SCREEN -->
+    <div id="login-container" class="min-h-screen flex items-center justify-center relative overflow-hidden bg-login-animated z-50">
+        <!-- O painel de login fica acima da animação de fundo por causa do z-index: 10 -->
+        <div class="login-glass p-8 sm:p-12 rounded-2xl z-10 w-full max-w-md mx-4 relative">
+            <div class="text-center mb-8">
+                <div class="bg-white text-black w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <i class="fa-solid fa-van-shuttle text-3xl"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-white uppercase tracking-tight">MicroBus Hub</h2>
+                <p class="text-gray-200 mt-2 font-medium">Acesso ao Sistema Corporativo</p>
+            </div>
+            
+            <form id="loginForm" class="space-y-5" onsubmit="event.preventDefault(); fazerLoginGestor();">
+                <div>
+                    <label class="block text-sm font-bold text-gray-100 mb-2">Usuário (Gestor)</label>
+                    <input type="text" id="loginUser" class="w-full px-4 py-3 bg-white/90 border border-gray-300 rounded-md focus:ring-2 focus:ring-white focus:border-white outline-none transition-all placeholder-gray-500 text-black" placeholder="Digite seu usuário">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-100 mb-2">Senha</label>
+                    <input type="password" id="loginPass" class="w-full px-4 py-3 bg-white/90 border border-gray-300 rounded-md focus:ring-2 focus:ring-white focus:border-white outline-none transition-all placeholder-gray-500 text-black" placeholder="••••••••">
+                </div>
+                <button type="submit" class="w-full py-3 mt-2 bg-white text-black font-bold rounded-md hover:bg-gray-200 transition-colors shadow-lg flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-user-tie"></i> Entrar como Gestor
+                </button>
+                
+                <div class="relative flex items-center py-4">
+                    <div class="flex-grow border-t border-white/20"></div>
+                    <span class="flex-shrink-0 mx-4 text-gray-300 text-xs font-bold uppercase tracking-wider">Acesso de Leitura</span>
+                    <div class="flex-grow border-t border-white/20"></div>
+                </div>
+                
+                <button type="button" onclick="fazerLoginVisitante()" class="w-full py-3 bg-black/40 backdrop-blur-md text-white font-bold rounded-md border border-white/30 hover:bg-black/60 transition-colors flex items-center justify-center gap-2">
+                    <i class="fa-regular fa-eye"></i> Entrar como Visitante
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN APP WRAPPER -->
+    <div id="app-container" class="hidden min-h-full bg-gray-100">
+        
+        <!-- Header Fotográfico P&B -->
+        <header class="bg-bw-photo shadow-lg border-b-4 border-black">
+            <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-4 sm:py-6 tv-sm:py-8 tv-md:py-10">
+                    <div class="flex items-center gap-4">
+                        <div class="flex-shrink-0 bg-white p-3 rounded-lg shadow-md">
+                            <i class="fa-solid fa-van-shuttle text-3xl tv-sm:text-5xl text-black"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-xl tv-sm:text-3xl tv-md:text-4xl font-bold text-white tracking-tight uppercase">MicroBus Hub</h1>
+                            <p class="text-sm tv-sm:text-lg text-gray-300 font-light">Gestão Centralizada de Demandas Corporativas</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="text-white text-right hidden sm:block">
+                            <p id="userNameDisplay" class="text-xs tv-sm:text-sm text-gray-400 uppercase tracking-widest font-bold"></p>
+                            <p class="text-sm tv-sm:text-lg font-semibold" id="currentDate"></p>
+                        </div>
+                        <!-- Botão Sair -->
+                        <button onclick="fazerLogout()" class="px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/30 rounded-md text-white font-bold transition-colors shadow-sm ml-2 flex items-center gap-2">
+                            <i class="fa-solid fa-right-from-bracket"></i> <span class="hidden sm:inline">Sair</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navegação / Tabs -->
+        <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40">
+            <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 tv-padding tablet-padding mobile-padding">
+                <div class="flex flex-wrap justify-center tv-sm:justify-start space-x-2 tv-sm:space-x-4 tv-md:space-x-8 mobile-scroll">
+                    <button onclick="showTab('dashboard')" id="tab-dashboard" class="tab-button tv-button active py-4 px-4 border-b-4 border-black text-black font-bold text-sm tv-sm:text-base whitespace-nowrap transition-colors">
+                        <i class="fa-solid fa-chart-pie mr-2"></i> Dashboard
+                    </button>
+                    <button onclick="showTab('cadastro')" id="tab-cadastro" class="tab-button tv-button py-4 px-4 border-b-4 border-transparent text-gray-500 hover:text-black hover:border-gray-300 font-medium text-sm tv-sm:text-base whitespace-nowrap transition-colors">
+                        <i class="fa-solid fa-plus-circle mr-2"></i> Nova Demanda
+                    </button>
+                    <button onclick="showTab('timeline')" id="tab-timeline" class="tab-button tv-button py-4 px-4 border-b-4 border-transparent text-gray-500 hover:text-black hover:border-gray-300 font-medium text-sm tv-sm:text-base whitespace-nowrap transition-colors">
+                        <i class="fa-solid fa-route mr-2"></i> Timeline
+                    </button>
+                    <button onclick="showTab('motoristas')" id="tab-motoristas" class="tab-button tv-button py-4 px-4 border-b-4 border-transparent text-gray-500 hover:text-black hover:border-gray-300 font-medium text-sm tv-sm:text-base whitespace-nowrap transition-colors">
+                        <i class="fa-solid fa-id-card-clip mr-2"></i> Motoristas
+                    </button>
+                    <button onclick="showTab('escala')" id="tab-escala" class="tab-button tv-button py-4 px-4 border-b-4 border-transparent text-gray-500 hover:text-black hover:border-gray-300 font-medium text-sm tv-sm:text-base whitespace-nowrap transition-colors">
+                        <i class="fa-solid fa-list-check mr-2"></i> Escala
+                    </button>
+                    <button onclick="showTab('calendario')" id="tab-calendario" class="tab-button tv-button py-4 px-4 border-b-4 border-transparent text-gray-500 hover:text-black hover:border-gray-300 font-medium text-sm tv-sm:text-base whitespace-nowrap transition-colors">
+                        <i class="fa-solid fa-calendar-days mr-2"></i> Calendário
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <main class="max-w-full mx-auto py-6 tv-sm:py-8 px-4 sm:px-6 lg:px-8">
+            
+            <!-- Dashboard Content -->
+            <div id="dashboard-content" class="tab-content">
+                
+                <!-- KPI Cards (B&W Theme) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6">
+                    
+                    <!-- Card: Total Hoje -->
+                    <div class="bg-black rounded-xl card-shadow p-6 text-white border border-gray-800">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-van-shuttle text-xl text-white"></i>
+                            </div>
+                            <div class="ml-4 flex-1">
+                                <p class="text-sm font-medium text-gray-400 uppercase tracking-wider">Demandas Hoje</p>
+                                <p class="text-3xl font-bold text-white" id="totalDemandas">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card: Concluídas -->
+                    <div class="bg-gray-800 rounded-xl card-shadow p-6 text-white border border-gray-700">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-check-circle text-xl text-gray-300"></i>
+                            </div>
+                            <div class="ml-4 flex-1">
+                                <p class="text-sm font-medium text-gray-400 uppercase tracking-wider">Concluídas (Hoje)</p>
+                                <p class="text-3xl font-bold text-white" id="concluidas">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card: Pendentes -->
+                    <div class="bg-white rounded-xl card-shadow p-6 text-black border-2 border-black">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-300">
+                                <i class="fa-solid fa-clock text-xl text-black"></i>
+                            </div>
+                            <div class="ml-4 flex-1">
+                                <p class="text-sm font-bold text-gray-500 uppercase tracking-wider">Pendentes</p>
+                                <p class="text-3xl font-black text-black" id="pendentes">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card: Total Geral -->
+                    <div class="bg-gray-100 rounded-xl card-shadow p-6 text-black border border-gray-300">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-gray-300 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-layer-group text-xl text-gray-700"></i>
+                            </div>
+                            <div class="ml-4 flex-1">
+                                <p class="text-sm font-medium text-gray-600 uppercase tracking-wider">Histórico Total</p>
+                                <p class="text-3xl font-bold text-black" id="totalHistorico">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Relatórios -->
+                <div id="relatorios-section" class="bg-white rounded-xl card-shadow p-6 mb-6 border border-gray-200">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
+                        <div>
+                            <h3 class="text-lg font-bold text-black flex items-center gap-2">
+                                <i class="fa-solid fa-file-invoice text-gray-400"></i> Emissão de Relatórios
+                            </h3>
+                            <p class="text-sm text-gray-500 mt-1">Exporte o histórico consolidado de viagens executadas em frotas de micro-ônibus.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            <button onclick="gerarRelatorioHTML()" class="flex items-center px-4 py-2 bg-white border border-gray-300 text-black rounded-md hover:bg-gray-50 text-sm font-medium transition-colors">
+                                <i class="fa-solid fa-eye mr-2"></i> Visualizar
+                            </button>
+                            <button onclick="gerarRelatorioPDF()" class="flex items-center px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 text-sm font-medium transition-colors shadow-md">
+                                <i class="fa-solid fa-file-pdf mr-2"></i> Gerar PDF
+                            </button>
+                            <button onclick="gerarViewExcel()" class="flex items-center px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 text-sm font-medium transition-colors shadow-md">
+                                <i class="fa-solid fa-file-excel mr-2"></i> Exportar Planilha
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Demandas Recentes -->
+                <div class="bg-white rounded-xl card-shadow p-6 border border-gray-200">
+                    <h3 class="text-lg font-bold text-black mb-6 border-b border-gray-100 pb-2">Últimos Registros</h3>
+                    <div id="demandasRecentes" class="space-y-3">
+                        <p class="text-gray-500 text-center py-6 text-sm">Nenhuma demanda corporativa registrada.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cadastro Content -->
+            <div id="cadastro-content" class="tab-content hidden">
+                <div class="bg-white rounded-xl card-shadow p-6 sm:p-8 border border-gray-200 max-w-5xl mx-auto">
+                    <div class="border-b border-gray-200 pb-5 mb-6">
+                        <h2 class="text-2xl font-bold text-black">Nova Demanda de Micro-ônibus</h2>
+                        <p class="text-gray-500 mt-1">Preencha os dados logísticos para o fretamento.</p>
+                    </div>
+                    
+                    <form id="demandaForm" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Empresa / Solicitante</label>
+                                <input type="text" id="solicitante" name="solicitante" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Centro de Custo / Setor</label>
+                                <input type="text" id="setor" name="setor" required placeholder="Ex: Diretoria / Eventos" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-4 rounded-lg border border-gray-100">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fa-solid fa-map-pin mr-1 text-gray-400"></i> Endereço de Partida</label>
+                                <input type="text" id="partida" name="partida" required class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fa-solid fa-flag-checkered mr-1 text-gray-400"></i> Destino Final</label>
+                                <input type="text" id="destino" name="destino" required class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Data do Fretamento</label>
+                                <input type="date" id="dataDemanda" name="dataDemanda" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Horário de Apresentação</label>
+                                <input type="time" id="horario" name="horario" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Cód. Autorização / SEI</label>
+                                <input type="text" id="numeroSei" name="numeroSei" placeholder="Opcional" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Placa do Micro-ônibus</label>
+                                <input type="text" id="placaVeiculo" name="placaVeiculo" placeholder="Ex: ABC-1234" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Motorista Designado</label>
+                                <select id="nomeMotorista" name="nomeMotorista" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
+                                    <option value="">Selecione na lista...</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Observações (Pax, Roteiro, Franquia)</label>
+                            <textarea id="observacoes" name="observacoes" rows="3" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all" placeholder="Informações sobre capacidade (ex: Micro-ônibus 26 lugares), particularidades..."></textarea>
+                        </div>
+                        
+                        <div class="flex flex-col sm:flex-row justify-end gap-4 pt-4 border-t border-gray-200">
+                            <button type="button" onclick="limparFormulario()" class="px-6 py-3 border border-gray-300 rounded-md text-black font-bold hover:bg-gray-50 transition-colors">
+                                Cancelar
+                            </button>
+                            <button type="submit" class="px-8 py-3 bg-black text-white font-bold rounded-md hover:bg-gray-800 shadow-lg transition-colors flex items-center justify-center">
+                                Registrar Demanda no Hub <i class="fa-solid fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Motoristas Content -->
+            <div id="motoristas-content" class="tab-content hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+                    
+                    <div class="bg-white rounded-xl card-shadow p-6 border border-gray-200 lg:col-span-1">
+                        <h2 class="text-xl font-bold text-black mb-6 pb-2 border-b border-gray-100">Homologar Motorista</h2>
+                        <form id="motoristaForm" class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Nome Completo</label>
+                                <input type="text" id="nomeMotoristaForm" name="nomeMotoristaForm" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Foto / CNH (Opcional)</label>
+                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md bg-gray-50">
+                                    <div class="space-y-1 text-center">
+                                        <div id="previewContainer" class="hidden">
+                                            <img id="previewImage" class="mx-auto h-24 w-24 rounded-full object-cover border-2 border-black" src="" alt="Preview">
+                                        </div>
+                                        <div id="uploadPlaceholder">
+                                            <i class="fa-solid fa-image text-3xl text-gray-400 mb-2"></i>
+                                            <div class="flex justify-center text-sm text-gray-600">
+                                                <label for="fotoMotorista" class="relative cursor-pointer bg-white px-2 py-1 rounded font-medium text-black border border-gray-300 hover:bg-gray-100">
+                                                    <span>Fazer Upload</span>
+                                                    <input id="fotoMotorista" name="fotoMotorista" type="file" accept="image/*" class="sr-only">
+                                                </label>
+                                            </div>
+                                            <p class="text-xs text-gray-500 mt-2">Formatos padrões de imagem</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full px-6 py-3 bg-black text-white font-bold rounded-md hover:bg-gray-800 transition-colors">
+                                Cadastrar
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="bg-white rounded-xl card-shadow p-6 border border-gray-200 lg:col-span-2">
+                        <h3 class="text-xl font-bold text-black mb-6 pb-2 border-b border-gray-100">Profissionais Homologados (Hub)</h3>
+                        <div id="listaMotoristas" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <p class="text-gray-500 text-center py-8 col-span-2">Nenhum profissional listado.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Content -->
+            <div id="timeline-content" class="tab-content hidden">
+                <div class="bg-white rounded-xl card-shadow p-6 border border-gray-200 max-w-5xl mx-auto">
+                    <div class="flex justify-between items-center mb-8 pb-4 border-b border-gray-100">
+                        <div>
+                            <h2 class="text-2xl font-bold text-black">Acompanhamento Logístico</h2>
+                            <p class="text-gray-500 text-sm">Visualização temporal de despachos de micro-ônibus.</p>
+                        </div>
+                        <div class="flex items-center space-x-2 bg-gray-100 px-3 py-1 rounded-full border border-gray-200">
+                            <div id="statusBadgeColor" class="w-2.5 h-2.5 bg-black rounded-full status-indicator"></div>
+                            <span id="statusBadgeText" class="text-xs font-bold text-black tracking-wide">AO VIVO</span>
+                        </div>
+                    </div>
+                    <div id="timelineContainer" class="space-y-6">
+                        <p class="text-gray-500 text-center py-8">Sem rotas ativas na semana.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendario Content -->
+            <div id="calendario-content" class="tab-content hidden">
+                <div class="bg-white rounded-xl card-shadow overflow-hidden border border-gray-200 max-w-6xl mx-auto">
+                    <div class="bg-black px-6 py-5 flex justify-between items-center">
+                        <h2 class="text-xl font-bold text-white"><i class="fa-regular fa-calendar mr-2"></i> Grade Mensal</h2>
+                        <div class="flex items-center space-x-4 bg-gray-800 p-1 rounded-lg">
+                            <button onclick="navegarMes(-1)" class="px-3 py-1 bg-transparent hover:bg-gray-700 text-white rounded transition-colors"><i class="fa-solid fa-chevron-left"></i></button>
+                            <h3 id="mesAnoAtual" class="text-white font-bold text-sm min-w-[120px] text-center uppercase tracking-wider"></h3>
+                            <button onclick="navegarMes(1)" class="px-3 py-1 bg-transparent hover:bg-gray-700 text-white rounded transition-colors"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6 bg-gray-50">
+                        <div class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
+                            <div class="grid grid-cols-7 bg-gray-100 border-b border-gray-200">
+                                <div class="p-3 text-center text-black font-bold text-xs uppercase tracking-wider">Dom</div>
+                                <div class="p-3 text-center text-black font-bold text-xs uppercase tracking-wider border-l border-gray-200">Seg</div>
+                                <div class="p-3 text-center text-black font-bold text-xs uppercase tracking-wider border-l border-gray-200">Ter</div>
+                                <div class="p-3 text-center text-black font-bold text-xs uppercase tracking-wider border-l border-gray-200">Qua</div>
+                                <div class="p-3 text-center text-black font-bold text-xs uppercase tracking-wider border-l border-gray-200">Qui</div>
+                                <div class="p-3 text-center text-black font-bold text-xs uppercase tracking-wider border-l border-gray-200">Sex</div>
+                                <div class="p-3 text-center text-black font-bold text-xs uppercase tracking-wider border-l border-gray-200">Sáb</div>
+                            </div>
+                            <div id="calendarioGrid" class="grid grid-cols-7 divide-x divide-y divide-gray-200"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Escala Content -->
+            <div id="escala-content" class="tab-content hidden">
+                <div class="bg-white rounded-xl card-shadow overflow-hidden border border-gray-200 max-w-full mx-auto">
+                    <div class="bg-black px-6 py-5 flex justify-between items-center">
+                        <div>
+                            <h2 class="text-xl font-bold text-white">Escala Operacional</h2>
+                            <p class="text-gray-400 text-sm">Controle de saídas e alocação de frota.</p>
+                        </div>
+                        <i class="fa-solid fa-table-list text-2xl text-gray-500"></i>
+                    </div>
+                    
+                    <div class="p-0 overflow-x-auto">
+                        <table class="min-w-full bg-white divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider">Data/Hora</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider">Cód</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider">Trajeto</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider hidden md:table-cell">Cliente / Setor</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider hidden lg:table-cell">Placa</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider">Motorista</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider" id="escalaThGestao">Gestão</th>
+                                </tr>
+                            </thead>
+                            <tbody id="escalaTableBody" class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td colspan="7" class="px-6 py-12 text-center">
+                                        <i class="fa-solid fa-folder-open text-4xl text-gray-300 mb-3 block"></i>
+                                        <p class="text-gray-500 font-medium">Lista de escala vazia.</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Modal Edição -->
+    <div id="modalEdicao" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4 hidden glass-panel">
+        <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-300">
+            <div class="bg-black px-6 py-4 flex justify-between items-center sticky top-0 z-10">
+                <h3 class="text-xl font-bold text-white">Modificar Demanda</h3>
+                <button onclick="fecharModalEdicao()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            
+            <div class="p-6 bg-gray-50">
+                <form id="formEdicao" class="space-y-5">
+                    <input type="hidden" id="editId" name="editId">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Empresa / Solicitante</label>
+                            <input type="text" id="editSolicitante" name="editSolicitante" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Setor</label>
+                            <input type="text" id="editSetor" name="editSetor" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Partida</label>
+                            <input type="text" id="editPartida" name="editPartida" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Destino</label>
+                            <input type="text" id="editDestino" name="editDestino" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Data</label>
+                            <input type="date" id="editDataDemanda" name="editDataDemanda" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Horário</label>
+                            <input type="time" id="editHorario" name="editHorario" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Cód. / SEI</label>
+                            <input type="text" id="editNumeroSei" name="editNumeroSei" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Placa Micro-ônibus</label>
+                            <input type="text" id="editPlacaVeiculo" name="editPlacaVeiculo" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Motorista</label>
+                            <select id="editNomeMotorista" name="editNomeMotorista" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
+                                <option value="">Selecione...</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">Observações</label>
+                        <textarea id="editObservacoes" name="editObservacoes" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="px-6 py-4 bg-white border-t border-gray-200 flex justify-end gap-3 rounded-b-xl">
+                <button onclick="fecharModalEdicao()" class="px-5 py-2 border border-gray-300 rounded-md text-black font-bold hover:bg-gray-50">Cancelar</button>
+                <button onclick="salvarEdicao()" class="px-5 py-2 bg-black text-white rounded-md font-bold hover:bg-gray-800">Salvar Alterações</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuração do seu Firebase conectado
+        const firebaseConfig = {
+            apiKey: "AIzaSyDEvUYtoX6I1UCwDj3cGg83uIcUtJ0yCBU",
+            authDomain: "demandas-de-micro-onibus.firebaseapp.com",
+            projectId: "demandas-de-micro-onibus",
+            storageBucket: "demandas-de-micro-onibus.firebasestorage.app",
+            messagingSenderId: "290370030937",
+            appId: "1:290370030937:web:77be250e6ab8e07932d048",
+            measurementId: "G-C9EKH0V13X"
+        };
+
+        const isFirebaseConfigured = firebaseConfig.projectId !== "SEU_PROJECT_ID";
+        let db = null;
+
+        let demandas = [];
+        let motoristas = [];
+        let mesAtual = new Date().getMonth();
+        let anoAtual = new Date().getFullYear();
+        
+        // CONTROLE DE ACESSO
+        let currentUserRole = sessionStorage.getItem('userRole') || null;
+
+        if (isFirebaseConfigured) {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+
+            db.collection('demandas').orderBy('dataCadastro', 'desc').onSnapshot((querySnapshot) => {
+                demandas = []; 
+                querySnapshot.forEach((doc) => { demandas.push({ ...doc.data(), id: doc.id }); });
+                if (currentUserRole) refreshDemandasViews();
+            }, (error) => mostrarMensagem('Erro conexão demandas', 'error'));
+
+            db.collection('motoristas').orderBy('nome', 'asc').onSnapshot((querySnapshot) => {
+                motoristas = [];
+                querySnapshot.forEach((doc) => { motoristas.push({ ...doc.data(), id: doc.id }); });
+                if (currentUserRole) refreshMotoristasViews();
+            }, (error) => mostrarMensagem('Erro conexão motoristas', 'error'));
+        } else {
+            console.warn("Modo de Simulação Local ativado.");
+            document.addEventListener('DOMContentLoaded', () => {
+                const statusBadgeText = document.getElementById('statusBadgeText');
+                const statusBadgeColor = document.getElementById('statusBadgeColor');
+                if(statusBadgeText) statusBadgeText.innerText = "MODO LOCAL (OFFLINE)";
+                if(statusBadgeColor) {
+                    statusBadgeColor.classList.remove('bg-black');
+                    statusBadgeColor.classList.add('bg-yellow-500');
+                }
+            });
+        }
+
+        // ==========================================
+        // LÓGICA DE LOGIN
+        // ==========================================
+        function fazerLoginGestor() {
+            const user = document.getElementById('loginUser').value;
+            const pass = document.getElementById('loginPass').value;
+            
+            if (user.trim().toLowerCase() === 'welligton ferreira' && pass === '020519') {
+                iniciarApp('gestor');
+            } else {
+                mostrarMensagem('Credenciais incorretas!', 'error');
+            }
+        }
+
+        function fazerLoginVisitante() {
+            iniciarApp('visitante');
+        }
+
+        function iniciarApp(role) {
+            currentUserRole = role;
+            sessionStorage.setItem('userRole', role);
+            
+            document.getElementById('login-container').classList.add('hidden');
+            document.getElementById('app-container').classList.remove('hidden');
+            
+            aplicarRestricoesDeAcesso();
+            refreshDemandasViews();
+            refreshMotoristasViews();
+            showTab('dashboard'); // Forçar ir para dashboard após login
+        }
+
+        function fazerLogout() {
+            currentUserRole = null;
+            sessionStorage.removeItem('userRole');
+            
+            document.getElementById('app-container').classList.add('hidden');
+            document.getElementById('login-container').classList.remove('hidden');
+            document.getElementById('loginForm').reset();
+        }
+
+        function aplicarRestricoesDeAcesso() {
+            const relatoriosSection = document.getElementById('relatorios-section');
+            const tabCadastro = document.getElementById('tab-cadastro');
+            const tabMotoristas = document.getElementById('tab-motoristas');
+            const userNameDisplay = document.getElementById('userNameDisplay');
+
+            if (currentUserRole === 'visitante') {
+                if(relatoriosSection) relatoriosSection.classList.add('hidden');
+                if(tabCadastro) tabCadastro.classList.add('hidden');
+                if(tabMotoristas) tabMotoristas.classList.add('hidden');
+                if(userNameDisplay) userNameDisplay.textContent = "Visitante (Apenas Leitura)";
+            } else {
+                if(relatoriosSection) relatoriosSection.classList.remove('hidden');
+                if(tabCadastro) tabCadastro.classList.remove('hidden');
+                if(tabMotoristas) tabMotoristas.classList.remove('hidden');
+                if(userNameDisplay) userNameDisplay.textContent = "Gestor: Welligton Ferreira";
+            }
+        }
+
+        // Refreshes unificados
+        function refreshDemandasViews() {
+            updateDashboard(); updateTimeline(); updateEscala(); updateCalendario();
+        }
+        function refreshMotoristasViews() {
+            updateListaMotoristas(); updateSelectMotoristas(); updateSelectMotoristasEdicao();
+        }
+
+        // Auxiliares
+        function criarDataBrasilia(dataString) {
+            const [ano, mes, dia] = dataString.split('-');
+            return new Date(parseInt(ano), parseInt(mes) - 1, parseInt(dia));
+        }
+        function formatarDataBrasil(dataString) { return criarDataBrasilia(dataString).toLocaleDateString('pt-BR'); }
+        function formatarDataCompletaBrasil(dataString) {
+            return criarDataBrasilia(dataString).toLocaleDateString('pt-BR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        }
+        function isDataNaSemanaAtual(data) {
+            const hoje = new Date(); const dataObj = criarDataBrasilia(data);
+            const inicioSemana = new Date(hoje); inicioSemana.setDate(hoje.getDate() - hoje.getDay()); inicioSemana.setHours(0,0,0,0);
+            const fimSemana = new Date(inicioSemana); fimSemana.setDate(inicioSemana.getDate() + 6); fimSemana.setHours(23,59,59,999);
+            return dataObj >= inicioSemana && dataObj <= fimSemana;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCurrentDate(); setInterval(updateCurrentDate, 60000);
+            const hoje = new Date().toISOString().split('T')[0];
+            document.getElementById('dataDemanda').min = hoje;
+            document.getElementById('dataDemanda').value = hoje;
+            initializePhotoUpload();
+            
+            // Verifica se já estava logado ao atualizar a página
+            if (currentUserRole) {
+                iniciarApp(currentUserRole);
+            }
+        });
+
+        function updateCurrentDate() {
+            document.getElementById('currentDate').textContent = new Date().toLocaleDateString('pt-BR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        // Navegação de Abas
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+            document.querySelectorAll('.tab-button').forEach(b => {
+                b.classList.remove('active', 'border-black', 'text-black');
+                b.classList.add('border-transparent', 'text-gray-500');
+            });
+            document.getElementById(tabName + '-content').classList.remove('hidden');
+            const btn = document.getElementById('tab-' + tabName);
+            if(btn){
+                btn.classList.add('active', 'border-black', 'text-black');
+                btn.classList.remove('border-transparent', 'text-gray-500');
+            }
+        }
+
+        // Cadastro Demanda
+        document.getElementById('demandaForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            if(currentUserRole !== 'gestor') return; // Segurança extra
+
+            const formData = new FormData(e.target);
+            const demanda = {
+                solicitante: formData.get('solicitante'), setor: formData.get('setor'),
+                partida: formData.get('partida'), destino: formData.get('destino'),
+                dataDemanda: formData.get('dataDemanda'), horario: formData.get('horario'),
+                numeroSei: formData.get('numeroSei'), placaVeiculo: formData.get('placaVeiculo'),
+                nomeMotorista: formData.get('nomeMotorista'), observacoes: formData.get('observacoes'),
+                status: 'Pendente', dataCadastro: new Date().toISOString()
+            };
+            
+            try {
+                if (isFirebaseConfigured) {
+                    await db.collection('demandas').add(demanda);
+                } else {
+                    demanda.id = 'sim_' + Date.now();
+                    demandas.unshift(demanda); 
+                    refreshDemandasViews();
+                }
+                mostrarMensagem('Viagem registrada!', 'success');
+                limparFormulario();
+            } catch (error) { mostrarMensagem('Erro ao registrar', 'error'); }
+        });
+
+        function limparFormulario() {
+            document.getElementById('demandaForm').reset();
+            document.getElementById('dataDemanda').value = new Date().toISOString().split('T')[0];
+        }
+
+        function mostrarMensagem(texto, tipo) {
+            const cor = tipo === 'success' ? 'bg-black text-white border-white' : 'bg-white text-black border-black';
+            const msg = document.createElement('div');
+            msg.className = `fixed top-4 right-4 ${cor} border-2 px-6 py-4 rounded-lg shadow-xl z-50 transform transition-all font-bold`;
+            msg.innerHTML = `<i class="fa-solid ${tipo==='success'?'fa-check':'fa-triangle-exclamation'} mr-2"></i> ${texto}`;
+            document.body.appendChild(msg);
+            setTimeout(() => { msg.style.opacity='0'; setTimeout(() => msg.remove(), 300); }, 3000);
+        }
+
+        function getStatusClasses(status) {
+            if(status === 'Concluída') return 'bg-black text-white border-black';
+            if(status === 'Em Andamento') return 'bg-gray-500 text-white border-gray-500';
+            return 'bg-white text-black border-gray-300'; // Pendente
+        }
+
+        // Dashboard
+        function updateDashboard() {
+            const hoje = new Date().toISOString().split('T')[0];
+            const demandasHoje = demandas.filter(d => d.dataDemanda === hoje);
+            
+            document.getElementById('totalDemandas').textContent = demandasHoje.length;
+            document.getElementById('concluidas').textContent = demandasHoje.filter(d => d.status === 'Concluída').length;
+            document.getElementById('pendentes').textContent = demandasHoje.filter(d => d.status === 'Pendente').length;
+            if (document.getElementById('totalHistorico')) document.getElementById('totalHistorico').textContent = demandas.filter(d => d.status === 'Concluída').length;
+            
+            const container = document.getElementById('demandasRecentes');
+            if (demandas.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center py-6 text-sm">Nenhum fretamento registrado.</p>';
+            } else {
+                container.innerHTML = demandas.slice(0,5).map(demanda => {
+                    const stClasses = getStatusClasses(demanda.status);
+                    return `
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 mb-2 hover:bg-gray-100 transition-colors">
+                        <div>
+                            <div class="font-bold text-black">${demanda.solicitante} <span class="font-normal text-sm text-gray-500">(${demanda.setor})</span></div>
+                            <div class="text-sm text-gray-600 mt-1"><i class="fa-solid fa-route mr-1 text-gray-400"></i> ${demanda.partida} → ${demanda.destino}</div>
+                            <div class="text-xs text-gray-500 mt-1"><i class="fa-regular fa-clock mr-1"></i> ${formatarDataBrasil(demanda.dataDemanda)} às ${demanda.horario}</div>
+                        </div>
+                        <div>
+                            <span class="px-3 py-1 text-xs font-bold rounded-full border ${stClasses}">${demanda.status}</span>
+                        </div>
+                    </div>`;
+                }).join('');
+            }
+        }
+
+        // Timeline
+        function updateTimeline() {
+            const demandasSemanaAtual = demandas.filter(d => isDataNaSemanaAtual(d.dataDemanda) && d.status !== 'Concluída');
+            const demandasPorData = {};
+            demandasSemanaAtual.forEach(d => { if(!demandasPorData[d.dataDemanda]) demandasPorData[d.dataDemanda]=[]; demandasPorData[d.dataDemanda].push(d); });
+            const datasOrdenadas = Object.keys(demandasPorData).sort();
+            
+            const container = document.getElementById('timelineContainer');
+            if (datasOrdenadas.length === 0) { container.innerHTML = '<p class="text-gray-500 text-center py-8">Sem despachos pendentes.</p>'; return; }
+            
+            let html = '';
+            datasOrdenadas.forEach(data => {
+                const demandasDoDia = demandasPorData[data].sort((a,b) => a.horario.localeCompare(b.horario));
+                html += `
+                    <div class="mb-8 border-l-2 border-black pl-6 relative">
+                        <div class="absolute w-4 h-4 bg-black rounded-full -left-[9px] top-1"></div>
+                        <h3 class="text-xl font-bold text-black mb-4 uppercase tracking-tight">${formatarDataCompletaBrasil(data)}</h3>
+                        <div class="space-y-4">
+                `;
+                demandasDoDia.forEach(d => {
+                    // Botões de ação apenas para Gestor
+                    const actionButtons = currentUserRole === 'gestor' ? `
+                        <button onclick="editarDemanda('${d.id}')" class="text-gray-400 hover:text-black transition-colors"><i class="fa-solid fa-pen-to-square"></i></button>
+                    ` : '';
+
+                    html += `
+                        <div class="bg-white border border-gray-200 p-4 rounded-lg shadow-sm">
+                            <div class="flex justify-between items-center mb-2 border-b border-gray-100 pb-2">
+                                <span class="text-lg font-black text-black"><i class="fa-regular fa-clock mr-1 text-gray-400"></i> ${d.horario}</span>
+                                <div class="flex gap-2">
+                                    <span class="px-2 py-1 text-xs font-bold border rounded bg-gray-100 text-gray-700">${d.status}</span>
+                                    ${actionButtons}
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 text-sm mt-3">
+                                <div>
+                                    <p class="text-gray-800"><strong>Para:</strong> ${d.solicitante} (${d.setor})</p>
+                                    <p class="text-gray-600 mt-1"><i class="fa-solid fa-map-pin mr-1"></i> ${d.partida}</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-800"><strong>Motorista:</strong> ${d.nomeMotorista || 'N/A'} [${d.placaVeiculo || 'S/Placa'}]</p>
+                                    <p class="text-gray-600 mt-1"><i class="fa-solid fa-flag-checkered mr-1"></i> ${d.destino}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                html += `</div></div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        // Escala
+        function updateEscala() {
+            const demandasOrdenadas = demandas.filter(d => isDataNaSemanaAtual(d.dataDemanda) && d.status !== 'Concluída')
+                .sort((a, b) => new Date(a.dataDemanda+'T'+a.horario) - new Date(b.dataDemanda+'T'+b.horario));
+            
+            const tbody = document.getElementById('escalaTableBody');
+            if (demandasOrdenadas.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="px-6 py-12 text-center text-gray-500 font-medium">Escala Operacional Vazia.</td></tr>`;
+                return;
+            }
+            
+            tbody.innerHTML = demandasOrdenadas.map(d => {
+                // Ações condicionais de Gestor vs Visitante
+                const gestaoHTML = currentUserRole === 'gestor' ? `
+                    <select onchange="alterarStatus('${d.id}', this.value)" class="text-xs font-bold border border-gray-300 rounded bg-white px-2 py-1">
+                        <option value="Pendente" ${d.status==='Pendente'?'selected':''}>Pendente</option>
+                        <option value="Concluída" ${d.status==='Concluída'?'selected':''}>Concluir</option>
+                    </select>
+                    <button onclick="editarDemanda('${d.id}')" class="text-gray-500 hover:text-black"><i class="fa-solid fa-edit"></i></button>
+                    <button onclick="excluirDemanda('${d.id}')" class="text-gray-400 hover:text-red-600"><i class="fa-solid fa-trash"></i></button>
+                ` : `
+                    <span class="text-xs font-bold px-2 py-1 border border-gray-300 rounded bg-gray-50 text-gray-500">${d.status}</span>
+                `;
+
+                return `
+                <tr class="hover:bg-gray-50 transition-colors border-l-4 border-l-black">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="font-bold text-black">${d.horario}</div>
+                        <div class="text-xs text-gray-500">${formatarDataBrasil(d.dataDemanda)}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap"><span class="bg-gray-200 text-gray-800 text-xs font-bold px-2 py-1 rounded">TR${(d.id || '').slice(0,4).toUpperCase()}</span></td>
+                    <td class="px-6 py-4">
+                        <div class="font-bold text-gray-800">${d.destino}</div>
+                        <div class="text-xs text-gray-500">de ${d.partida}</div>
+                    </td>
+                    <td class="px-6 py-4 hidden md:table-cell">
+                        <div class="font-bold text-gray-800">${d.solicitante}</div>
+                        <div class="text-xs text-gray-500">${d.setor}</div>
+                    </td>
+                    <td class="px-6 py-4 hidden lg:table-cell text-sm font-bold">${d.placaVeiculo || '-'}</td>
+                    <td class="px-6 py-4 text-sm font-bold text-gray-700">${d.nomeMotorista || '-'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center space-x-2">
+                            ${gestaoHTML}
+                        </div>
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+
+        async function alterarStatus(id, novoStatus) {
+            if(currentUserRole !== 'gestor') return;
+            try { 
+                if (isFirebaseConfigured) {
+                    await db.collection('demandas').doc(id).update({ status: novoStatus }); 
+                } else {
+                    const idx = demandas.findIndex(d => d.id === id);
+                    if(idx > -1) demandas[idx].status = novoStatus;
+                    refreshDemandasViews();
+                }
+                mostrarMensagem(`Status: ${novoStatus}`, 'success'); 
+            } 
+            catch (e) { mostrarMensagem('Erro', 'error'); }
+        }
+
+        // Calendário
+        function navegarMes(dir) {
+            mesAtual += dir; if(mesAtual>11){mesAtual=0;anoAtual++;} else if(mesAtual<0){mesAtual=11;anoAtual--;} updateCalendario();
+        }
+        function updateCalendario() {
+            const nomesMeses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+            document.getElementById('mesAnoAtual').textContent = `${nomesMeses[mesAtual]} ${anoAtual}`;
+            
+            const diasNoMes = new Date(anoAtual, mesAtual + 1, 0).getDate();
+            const diaSemanaInicio = new Date(anoAtual, mesAtual, 1).getDay();
+            
+            const grid = document.getElementById('calendarioGrid'); grid.innerHTML = '';
+            
+            for (let i = 0; i < diaSemanaInicio; i++) { grid.innerHTML += `<div class="h-24 bg-gray-50/50"></div>`; }
+            
+            for (let dia = 1; dia <= diasNoMes; dia++) {
+                const dataStr = new Date(anoAtual, mesAtual, dia).toISOString().split('T')[0];
+                const dDia = demandas.filter(d => d.dataDemanda === dataStr);
+                
+                let b= `<div class="h-24 p-2 relative bg-white hover:bg-gray-50 transition-colors border-b border-r border-gray-100 cursor-pointer">
+                            <div class="text-sm font-bold text-gray-700">${dia}</div>`;
+                if(dDia.length > 0) {
+                    b += `<div class="mt-1 flex flex-wrap gap-1">`;
+                    dDia.slice(0,3).forEach(d => {
+                        b += `<div class="text-[10px] bg-black text-white px-1 rounded flex-1 text-center font-bold" title="${d.horario}">${d.horario}</div>`;
+                    });
+                    if(dDia.length>3) b+= `<div class="text-[10px] text-gray-500 font-bold">+${dDia.length-3}</div>`;
+                    b += `</div>`;
+                }
+                b += `</div>`;
+                grid.innerHTML += b;
+            }
+        }
+
+        // Funções de Edição/Exclusão
+        function editarDemanda(id) {
+            if(currentUserRole !== 'gestor') return;
+            const d = demandas.find(x => x.id === id); if(!d) return;
+            document.getElementById('editId').value = d.id;
+            ['Solicitante','Setor','Partida','Destino','DataDemanda','Horario','NumeroSei','PlacaVeiculo','Observacoes'].forEach(f => {
+                const el = document.getElementById('edit'+f);
+                if(el) el.value = d[f.charAt(0).toLowerCase() + f.slice(1)] || '';
+            });
+            updateSelectMotoristasEdicao();
+            setTimeout(() => document.getElementById('editNomeMotorista').value = d.nomeMotorista || '', 50);
+            document.getElementById('modalEdicao').classList.remove('hidden');
+        }
+
+        function fecharModalEdicao() { document.getElementById('modalEdicao').classList.add('hidden'); }
+        
+        async function salvarEdicao() {
+            if(currentUserRole !== 'gestor') return;
+            const f = new FormData(document.getElementById('formEdicao'));
+            const id = f.get('editId');
+            const upd = {
+                solicitante: f.get('editSolicitante'), setor: f.get('editSetor'), partida: f.get('editPartida'), destino: f.get('editDestino'),
+                dataDemanda: f.get('editDataDemanda'), horario: f.get('editHorario'), numeroSei: f.get('editNumeroSei'),
+                placaVeiculo: f.get('editPlacaVeiculo'), nomeMotorista: f.get('editNomeMotorista'), observacoes: f.get('editObservacoes')
+            };
+            try { 
+                if (isFirebaseConfigured) {
+                    await db.collection('demandas').doc(id).update(upd); 
+                } else {
+                    const idx = demandas.findIndex(d => d.id === id);
+                    if(idx > -1) demandas[idx] = { ...demandas[idx], ...upd };
+                    refreshDemandasViews();
+                }
+                mostrarMensagem('Atualizado!', 'success'); 
+                fecharModalEdicao(); 
+            } 
+            catch (e) { mostrarMensagem('Erro', 'error'); }
+        }
+
+        async function excluirDemanda(id) {
+            if(currentUserRole !== 'gestor') return;
+            if(confirm('Atenção: A exclusão dessa logística é permanente. Confirmar?')) {
+                try { 
+                    if (isFirebaseConfigured) {
+                        await db.collection('demandas').doc(id).delete(); 
+                    } else {
+                        demandas = demandas.filter(d => d.id !== id);
+                        refreshDemandasViews();
+                    }
+                    mostrarMensagem('Removido.', 'success'); 
+                } 
+                catch (e) { mostrarMensagem('Erro', 'error'); }
+            }
+        }
+
+        // Motoristas
+        function initializePhotoUpload() {
+            document.getElementById('fotoMotorista').addEventListener('change', e => {
+                if(e.target.files[0]) {
+                    const r = new FileReader(); r.onload = e => {
+                        document.getElementById('previewImage').src = e.target.result;
+                        document.getElementById('previewContainer').classList.remove('hidden');
+                        document.getElementById('uploadPlaceholder').classList.add('hidden');
+                    };
+                    r.readAsDataURL(e.target.files[0]);
+                }
+            });
+        }
+        
+        document.getElementById('motoristaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if(currentUserRole !== 'gestor') return;
+            const nome = new FormData(e.target).get('nomeMotoristaForm');
+            const file = document.getElementById('fotoMotorista').files[0];
+            if(file) {
+                const r = new FileReader(); r.onload = e => salvarMotorista(nome, e.target.result); r.readAsDataURL(file);
+            } else salvarMotorista(nome, '');
+        });
+
+        async function salvarMotorista(nome, foto) {
+            try {
+                const m = { nome, foto, dataCadastro: new Date().toISOString() };
+                if (isFirebaseConfigured) {
+                    await db.collection('motoristas').add(m);
+                } else {
+                    m.id = 'mot_' + Date.now();
+                    motoristas.push(m);
+                    refreshMotoristasViews();
+                }
+                mostrarMensagem('Motorista homologado.', 'success');
+                document.getElementById('motoristaForm').reset();
+                document.getElementById('previewContainer').classList.add('hidden'); document.getElementById('uploadPlaceholder').classList.remove('hidden');
+            } catch (e) { mostrarMensagem('Erro', 'error'); }
+        }
+
+        async function excluirMotorista(id) {
+            if(currentUserRole !== 'gestor') return;
+            if(confirm('Remover profissional da homologação?')) {
+                try {
+                    if (isFirebaseConfigured) {
+                        await db.collection('motoristas').doc(id).delete();
+                    } else {
+                        motoristas = motoristas.filter(m => m.id !== id);
+                        refreshMotoristasViews();
+                    }
+                    mostrarMensagem('Removido.', 'success');
+                } catch(e) { mostrarMensagem('Erro', 'error'); }
+            }
+        }
+
+        function updateListaMotoristas() {
+            const list = document.getElementById('listaMotoristas');
+            if(!motoristas.length) { list.innerHTML = '<p class="col-span-2 text-gray-500 text-center">Nenhum registrado.</p>'; return; }
+            list.innerHTML = motoristas.map(m => `
+                <div class="flex items-center gap-4 bg-gray-50 p-3 rounded border border-gray-200">
+                    ${m.foto ? `<img src="${m.foto}" class="w-10 h-10 rounded-full object-cover">` : `<div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center"><i class="fa-solid fa-user text-gray-600"></i></div>`}
+                    <div class="flex-1"><p class="font-bold text-sm text-black">${m.nome}</p></div>
+                    ${currentUserRole === 'gestor' ? `<button onclick="excluirMotorista('${m.id}')" class="text-gray-400 hover:text-red-500"><i class="fa-solid fa-trash"></i></button>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function updateSelectMotoristas() {
+            const s = document.getElementById('nomeMotorista'); s.innerHTML = '<option value="">Selecione...</option>';
+            motoristas.forEach(m => s.innerHTML += `<option value="${m.nome}">${m.nome}</option>`);
+        }
+        function updateSelectMotoristasEdicao() {
+            const s = document.getElementById('editNomeMotorista'); s.innerHTML = '<option value="">Selecione...</option>';
+            motoristas.forEach(m => s.innerHTML += `<option value="${m.nome}">${m.nome}</option>`);
+        }
+
+        // Relatórios
+        function getDemandasConcluidas() { return demandas.filter(d => d.status === 'Concluída').sort((a, b) => new Date(b.dataCadastro) - new Date(a.dataCadastro)); }
+
+        function gerarTabelaRelatorio() {
+            const c = getDemandasConcluidas(); let tb = '';
+            if(!c.length) tb = '<tr><td colspan="8" style="padding:15px;text-align:center;">Nenhuma executada.</td></tr>';
+            else c.forEach(d => {
+                tb += `<tr style="border-bottom: 1px solid #e5e7eb;">
+                    <td style="padding:12px;">${formatarDataBrasil(d.dataDemanda)}</td><td style="padding:12px;"><b>${d.horario}</b></td>
+                    <td style="padding:12px;">${d.solicitante}<br><small>${d.setor}</small></td><td style="padding:12px;">${d.partida}</td>
+                    <td style="padding:12px;">${d.destino}</td><td style="padding:12px;">${d.nomeMotorista||'-'}</td>
+                    <td style="padding:12px;">${d.placaVeiculo||'-'}</td><td style="padding:12px;">${d.numeroSei||'-'}</td>
+                </tr>`;
+            });
+            return `<table style="width:100%;border-collapse:collapse;font-family:sans-serif;text-align:left;background:#fff;border:1px solid #ccc;">
+                <thead style="background:#000;color:#fff;"><tr>
+                <th style="padding:12px;">Data</th><th style="padding:12px;">Hora</th><th style="padding:12px;">Empresa/Setor</th>
+                <th style="padding:12px;">Partida</th><th style="padding:12px;">Destino</th><th style="padding:12px;">Motorista</th>
+                <th style="padding:12px;">Placa</th><th style="padding:12px;">Cód/SEI</th>
+                </tr></thead><tbody>${tb}</tbody></table>`;
+        }
+
+        function gerarEstruturaPagina(titulo, botoes, script) {
+            return `<html><head><title>${titulo}</title><script src="https://cdn.tailwindcss.com"><\/script></head>
+            <body class="bg-gray-100 p-8 font-sans"><div class="max-w-6xl mx-auto bg-white p-8 shadow-lg border-t-8 border-black">
+            <div class="flex justify-between border-b pb-4 mb-6">
+                <div><h1 class="text-2xl font-black uppercase">MicroBus Hub - Logística</h1><p class="text-gray-500">${titulo}</p></div>
+                <div class="flex gap-2 no-print">${botoes}<button onclick="window.close()" class="px-4 py-2 border rounded bg-white text-black font-bold">Fechar</button></div>
+            </div>
+            ${gerarTabelaRelatorio()}<div class="mt-4 text-sm text-gray-500 text-center">Total listado: <b>${getDemandasConcluidas().length}</b></div>
+            </div>${script||''}</body></html>`;
+        }
+
+        function gerarRelatorioHTML() {
+            if(currentUserRole !== 'gestor') return;
+            const w = window.open('','_blank');
+            w.document.write(gerarEstruturaPagina('Demandas Corporativas Finalizadas', '<button onclick="window.print()" class="px-4 py-2 bg-black text-white font-bold rounded">Imprimir</button>')); w.document.close();
+        }
+        function gerarRelatorioPDF() {
+            if(currentUserRole !== 'gestor') return;
+            const w = window.open('','_blank'); w.document.write(gerarEstruturaPagina('Relatório PDF')); w.document.close();
+            setTimeout(() => w.print(), 800);
+        }
+        function gerarViewExcel() {
+            if(currentUserRole !== 'gestor') return;
+            const script = `<script>function bx(){
+                const tb = document.querySelector('table').outerHTML;
+                const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['<html xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="utf-8"></head><body>'+tb+'</body></html>'], {type:'application/vnd.ms-excel'}));
+                a.download = 'MicroBusHub_Demandas.xls'; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+            }<\/script>`;
+            const w = window.open('','_blank');
+            w.document.write(gerarEstruturaPagina('Exportação Excel', '<button onclick="bx()" class="px-4 py-2 bg-black text-white font-bold rounded">Baixar .xls</button>', script)); w.document.close();
+        }
+    </script>
+</body>
+</html>
