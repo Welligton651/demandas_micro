@@ -368,11 +368,11 @@
                     <form id="demandaForm" class="space-y-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Empresa / Solicitante</label>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Solicitante</label>
                                 <input type="text" id="solicitante" name="solicitante" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Centro de Custo / Setor</label>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Setor</label>
                                 <input type="text" id="setor" name="setor" required placeholder="Ex: Diretoria / Eventos" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
                             </div>
                         </div>
@@ -390,30 +390,28 @@
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Data do Fretamento</label>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Data da demanda</label>
                                 <input type="date" id="dataDemanda" name="dataDemanda" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Horário de Apresentação</label>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Horário da demanda</label>
                                 <input type="time" id="horario" name="horario" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
                             </div>
                         </div>
                         
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Cód. Autorização / SEI</label>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Nº SEI</label>
                                 <input type="text" id="numeroSei" name="numeroSei" placeholder="Opcional" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Placa do Micro-ônibus</label>
-                                <input type="text" id="placaVeiculo" name="placaVeiculo" placeholder="Ex: ABC-1234" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Quantidade de Veículos/Motoristas</label>
+                                <input type="number" id="qtdVeiculos" name="qtdVeiculos" min="1" value="1" onchange="renderizarVeiculosCadastro()" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
                             </div>
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Motorista Designado</label>
-                                <select id="nomeMotorista" name="nomeMotorista" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
-                                    <option value="">Selecione na lista...</option>
-                                </select>
-                            </div>
+                        </div>
+                        
+                        <div id="containerVeiculos" class="space-y-4 bg-gray-50 p-4 rounded-lg border border-gray-200 mt-2">
+                            <!-- Campos de motoristas e placas injetados dinamicamente via JS -->
                         </div>
                         
                         <div>
@@ -581,7 +579,7 @@
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Empresa / Solicitante</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Solicitante</label>
                             <input type="text" id="editSolicitante" name="editSolicitante" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
                         </div>
                         <div>
@@ -603,30 +601,27 @@
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Data</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Data da demanda</label>
                             <input type="date" id="editDataDemanda" name="editDataDemanda" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Horário</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Horário da demanda</label>
                             <input type="time" id="editHorario" name="editHorario" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
                         </div>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Cód. / SEI</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Nº SEI</label>
                             <input type="text" id="editNumeroSei" name="editNumeroSei" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Placa Micro-ônibus</label>
-                            <input type="text" id="editPlacaVeiculo" name="editPlacaVeiculo" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Qtd. de Veículos</label>
+                            <input type="number" id="editQtdVeiculos" name="editQtdVeiculos" min="1" value="1" onchange="renderizarVeiculosEdicao()" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
                         </div>
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Motorista</label>
-                            <select id="editNomeMotorista" name="editNomeMotorista" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
-                                <option value="">Selecione...</option>
-                            </select>
-                        </div>
+                    </div>
+                    <div id="editContainerVeiculos" class="space-y-3 bg-gray-100 p-3 rounded border border-gray-200 mt-2 mb-4">
+                        <!-- Será injetado via JS -->
                     </div>
                     
                     <div>
@@ -770,12 +765,110 @@
             }
         }
 
+        // === LOGICA DINÂMICA DE MÚLTIPLOS VEÍCULOS ===
+        function getMotoristasOptionsHTML(selectedVal = '') {
+            let options = '<option value="">Selecione o motorista...</option>';
+            motoristas.forEach(m => {
+                options += `<option value="${m.nome}" ${m.nome === selectedVal ? 'selected' : ''}>${m.nome}</option>`;
+            });
+            return options;
+        }
+
+        function renderizarVeiculosCadastro() {
+            const qtd = parseInt(document.getElementById('qtdVeiculos').value) || 1;
+            const container = document.getElementById('containerVeiculos');
+            
+            // Guarda valores que já estavam preenchidos para não os perder ao alterar a quantidade
+            let existingValues = [];
+            for(let i=0; i<container.children.length; i++) {
+                const placa = document.querySelector(`input[name="placaVeiculo_${i}"]`)?.value || '';
+                const mot = document.querySelector(`select[name="nomeMotorista_${i}"]`)?.value || '';
+                existingValues.push({ placa, motorista: mot });
+            }
+
+            container.innerHTML = '';
+            for(let i=0; i<qtd; i++) {
+                const val = existingValues[i] || { placa: '', motorista: '' };
+                container.innerHTML += `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4 border-b border-gray-200 last:border-0 last:pb-0">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-600 mb-1">Placa do Veículo ${i+1}</label>
+                            <input type="text" name="placaVeiculo_${i}" value="${val.placa}" placeholder="Ex: ABC-1234" class="w-full px-3 py-2 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-600 mb-1">Motorista do Veículo ${i+1}</label>
+                            <select name="nomeMotorista_${i}" class="w-full px-3 py-2 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black">
+                                ${getMotoristasOptionsHTML(val.motorista)}
+                            </select>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function renderizarVeiculosEdicao(alocacoesIniciais = null) {
+            const qtd = parseInt(document.getElementById('editQtdVeiculos').value) || 1;
+            const container = document.getElementById('editContainerVeiculos');
+
+            let existingValues = [];
+            if (alocacoesIniciais) {
+                existingValues = alocacoesIniciais;
+            } else {
+                for(let i=0; i<container.children.length; i++) {
+                    const placa = document.querySelector(`input[name="editPlacaVeiculo_${i}"]`)?.value || '';
+                    const mot = document.querySelector(`select[name="editNomeMotorista_${i}"]`)?.value || '';
+                    existingValues.push({ placa, motorista: mot });
+                }
+            }
+
+            container.innerHTML = '';
+            for(let i=0; i<qtd; i++) {
+                const val = existingValues[i] || { placa: '', motorista: '' };
+                container.innerHTML += `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pb-3 border-b border-gray-300 last:border-0 last:pb-0">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-600 mb-1">Placa ${i+1}</label>
+                            <input type="text" name="editPlacaVeiculo_${i}" value="${val.placa}" class="w-full px-2 py-1.5 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-600 mb-1">Motorista ${i+1}</label>
+                            <select name="editNomeMotorista_${i}" class="w-full px-2 py-1.5 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
+                                ${getMotoristasOptionsHTML(val.motorista)}
+                            </select>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Funções para formatar múltiplas alocações nas tabelas
+        function formatarAlocacoesView(demanda, htmlMode = true) {
+            let alocs = demanda.alocacoes || [];
+            if (alocs.length === 0 && (demanda.nomeMotorista || demanda.placaVeiculo)) { alocs = [{ motorista: demanda.nomeMotorista, placa: demanda.placaVeiculo }]; }
+            if (alocs.length === 0) return 'A definir';
+
+            if (htmlMode) {
+                return alocs.map(a => `${a.motorista || 'A definir'} <span class="text-xs font-normal text-gray-500">[${a.placa || 'S/Placa'}]</span>`).join('<br>');
+            } else {
+                return alocs.map(a => `${a.motorista || 'A definir'} [${a.placa || 'S/Placa'}]`).join(', ');
+            }
+        }
+
+        function formatarAlocacoesSeparadas(demanda, campo) {
+            let alocs = demanda.alocacoes || [];
+            if (alocs.length === 0 && (demanda.nomeMotorista || demanda.placaVeiculo)) { alocs = [{ motorista: demanda.nomeMotorista, placa: demanda.placaVeiculo }]; }
+            if (alocs.length === 0) return '-';
+            return alocs.map(a => a[campo] || '-').join('<br>');
+        }
+        // ===============================================
+
         // Refreshes unificados
         function refreshDemandasViews() {
             updateDashboard(); updateTimeline(); updateEscala(); updateCalendario();
         }
         function refreshMotoristasViews() {
-            updateListaMotoristas(); updateSelectMotoristas(); updateSelectMotoristasEdicao();
+            updateListaMotoristas(); 
+            renderizarVeiculosCadastro(); // Reconstrói listagem de motoristas dentro dos selects dinâmicos atuais
         }
 
         // Auxiliares
@@ -800,6 +893,7 @@
             document.getElementById('dataDemanda').min = hoje;
             document.getElementById('dataDemanda').value = hoje;
             initializePhotoUpload();
+            renderizarVeiculosCadastro(); // Renderiza o primeiro conjunto no form ao iniciar
             
             // Verifica se já estava logado ao atualizar a página
             if (currentUserRole) {
@@ -832,12 +926,23 @@
             if(currentUserRole !== 'gestor') return; // Segurança extra
 
             const formData = new FormData(e.target);
+            
+            // Coletar array dinâmico de veículos/motoristas alocados
+            const qtd = parseInt(document.getElementById('qtdVeiculos').value) || 1;
+            let alocacoes = [];
+            for(let i=0; i<qtd; i++) {
+                alocacoes.push({
+                    placa: document.querySelector(`input[name="placaVeiculo_${i}"]`)?.value || '',
+                    motorista: document.querySelector(`select[name="nomeMotorista_${i}"]`)?.value || ''
+                });
+            }
+
             const demanda = {
                 solicitante: formData.get('solicitante'), setor: formData.get('setor'),
                 partida: formData.get('partida'), destino: formData.get('destino'),
                 dataDemanda: formData.get('dataDemanda'), horario: formData.get('horario'),
-                numeroSei: formData.get('numeroSei'), placaVeiculo: formData.get('placaVeiculo'),
-                nomeMotorista: formData.get('nomeMotorista'), observacoes: formData.get('observacoes'),
+                numeroSei: formData.get('numeroSei'), observacoes: formData.get('observacoes'),
+                alocacoes: alocacoes, // Salva matriz de frotas
                 status: 'Pendente', dataCadastro: new Date().toISOString()
             };
             
@@ -857,6 +962,8 @@
         function limparFormulario() {
             document.getElementById('demandaForm').reset();
             document.getElementById('dataDemanda').value = new Date().toISOString().split('T')[0];
+            document.getElementById('qtdVeiculos').value = 1;
+            renderizarVeiculosCadastro();
         }
 
         function mostrarMensagem(texto, tipo) {
@@ -945,8 +1052,8 @@
                                     <p class="text-gray-600 mt-1"><i class="fa-solid fa-map-pin mr-1"></i> ${d.partida}</p>
                                 </div>
                                 <div>
-                                    <p class="text-gray-800"><strong>Motorista:</strong> ${d.nomeMotorista || 'N/A'} [${d.placaVeiculo || 'S/Placa'}]</p>
-                                    <p class="text-gray-600 mt-1"><i class="fa-solid fa-flag-checkered mr-1"></i> ${d.destino}</p>
+                                    <p class="text-gray-800"><strong>Equipe / Alocação:</strong><br/> <span class="leading-relaxed block mt-1">${formatarAlocacoesView(d, true)}</span></p>
+                                    <p class="text-gray-600 mt-2"><i class="fa-solid fa-flag-checkered mr-1"></i> ${d.destino}</p>
                                 </div>
                             </div>
                         </div>
@@ -996,8 +1103,8 @@
                         <div class="font-bold text-gray-800">${d.solicitante}</div>
                         <div class="text-xs text-gray-500">${d.setor}</div>
                     </td>
-                    <td class="px-6 py-4 hidden lg:table-cell text-sm font-bold">${d.placaVeiculo || '-'}</td>
-                    <td class="px-6 py-4 text-sm font-bold text-gray-700">${d.nomeMotorista || '-'}</td>
+                    <td class="px-6 py-4 hidden lg:table-cell text-sm font-bold leading-relaxed">${formatarAlocacoesSeparadas(d, 'placa')}</td>
+                    <td class="px-6 py-4 text-sm font-bold text-gray-700 leading-relaxed">${formatarAlocacoesSeparadas(d, 'motorista')}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center space-x-2">
                             ${gestaoHTML}
@@ -1097,9 +1204,10 @@
                                     <p>${d.destino}</p>
                                 </div>
                                 <div>
-                                    <p class="font-semibold text-gray-800 mb-1"><i class="fa-solid fa-id-card-clip mr-1 text-gray-400"></i> Designação</p>
-                                    <p>${d.nomeMotorista || 'Profissional a definir'}</p>
-                                    <p class="text-xs text-gray-500 mt-0.5">${d.placaVeiculo ? '['+d.placaVeiculo+']' : 'Sem placa alocada'}</p>
+                                    <p class="font-semibold text-gray-800 mb-1"><i class="fa-solid fa-users mr-1 text-gray-400"></i> Profissionais & Frotas</p>
+                                    <div class="leading-relaxed mt-1 text-gray-800 font-medium">
+                                        ${formatarAlocacoesView(d, true)}
+                                    </div>
                                 </div>
                             </div>
                             ${botoesGestao}
@@ -1122,12 +1230,19 @@
             if(currentUserRole !== 'gestor') return;
             const d = demandas.find(x => x.id === id); if(!d) return;
             document.getElementById('editId').value = d.id;
-            ['Solicitante','Setor','Partida','Destino','DataDemanda','Horario','NumeroSei','PlacaVeiculo','Observacoes'].forEach(f => {
+            ['Solicitante','Setor','Partida','Destino','DataDemanda','Horario','NumeroSei','Observacoes'].forEach(f => {
                 const el = document.getElementById('edit'+f);
                 if(el) el.value = d[f.charAt(0).toLowerCase() + f.slice(1)] || '';
             });
-            updateSelectMotoristasEdicao();
-            setTimeout(() => document.getElementById('editNomeMotorista').value = d.nomeMotorista || '', 50);
+            
+            // Reconstruir área de frotas e motoristas
+            let alocs = d.alocacoes || [];
+            if(alocs.length === 0 && (d.nomeMotorista || d.placaVeiculo)) { alocs = [{ motorista: d.nomeMotorista, placa: d.placaVeiculo }]; }
+            if(alocs.length === 0) { alocs = [{ motorista: '', placa: '' }]; }
+            
+            document.getElementById('editQtdVeiculos').value = alocs.length;
+            renderizarVeiculosEdicao(alocs);
+            
             document.getElementById('modalEdicao').classList.remove('hidden');
         }
 
@@ -1137,10 +1252,21 @@
             if(currentUserRole !== 'gestor') return;
             const f = new FormData(document.getElementById('formEdicao'));
             const id = f.get('editId');
+            
+            // Coletar array dinâmico durante a edição
+            const qtd = parseInt(document.getElementById('editQtdVeiculos').value) || 1;
+            let alocacoes = [];
+            for(let i=0; i<qtd; i++) {
+                alocacoes.push({
+                    placa: document.querySelector(`input[name="editPlacaVeiculo_${i}"]`)?.value || '',
+                    motorista: document.querySelector(`select[name="editNomeMotorista_${i}"]`)?.value || ''
+                });
+            }
+
             const upd = {
                 solicitante: f.get('editSolicitante'), setor: f.get('editSetor'), partida: f.get('editPartida'), destino: f.get('editDestino'),
                 dataDemanda: f.get('editDataDemanda'), horario: f.get('editHorario'), numeroSei: f.get('editNumeroSei'),
-                placaVeiculo: f.get('editPlacaVeiculo'), nomeMotorista: f.get('editNomeMotorista'), observacoes: f.get('editObservacoes')
+                observacoes: f.get('editObservacoes'), alocacoes: alocacoes
             };
             try { 
                 if (isFirebaseConfigured) {
@@ -1239,15 +1365,6 @@
             `).join('');
         }
 
-        function updateSelectMotoristas() {
-            const s = document.getElementById('nomeMotorista'); s.innerHTML = '<option value="">Selecione...</option>';
-            motoristas.forEach(m => s.innerHTML += `<option value="${m.nome}">${m.nome}</option>`);
-        }
-        function updateSelectMotoristasEdicao() {
-            const s = document.getElementById('editNomeMotorista'); s.innerHTML = '<option value="">Selecione...</option>';
-            motoristas.forEach(m => s.innerHTML += `<option value="${m.nome}">${m.nome}</option>`);
-        }
-
         // Relatórios
         function getDemandasConcluidas() { return demandas.filter(d => d.status === 'Concluída').sort((a, b) => new Date(b.dataCadastro) - new Date(a.dataCadastro)); }
 
@@ -1258,8 +1375,10 @@
                 tb += `<tr style="border-bottom: 1px solid #e5e7eb;">
                     <td style="padding:12px;">${formatarDataBrasil(d.dataDemanda)}</td><td style="padding:12px;"><b>${d.horario}</b></td>
                     <td style="padding:12px;">${d.solicitante}<br><small>${d.setor}</small></td><td style="padding:12px;">${d.partida}</td>
-                    <td style="padding:12px;">${d.destino}</td><td style="padding:12px;">${d.nomeMotorista||'-'}</td>
-                    <td style="padding:12px;">${d.placaVeiculo||'-'}</td><td style="padding:12px;">${d.numeroSei||'-'}</td>
+                    <td style="padding:12px;">${d.destino}</td>
+                    <td style="padding:12px;">${formatarAlocacoesSeparadas(d, 'motorista')}</td>
+                    <td style="padding:12px;">${formatarAlocacoesSeparadas(d, 'placa')}</td>
+                    <td style="padding:12px;">${d.numeroSei||'-'}</td>
                 </tr>`;
             });
             return `<table style="width:100%;border-collapse:collapse;font-family:sans-serif;text-align:left;background:#fff;border:1px solid #ccc;">
