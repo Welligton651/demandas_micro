@@ -491,7 +491,7 @@
                         </div>
                     </div>
                     <div id="timelineContainer" class="space-y-6">
-                        <p class="text-gray-500 text-center py-8">Sem rotas ativas na semana.</p>
+                        <p class="text-gray-500 text-center py-8">Sem rotas ativas no mês.</p>
                     </div>
                 </div>
             </div>
@@ -880,11 +880,9 @@
         function formatarDataCompletaBrasil(dataString) {
             return criarDataBrasilia(dataString).toLocaleDateString('pt-BR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
         }
-        function isDataNaSemanaAtual(data) {
+        function isDataNoMesAtual(data) {
             const hoje = new Date(); const dataObj = criarDataBrasilia(data);
-            const inicioSemana = new Date(hoje); inicioSemana.setDate(hoje.getDate() - hoje.getDay()); inicioSemana.setHours(0,0,0,0);
-            const fimSemana = new Date(inicioSemana); fimSemana.setDate(inicioSemana.getDate() + 6); fimSemana.setHours(23,59,59,999);
-            return dataObj >= inicioSemana && dataObj <= fimSemana;
+            return dataObj.getMonth() === hoje.getMonth() && dataObj.getFullYear() === hoje.getFullYear();
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -1014,13 +1012,13 @@
 
         // Timeline
         function updateTimeline() {
-            const demandasSemanaAtual = demandas.filter(d => isDataNaSemanaAtual(d.dataDemanda) && d.status !== 'Concluída');
+            const demandasMesAtual = demandas.filter(d => isDataNoMesAtual(d.dataDemanda) && d.status !== 'Concluída');
             const demandasPorData = {};
-            demandasSemanaAtual.forEach(d => { if(!demandasPorData[d.dataDemanda]) demandasPorData[d.dataDemanda]=[]; demandasPorData[d.dataDemanda].push(d); });
+            demandasMesAtual.forEach(d => { if(!demandasPorData[d.dataDemanda]) demandasPorData[d.dataDemanda]=[]; demandasPorData[d.dataDemanda].push(d); });
             const datasOrdenadas = Object.keys(demandasPorData).sort();
             
             const container = document.getElementById('timelineContainer');
-            if (datasOrdenadas.length === 0) { container.innerHTML = '<p class="text-gray-500 text-center py-8">Sem despachos pendentes.</p>'; return; }
+            if (datasOrdenadas.length === 0) { container.innerHTML = '<p class="text-gray-500 text-center py-8">Sem despachos pendentes no mês.</p>'; return; }
             
             let html = '';
             datasOrdenadas.forEach(data => {
@@ -1066,7 +1064,7 @@
 
         // Escala
         function updateEscala() {
-            const demandasOrdenadas = demandas.filter(d => isDataNaSemanaAtual(d.dataDemanda) && d.status !== 'Concluída')
+            const demandasOrdenadas = demandas.filter(d => isDataNoMesAtual(d.dataDemanda) && d.status !== 'Concluída')
                 .sort((a, b) => new Date(a.dataDemanda+'T'+a.horario) - new Date(b.dataDemanda+'T'+b.horario));
             
             const tbody = document.getElementById('escalaTableBody');
