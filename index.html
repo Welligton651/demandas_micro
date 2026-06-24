@@ -57,7 +57,7 @@
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9)), url('https://i.ibb.co/gbMr6pL0/1772841480807.png');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9)), url('https://i.ibb.co/nNCprjtG/1782309572639.jpg');
             background-size: cover;
             background-position: center;
             filter: grayscale(100%);
@@ -166,17 +166,174 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #4b5563;
         }
+
+        /* --- ANIMAÇÕES E EFEITOS HOVER NOVOS --- */
+        @keyframes fadeInTab {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content:not(.hidden) {
+            animation: fadeInTab 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .hover-lift {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            z-index: 10;
+        }
+
+        .btn-press {
+            transition: transform 0.15s ease-in-out;
+        }
+        
+        .btn-press:active {
+            transform: scale(0.96);
+        }
+
+        /* Tooltip do Calendário (Hover) */
+        .calendar-tooltip {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+            transform: translateY(10px) translateX(-50%);
+            pointer-events: none;
+            z-index: 60;
+        }
+
+        .group:hover .calendar-tooltip {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0) translateX(-50%);
+        }
+
+        /* --- ENGRENAGENS (GEARBOX) DEV --- */
+        @keyframes clockwise {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+
+        @keyframes counter-clockwise {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(-360deg); }
+        }
+
+        .gearbox {
+          background: #111;
+          height: 150px;
+          width: 200px;
+          position: relative;
+          border: none;
+          overflow: hidden;
+          border-radius: 6px;
+          box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.1);
+        }
+
+        .gearbox .overlay {
+          border-radius: 6px;
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 10;
+          box-shadow: inset 0px 0px 20px black;
+          transition: background 0.2s;
+          background: transparent;
+        }
+
+        .gear {
+          position: absolute;
+          height: 60px;
+          width: 60px;
+          box-shadow: 0px -1px 0px 0px #888888, 0px 1px 0px 0px black;
+          border-radius: 30px;
+        }
+
+        .gear.large {
+          height: 120px;
+          width: 120px;
+          border-radius: 60px;
+        }
+
+        .gear.large:after {
+          height: 96px;
+          width: 96px;
+          border-radius: 48px;
+          margin-left: -48px;
+          margin-top: -48px;
+        }
+
+        .gear.one { top: 12px; left: 10px; }
+        .gear.two { top: 61px; left: 60px; }
+        .gear.three { top: 110px; left: 10px; }
+        .gear.four { top: 13px; left: 128px; }
+
+        .gear:after {
+          content: "";
+          position: absolute;
+          height: 36px;
+          width: 36px;
+          border-radius: 36px;
+          background: #111;
+          top: 50%;
+          left: 50%;
+          margin-left: -18px;
+          margin-top: -18px;
+          z-index: 3;
+          box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1), inset 0px 0px 10px rgba(0, 0, 0, 0.1), inset 0px 2px 0px 0px #090909, inset 0px -1px 0px 0px #888888;
+        }
+
+        .gear-inner {
+          position: relative;
+          height: 100%;
+          width: 100%;
+          background: #555;
+          border-radius: 30px;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .large .gear-inner { border-radius: 60px; }
+        .gear.one .gear-inner { animation: counter-clockwise 3s infinite linear; }
+        .gear.two .gear-inner { animation: clockwise 3s infinite linear; }
+        .gear.three .gear-inner { animation: counter-clockwise 3s infinite linear; }
+        .gear.four .gear-inner { animation: counter-clockwise 6s infinite linear; }
+
+        .gear-inner .bar {
+          background: #555;
+          height: 16px;
+          width: 76px;
+          position: absolute;
+          left: 50%;
+          margin-left: -38px;
+          top: 50%;
+          margin-top: -8px;
+          border-radius: 2px;
+          border-left: 1px solid rgba(255, 255, 255, 0.1);
+          border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .large .gear-inner .bar { margin-left: -68px; width: 136px; }
+        .gear-inner .bar:nth-child(2) { transform: rotate(60deg); }
+        .gear-inner .bar:nth-child(3) { transform: rotate(120deg); }
+        .gear-inner .bar:nth-child(4) { transform: rotate(90deg); }
+        .gear-inner .bar:nth-child(5) { transform: rotate(30deg); }
+        .gear-inner .bar:nth-child(6) { transform: rotate(150deg); }
     </style>
 </head>
 <body class="h-full text-gray-800">
 
     <!-- LOGIN SCREEN -->
     <div id="login-container" class="min-h-screen flex items-center justify-center relative overflow-hidden bg-login-animated z-50">
-        <!-- Aumentada a transparência (bg-white/30) e ajustados os contornos -->
-        <div class="bg-white/30 backdrop-blur-xl p-8 sm:p-12 rounded-2xl shadow-2xl z-10 w-full max-w-md border border-white/30 mx-4 relative">
+        <div class="bg-white/30 backdrop-blur-xl p-8 sm:p-12 rounded-2xl shadow-2xl z-10 w-full max-w-md border border-white/30 mx-4 relative hover-lift">
             <div class="text-center mb-8">
-                <div class="bg-black/90 text-white w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg backdrop-blur-md">
-                    <i class="fa-solid fa-van-shuttle text-3xl"></i>
+                <div class="w-24 h-24 flex items-center justify-center mx-auto mb-4">
+                    <img src="https://i.ibb.co/LDNS5Zxd/339699-removebg-preview.png" alt="MicroBus Logo" class="w-full h-full object-contain drop-shadow-[0_5px_15px_rgba(255,255,255,0.4)]">
                 </div>
                 <h2 class="text-3xl font-bold text-black uppercase tracking-tight">MicroBus Hub</h2>
                 <p class="text-gray-900 mt-2 font-medium">Acesso ao Sistema Corporativo</p>
@@ -191,7 +348,7 @@
                     <label class="block text-sm font-bold text-gray-900 mb-2">Senha</label>
                     <input type="password" id="loginPass" class="w-full px-4 py-3 bg-white/40 border border-white/40 rounded-md focus:ring-2 focus:ring-black focus:bg-white/90 outline-none transition-all placeholder-gray-700 font-medium text-black" placeholder="••••••••">
                 </div>
-                <button type="submit" class="w-full py-3 mt-2 bg-black/90 hover:bg-black text-white font-bold rounded-md transition-colors shadow-lg flex items-center justify-center gap-2 backdrop-blur-sm">
+                <button type="submit" class="btn-press w-full py-3 mt-2 bg-black/90 hover:bg-black text-white font-bold rounded-md transition-colors shadow-lg flex items-center justify-center gap-2 backdrop-blur-sm">
                     <i class="fa-solid fa-user-tie"></i> Entrar como Gestor
                 </button>
                 
@@ -201,7 +358,7 @@
                     <div class="flex-grow border-t border-gray-600/30"></div>
                 </div>
                 
-                <button type="button" onclick="fazerLoginVisitante()" class="w-full py-3 bg-white/20 hover:bg-white/40 text-black font-bold rounded-md border border-black/60 hover:border-black transition-colors flex items-center justify-center gap-2 backdrop-blur-sm">
+                <button type="button" onclick="fazerLoginVisitante()" class="btn-press w-full py-3 bg-white/20 hover:bg-white/40 text-black font-bold rounded-md border border-black/60 hover:border-black transition-colors flex items-center justify-center gap-2 backdrop-blur-sm">
                     <i class="fa-regular fa-eye"></i> Entrar como Visitante
                 </button>
             </form>
@@ -209,15 +366,15 @@
     </div>
 
     <!-- MAIN APP WRAPPER -->
-    <div id="app-container" class="hidden min-h-full bg-gray-100">
+    <div id="app-container" class="hidden min-h-full bg-gray-100 flex flex-col">
         
         <!-- Header Fotográfico P&B -->
         <header class="bg-bw-photo shadow-lg border-b-4 border-black">
             <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center py-4 sm:py-6 tv-sm:py-8 tv-md:py-10">
-                    <div class="flex items-center gap-4">
-                        <div class="flex-shrink-0 bg-white p-3 rounded-lg shadow-md">
-                            <i class="fa-solid fa-van-shuttle text-3xl tv-sm:text-5xl text-black"></i>
+                    <div class="flex items-center gap-4 hover-lift cursor-pointer">
+                        <div class="flex-shrink-0 transition-transform duration-300 flex items-center justify-center">
+                            <img src="https://i.ibb.co/LDNS5Zxd/339699-removebg-preview.png" alt="MicroBus Logo" class="w-14 h-14 tv-sm:w-20 tv-sm:h-20 object-contain drop-shadow-[0_2px_10px_rgba(255,255,255,0.3)]">
                         </div>
                         <div>
                             <h1 class="text-xl tv-sm:text-3xl tv-md:text-4xl font-bold text-white tracking-tight uppercase">MicroBus Hub</h1>
@@ -225,12 +382,21 @@
                         </div>
                     </div>
                     <div class="flex items-center space-x-4">
+                        <!-- DEV BADGE NO CABEÇALHO -->
+                        <div class="hidden md:flex items-center gap-3 bg-white/10 p-1.5 pr-4 rounded-full border border-white/20 backdrop-blur-md hover:bg-white/20 transition-colors">
+                            <img src="https://i.ibb.co/204hGBJ6/Screenshot-20260624-092626-Photos.jpg" alt="Dev" class="w-8 h-8 rounded-full object-cover border border-white/50">
+                            <div class="flex flex-col">
+                                <span class="text-[10px] text-gray-300 uppercase font-bold leading-none">Developer</span>
+                                <span class="text-xs text-white font-bold leading-tight">Welligton Ferreira</span>
+                            </div>
+                        </div>
+
                         <div class="text-white text-right hidden sm:block">
                             <p id="userNameDisplay" class="text-xs tv-sm:text-sm text-gray-400 uppercase tracking-widest font-bold"></p>
                             <p class="text-sm tv-sm:text-lg font-semibold" id="currentDate"></p>
                         </div>
                         <!-- Botão Sair -->
-                        <button onclick="fazerLogout()" class="px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/30 rounded-md text-white font-bold transition-colors shadow-sm ml-2 flex items-center gap-2">
+                        <button onclick="fazerLogout()" class="btn-press px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/30 rounded-md text-white font-bold transition-all shadow-sm ml-2 flex items-center gap-2">
                             <i class="fa-solid fa-right-from-bracket"></i> <span class="hidden sm:inline">Sair</span>
                         </button>
                     </div>
@@ -264,7 +430,7 @@
             </div>
         </nav>
 
-        <main class="max-w-full mx-auto py-6 tv-sm:py-8 px-4 sm:px-6 lg:px-8">
+        <main class="max-w-full mx-auto py-6 tv-sm:py-8 px-4 sm:px-6 lg:px-8 flex-1 w-full overflow-x-hidden">
             
             <!-- Dashboard Content -->
             <div id="dashboard-content" class="tab-content">
@@ -273,9 +439,9 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6">
                     
                     <!-- Card: Total Hoje -->
-                    <div class="bg-black rounded-xl card-shadow p-6 text-white border border-gray-800">
+                    <div class="bg-black rounded-xl card-shadow p-6 text-white border border-gray-800 hover-lift cursor-default">
                         <div class="flex items-center">
-                            <div class="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center">
+                            <div class="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center transition-transform hover:scale-110">
                                 <i class="fa-solid fa-van-shuttle text-xl text-white"></i>
                             </div>
                             <div class="ml-4 flex-1">
@@ -286,9 +452,9 @@
                     </div>
 
                     <!-- Card: Concluídas -->
-                    <div class="bg-gray-800 rounded-xl card-shadow p-6 text-white border border-gray-700">
+                    <div class="bg-gray-800 rounded-xl card-shadow p-6 text-white border border-gray-700 hover-lift cursor-default">
                         <div class="flex items-center">
-                            <div class="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center">
+                            <div class="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center transition-transform hover:scale-110">
                                 <i class="fa-solid fa-check-circle text-xl text-gray-300"></i>
                             </div>
                             <div class="ml-4 flex-1">
@@ -299,9 +465,9 @@
                     </div>
 
                     <!-- Card: Pendentes -->
-                    <div class="bg-white rounded-xl card-shadow p-6 text-black border-2 border-black">
+                    <div class="bg-white rounded-xl card-shadow p-6 text-black border-2 border-black hover-lift cursor-default">
                         <div class="flex items-center">
-                            <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-300">
+                            <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-300 transition-transform hover:scale-110">
                                 <i class="fa-solid fa-clock text-xl text-black"></i>
                             </div>
                             <div class="ml-4 flex-1">
@@ -312,9 +478,9 @@
                     </div>
 
                     <!-- Card: Total Geral -->
-                    <div class="bg-gray-100 rounded-xl card-shadow p-6 text-black border border-gray-300">
+                    <div class="bg-gray-100 rounded-xl card-shadow p-6 text-black border border-gray-300 hover-lift cursor-default">
                         <div class="flex items-center">
-                            <div class="w-12 h-12 bg-gray-300 rounded-lg flex items-center justify-center">
+                            <div class="w-12 h-12 bg-gray-300 rounded-lg flex items-center justify-center transition-transform hover:scale-110">
                                 <i class="fa-solid fa-layer-group text-xl text-gray-700"></i>
                             </div>
                             <div class="ml-4 flex-1">
@@ -335,13 +501,13 @@
                             <p class="text-sm text-gray-500 mt-1">Exporte o histórico consolidado de viagens executadas em frotas de micro-ônibus.</p>
                         </div>
                         <div class="flex flex-wrap gap-3">
-                            <button onclick="gerarRelatorioHTML()" class="flex items-center px-4 py-2 bg-white border border-gray-300 text-black rounded-md hover:bg-gray-50 text-sm font-medium transition-colors">
+                            <button onclick="gerarRelatorioHTML()" class="btn-press flex items-center px-4 py-2 bg-white border border-gray-300 text-black rounded-md hover:bg-gray-50 hover:shadow-md text-sm font-medium transition-all">
                                 <i class="fa-solid fa-eye mr-2"></i> Visualizar
                             </button>
-                            <button onclick="gerarRelatorioPDF()" class="flex items-center px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 text-sm font-medium transition-colors shadow-md">
+                            <button onclick="gerarRelatorioPDF()" class="btn-press flex items-center px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 hover:shadow-lg text-sm font-medium transition-all shadow-md">
                                 <i class="fa-solid fa-file-pdf mr-2"></i> Gerar PDF
                             </button>
-                            <button onclick="gerarViewExcel()" class="flex items-center px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 text-sm font-medium transition-colors shadow-md">
+                            <button onclick="gerarViewExcel()" class="btn-press flex items-center px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 hover:shadow-lg text-sm font-medium transition-all shadow-md">
                                 <i class="fa-solid fa-file-excel mr-2"></i> Exportar Planilha
                             </button>
                         </div>
@@ -359,7 +525,7 @@
 
             <!-- Cadastro Content -->
             <div id="cadastro-content" class="tab-content hidden">
-                <div class="bg-white rounded-xl card-shadow p-6 sm:p-8 border border-gray-200 max-w-5xl mx-auto">
+                <div class="bg-white rounded-xl card-shadow p-6 sm:p-8 border border-gray-200 max-w-5xl mx-auto hover-lift">
                     <div class="border-b border-gray-200 pb-5 mb-6">
                         <h2 class="text-2xl font-bold text-black">Nova Demanda de Micro-ônibus</h2>
                         <p class="text-gray-500 mt-1">Preencha os dados logísticos para o fretamento.</p>
@@ -369,61 +535,61 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-2">Solicitante</label>
-                                <input type="text" id="solicitante" name="solicitante" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
+                                <input type="text" id="solicitante" name="solicitante" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all hover:border-gray-400">
                             </div>
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-2">Setor</label>
-                                <input type="text" id="setor" name="setor" required placeholder="Ex: Diretoria / Eventos" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
+                                <input type="text" id="setor" name="setor" required placeholder="Ex: Diretoria / Eventos" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all hover:border-gray-400">
                             </div>
                         </div>
                         
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-4 rounded-lg border border-gray-100">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-4 rounded-lg border border-gray-100 transition-colors hover:bg-gray-100/50">
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fa-solid fa-map-pin mr-1 text-gray-400"></i> Endereço de Partida</label>
-                                <input type="text" id="partida" name="partida" required class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
+                                <input type="text" id="partida" name="partida" required class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all hover:border-gray-400">
                             </div>
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fa-solid fa-flag-checkered mr-1 text-gray-400"></i> Destino Final</label>
-                                <input type="text" id="destino" name="destino" required class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
+                                <input type="text" id="destino" name="destino" required class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all hover:border-gray-400">
                             </div>
                         </div>
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-2">Data da demanda</label>
-                                <input type="date" id="dataDemanda" name="dataDemanda" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
+                                <input type="date" id="dataDemanda" name="dataDemanda" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all hover:border-gray-400">
                             </div>
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-2">Horário da demanda</label>
-                                <input type="time" id="horario" name="horario" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
+                                <input type="time" id="horario" name="horario" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all hover:border-gray-400">
                             </div>
                         </div>
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-2">Nº SEI</label>
-                                <input type="text" id="numeroSei" name="numeroSei" placeholder="Opcional" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
+                                <input type="text" id="numeroSei" name="numeroSei" placeholder="Opcional" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all hover:border-gray-400">
                             </div>
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-2">Quantidade de Veículos/Motoristas</label>
-                                <input type="number" id="qtdVeiculos" name="qtdVeiculos" min="1" value="1" onchange="renderizarVeiculosCadastro()" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all">
+                                <input type="number" id="qtdVeiculos" name="qtdVeiculos" min="1" value="1" onchange="renderizarVeiculosCadastro()" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all hover:border-gray-400">
                             </div>
                         </div>
                         
-                        <div id="containerVeiculos" class="space-y-4 bg-gray-50 p-4 rounded-lg border border-gray-200 mt-2">
+                        <div id="containerVeiculos" class="space-y-4 bg-gray-50 p-4 rounded-lg border border-gray-200 mt-2 transition-all">
                             <!-- Campos de motoristas e placas injetados dinamicamente via JS -->
                         </div>
                         
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-2">Observações (Pax, Roteiro, Franquia)</label>
-                            <textarea id="observacoes" name="observacoes" rows="3" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all" placeholder="Informações sobre capacidade (ex: Micro-ônibus 26 lugares), particularidades..."></textarea>
+                            <textarea id="observacoes" name="observacoes" rows="3" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all hover:border-gray-400" placeholder="Informações sobre capacidade (ex: Micro-ônibus 26 lugares), particularidades..."></textarea>
                         </div>
                         
                         <div class="flex flex-col sm:flex-row justify-end gap-4 pt-4 border-t border-gray-200">
-                            <button type="button" onclick="limparFormulario()" class="px-6 py-3 border border-gray-300 rounded-md text-black font-bold hover:bg-gray-50 transition-colors">
+                            <button type="button" onclick="limparFormulario()" class="btn-press px-6 py-3 border border-gray-300 rounded-md text-black font-bold hover:bg-gray-100 transition-colors">
                                 Cancelar
                             </button>
-                            <button type="submit" class="px-8 py-3 bg-black text-white font-bold rounded-md hover:bg-gray-800 shadow-lg transition-colors flex items-center justify-center">
+                            <button type="submit" class="btn-press px-8 py-3 bg-black text-white font-bold rounded-md hover:bg-gray-800 shadow-lg transition-all hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center">
                                 Registrar Demanda no Hub <i class="fa-solid fa-arrow-right ml-2"></i>
                             </button>
                         </div>
@@ -435,24 +601,24 @@
             <div id="motoristas-content" class="tab-content hidden">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
                     
-                    <div class="bg-white rounded-xl card-shadow p-6 border border-gray-200 lg:col-span-1">
+                    <div class="bg-white rounded-xl card-shadow p-6 border border-gray-200 lg:col-span-1 hover-lift">
                         <h2 class="text-xl font-bold text-black mb-6 pb-2 border-b border-gray-100">Homologar Motorista</h2>
                         <form id="motoristaForm" class="space-y-6">
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-2">Nome Completo</label>
-                                <input type="text" id="nomeMotoristaForm" name="nomeMotoristaForm" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                                <input type="text" id="nomeMotoristaForm" name="nomeMotoristaForm" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black hover:border-gray-400 transition-colors">
                             </div>
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-2">Foto / CNH (Opcional)</label>
-                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md bg-gray-50">
+                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md bg-gray-50 hover:bg-gray-100 transition-colors">
                                     <div class="space-y-1 text-center">
                                         <div id="previewContainer" class="hidden">
-                                            <img id="previewImage" class="mx-auto h-24 w-24 rounded-full object-cover border-2 border-black" src="" alt="Preview">
+                                            <img id="previewImage" class="mx-auto h-24 w-24 rounded-full object-cover border-2 border-black shadow-md transition-transform hover:scale-105" src="" alt="Preview">
                                         </div>
                                         <div id="uploadPlaceholder">
-                                            <i class="fa-solid fa-image text-3xl text-gray-400 mb-2"></i>
+                                            <i class="fa-solid fa-image text-3xl text-gray-400 mb-2 transition-transform hover:scale-110"></i>
                                             <div class="flex justify-center text-sm text-gray-600">
-                                                <label for="fotoMotorista" class="relative cursor-pointer bg-white px-2 py-1 rounded font-medium text-black border border-gray-300 hover:bg-gray-100">
+                                                <label for="fotoMotorista" class="relative cursor-pointer bg-white px-2 py-1 rounded font-medium text-black border border-gray-300 hover:bg-gray-100 transition-colors">
                                                     <span>Fazer Upload</span>
                                                     <input id="fotoMotorista" name="fotoMotorista" type="file" accept="image/*" class="sr-only">
                                                 </label>
@@ -462,7 +628,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="w-full px-6 py-3 bg-black text-white font-bold rounded-md hover:bg-gray-800 transition-colors">
+                            <button type="submit" class="btn-press w-full px-6 py-3 bg-black text-white font-bold rounded-md hover:bg-gray-800 transition-all shadow hover:shadow-lg">
                                 Cadastrar
                             </button>
                         </form>
@@ -485,7 +651,7 @@
                             <h2 class="text-2xl font-bold text-black">Acompanhamento Logístico</h2>
                             <p class="text-gray-500 text-sm">Visualização temporal de despachos de micro-ônibus.</p>
                         </div>
-                        <div class="flex items-center space-x-2 bg-gray-100 px-3 py-1 rounded-full border border-gray-200">
+                        <div class="flex items-center space-x-2 bg-gray-100 px-3 py-1 rounded-full border border-gray-200 hover:bg-gray-200 transition-colors cursor-default">
                             <div id="statusBadgeColor" class="w-2.5 h-2.5 bg-black rounded-full status-indicator"></div>
                             <span id="statusBadgeText" class="text-xs font-bold text-black tracking-wide">AO VIVO</span>
                         </div>
@@ -498,19 +664,20 @@
 
             <!-- Calendario Content -->
             <div id="calendario-content" class="tab-content hidden">
-                <div class="bg-white rounded-xl card-shadow overflow-hidden border border-gray-200 max-w-6xl mx-auto">
-                    <div class="bg-black px-6 py-5 flex justify-between items-center">
-                        <h2 class="text-xl font-bold text-white"><i class="fa-regular fa-calendar mr-2"></i> Grade Mensal</h2>
+                <div class="bg-white rounded-xl card-shadow border border-gray-200 max-w-6xl mx-auto relative hover-lift">
+                    <div class="bg-black px-6 py-5 flex justify-between items-center rounded-t-xl">
+                        <h2 class="text-xl font-bold text-white"><i class="fa-regular fa-calendar mr-2 transition-transform hover:rotate-12"></i> Grade Mensal</h2>
                         <div class="flex items-center space-x-4 bg-gray-800 p-1 rounded-lg">
-                            <button onclick="navegarMes(-1)" class="px-3 py-1 bg-transparent hover:bg-gray-700 text-white rounded transition-colors"><i class="fa-solid fa-chevron-left"></i></button>
-                            <h3 id="mesAnoAtual" class="text-white font-bold text-sm min-w-[120px] text-center uppercase tracking-wider"></h3>
-                            <button onclick="navegarMes(1)" class="px-3 py-1 bg-transparent hover:bg-gray-700 text-white rounded transition-colors"><i class="fa-solid fa-chevron-right"></i></button>
+                            <button onclick="navegarMes(-1)" class="btn-press px-3 py-1 bg-transparent hover:bg-gray-700 text-white rounded transition-colors"><i class="fa-solid fa-chevron-left"></i></button>
+                            <h3 id="mesAnoAtual" class="text-white font-bold text-sm min-w-[120px] text-center uppercase tracking-wider transition-all"></h3>
+                            <button onclick="navegarMes(1)" class="btn-press px-3 py-1 bg-transparent hover:bg-gray-700 text-white rounded transition-colors"><i class="fa-solid fa-chevron-right"></i></button>
                         </div>
                     </div>
                     
-                    <div class="p-6 bg-gray-50">
-                        <div class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
-                            <div class="grid grid-cols-7 bg-gray-100 border-b border-gray-200">
+                    <div class="p-6 bg-gray-50 rounded-b-xl">
+                        <!-- Removido o overflow-hidden para não cortar o tooltip hover -->
+                        <div class="bg-white rounded-lg border border-gray-200 shadow-sm relative z-0">
+                            <div class="grid grid-cols-7 bg-gray-100 border-b border-gray-200 rounded-t-lg">
                                 <div class="p-3 text-center text-black font-bold text-xs uppercase tracking-wider">Dom</div>
                                 <div class="p-3 text-center text-black font-bold text-xs uppercase tracking-wider border-l border-gray-200">Seg</div>
                                 <div class="p-3 text-center text-black font-bold text-xs uppercase tracking-wider border-l border-gray-200">Ter</div>
@@ -519,6 +686,7 @@
                                 <div class="p-3 text-center text-black font-bold text-xs uppercase tracking-wider border-l border-gray-200">Sex</div>
                                 <div class="p-3 text-center text-black font-bold text-xs uppercase tracking-wider border-l border-gray-200">Sáb</div>
                             </div>
+                            <!-- O border radius é mantido aqui nas extremidades do grid no final via CSS dinâmico ou classes, mas para simplicidade manteremos o visual B&W padrão -->
                             <div id="calendarioGrid" class="grid grid-cols-7 divide-x divide-y divide-gray-200"></div>
                         </div>
                     </div>
@@ -527,32 +695,32 @@
 
             <!-- Escala Content -->
             <div id="escala-content" class="tab-content hidden">
-                <div class="bg-white rounded-xl card-shadow overflow-hidden border border-gray-200 max-w-full mx-auto">
+                <div class="bg-white rounded-xl card-shadow overflow-hidden border border-gray-200 max-w-full mx-auto hover-lift">
                     <div class="bg-black px-6 py-5 flex justify-between items-center">
                         <div>
                             <h2 class="text-xl font-bold text-white">Escala Operacional</h2>
                             <p class="text-gray-400 text-sm">Controle de saídas e alocação de frota.</p>
                         </div>
-                        <i class="fa-solid fa-table-list text-2xl text-gray-500"></i>
+                        <i class="fa-solid fa-table-list text-2xl text-gray-500 transition-transform hover:scale-110"></i>
                     </div>
                     
                     <div class="p-0 overflow-x-auto">
                         <table class="min-w-full bg-white divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider">Data/Hora</th>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider">Cód</th>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider">Trajeto</th>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider hidden md:table-cell">Cliente / Setor</th>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider hidden lg:table-cell">Placa</th>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider">Motorista</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider hover:text-gray-600 transition-colors">Data/Hora</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider hover:text-gray-600 transition-colors">Cód</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider hover:text-gray-600 transition-colors">Trajeto</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider hidden md:table-cell hover:text-gray-600 transition-colors">Cliente / Setor</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider hidden lg:table-cell hover:text-gray-600 transition-colors">Placa</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider hover:text-gray-600 transition-colors">Motorista</th>
                                     <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider" id="escalaThGestao">Gestão</th>
                                 </tr>
                             </thead>
                             <tbody id="escalaTableBody" class="bg-white divide-y divide-gray-200">
                                 <tr>
                                     <td colspan="7" class="px-6 py-12 text-center">
-                                        <i class="fa-solid fa-folder-open text-4xl text-gray-300 mb-3 block"></i>
+                                        <i class="fa-solid fa-folder-open text-4xl text-gray-300 mb-3 block transition-transform hover:scale-110"></i>
                                         <p class="text-gray-500 font-medium">Lista de escala vazia.</p>
                                     </td>
                                 </tr>
@@ -563,14 +731,59 @@
             </div>
 
         </main>
+
+        <!-- FOOTER / RODAPÉ DO DESENVOLVEDOR -->
+        <footer class="bg-black text-white border-t border-gray-800 mt-auto shadow-2xl relative z-40 overflow-hidden">
+            <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-6">
+                
+                <!-- Perfil do Dev -->
+                <div class="flex items-center gap-4 z-10 hover-lift cursor-default">
+                    <img src="https://i.ibb.co/204hGBJ6/Screenshot-20260624-092626-Photos.jpg" alt="Welligton Ferreira" class="w-16 h-16 rounded-full object-cover border-2 border-gray-600 shadow-xl transition-transform hover:border-white">
+                    <div>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-widest font-bold mb-1">Engenharia & Desenvolvimento</p>
+                        <h3 class="text-xl font-black tracking-tight text-white uppercase transition-colors hover:text-gray-300">Welligton Ferreira</h3>
+                        <p class="text-xs text-gray-500 mt-1"><i class="fa-solid fa-code text-gray-600 mr-1"></i> MicroBus Hub Sys</p>
+                    </div>
+                </div>
+
+                <!-- ANIMAÇÃO DE ENGRENAGENS (GEARBOX) -->
+                <div class="transform scale-75 origin-center md:origin-right opacity-80 hover:opacity-100 transition-opacity z-10">
+                    <div class="gearbox">
+                        <div class="overlay"></div>
+                        <div class="gear one">
+                            <div class="gear-inner">
+                                <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                            </div>
+                        </div>
+                        <div class="gear two">
+                            <div class="gear-inner">
+                                <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                            </div>
+                        </div>
+                        <div class="gear three">
+                            <div class="gear-inner">
+                                <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                            </div>
+                        </div>
+                        <div class="gear four large">
+                            <div class="gear-inner">
+                                <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                                <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </footer>
     </div>
 
     <!-- Modal Edição -->
     <div id="modalEdicao" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4 hidden glass-panel">
-        <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-300">
+        <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-300 transition-transform duration-300 transform scale-95 hover:scale-100">
             <div class="bg-black px-6 py-4 flex justify-between items-center sticky top-0 z-10">
                 <h3 class="text-xl font-bold text-white">Modificar Demanda</h3>
-                <button onclick="fecharModalEdicao()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+                <button onclick="fecharModalEdicao()" class="text-gray-400 hover:text-white transition-colors transform hover:rotate-90"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             
             <div class="p-6 bg-gray-50">
@@ -580,44 +793,44 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-1">Solicitante</label>
-                            <input type="text" id="editSolicitante" name="editSolicitante" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
+                            <input type="text" id="editSolicitante" name="editSolicitante" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black transition-colors">
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-1">Setor</label>
-                            <input type="text" id="editSetor" name="editSetor" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
+                            <input type="text" id="editSetor" name="editSetor" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black transition-colors">
                         </div>
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-1">Partida</label>
-                            <input type="text" id="editPartida" name="editPartida" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
+                            <input type="text" id="editPartida" name="editPartida" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black transition-colors">
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-1">Destino</label>
-                            <input type="text" id="editDestino" name="editDestino" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
+                            <input type="text" id="editDestino" name="editDestino" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black transition-colors">
                         </div>
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-1">Data da demanda</label>
-                            <input type="date" id="editDataDemanda" name="editDataDemanda" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
+                            <input type="date" id="editDataDemanda" name="editDataDemanda" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black transition-colors">
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-1">Horário da demanda</label>
-                            <input type="time" id="editHorario" name="editHorario" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
+                            <input type="time" id="editHorario" name="editHorario" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black transition-colors">
                         </div>
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-1">Nº SEI</label>
-                            <input type="text" id="editNumeroSei" name="editNumeroSei" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
+                            <input type="text" id="editNumeroSei" name="editNumeroSei" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black transition-colors">
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-1">Qtd. de Veículos</label>
-                            <input type="number" id="editQtdVeiculos" name="editQtdVeiculos" min="1" value="1" onchange="renderizarVeiculosEdicao()" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
+                            <input type="number" id="editQtdVeiculos" name="editQtdVeiculos" min="1" value="1" onchange="renderizarVeiculosEdicao()" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black transition-colors">
                         </div>
                     </div>
                     <div id="editContainerVeiculos" class="space-y-3 bg-gray-100 p-3 rounded border border-gray-200 mt-2 mb-4">
@@ -626,23 +839,23 @@
                     
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-1">Observações</label>
-                        <textarea id="editObservacoes" name="editObservacoes" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black"></textarea>
+                        <textarea id="editObservacoes" name="editObservacoes" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black transition-colors"></textarea>
                     </div>
                 </form>
             </div>
             <div class="px-6 py-4 bg-white border-t border-gray-200 flex justify-end gap-3 rounded-b-xl">
-                <button onclick="fecharModalEdicao()" class="px-5 py-2 border border-gray-300 rounded-md text-black font-bold hover:bg-gray-50">Cancelar</button>
-                <button onclick="salvarEdicao()" class="px-5 py-2 bg-black text-white rounded-md font-bold hover:bg-gray-800">Salvar Alterações</button>
+                <button onclick="fecharModalEdicao()" class="btn-press px-5 py-2 border border-gray-300 rounded-md text-black font-bold hover:bg-gray-100 transition-colors">Cancelar</button>
+                <button onclick="salvarEdicao()" class="btn-press px-5 py-2 bg-black text-white rounded-md font-bold hover:bg-gray-800 transition-all shadow hover:shadow-lg">Salvar Alterações</button>
             </div>
         </div>
     </div>
 
     <!-- Modal Visualização do Dia (Calendário) -->
     <div id="modalDia" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4 hidden glass-panel">
-        <div class="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-gray-300">
+        <div class="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-gray-300 transition-transform duration-300 transform scale-95 hover:scale-100">
             <div class="bg-black px-6 py-4 flex justify-between items-center rounded-t-xl shrink-0">
                 <h3 class="text-xl font-bold text-white" id="tituloModalDia">Demandas do Dia</h3>
-                <button onclick="fecharModalDia()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+                <button onclick="fecharModalDia()" class="text-gray-400 hover:text-white transition-colors transform hover:rotate-90"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             
             <div class="p-6 bg-gray-50 overflow-y-auto flex-1" id="conteudoModalDia">
@@ -650,7 +863,7 @@
             </div>
             
             <div class="px-6 py-4 bg-white border-t border-gray-200 flex justify-end rounded-b-xl shrink-0">
-                <button onclick="fecharModalDia()" class="px-6 py-2 bg-black text-white rounded-md font-bold hover:bg-gray-800 transition-colors">Fechar Calendário</button>
+                <button onclick="fecharModalDia()" class="btn-press px-6 py-2 bg-black text-white rounded-md font-bold hover:bg-gray-800 transition-colors shadow hover:shadow-lg">Fechar Calendário</button>
             </div>
         </div>
     </div>
@@ -730,6 +943,8 @@
             
             document.getElementById('login-container').classList.add('hidden');
             document.getElementById('app-container').classList.remove('hidden');
+            // Remove the hard flex-col class from index to animate smoothly, adding dynamically
+            document.getElementById('app-container').classList.add('flex', 'flex-col');
             
             aplicarRestricoesDeAcesso();
             refreshDemandasViews();
@@ -742,6 +957,7 @@
             sessionStorage.removeItem('userRole');
             
             document.getElementById('app-container').classList.add('hidden');
+            document.getElementById('app-container').classList.remove('flex', 'flex-col');
             document.getElementById('login-container').classList.remove('hidden');
             document.getElementById('loginForm').reset();
         }
@@ -778,7 +994,6 @@
             const qtd = parseInt(document.getElementById('qtdVeiculos').value) || 1;
             const container = document.getElementById('containerVeiculos');
             
-            // Guarda valores que já estavam preenchidos para não os perder ao alterar a quantidade
             let existingValues = [];
             for(let i=0; i<container.children.length; i++) {
                 const placa = document.querySelector(`input[name="placaVeiculo_${i}"]`)?.value || '';
@@ -790,14 +1005,14 @@
             for(let i=0; i<qtd; i++) {
                 const val = existingValues[i] || { placa: '', motorista: '' };
                 container.innerHTML += `
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4 border-b border-gray-200 last:border-0 last:pb-0">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4 border-b border-gray-200 last:border-0 last:pb-0 transition-opacity animate-fade-in">
                         <div>
                             <label class="block text-xs font-bold text-gray-600 mb-1">Placa do Veículo ${i+1}</label>
-                            <input type="text" name="placaVeiculo_${i}" value="${val.placa}" placeholder="Ex: ABC-1234" class="w-full px-3 py-2 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black">
+                            <input type="text" name="placaVeiculo_${i}" value="${val.placa}" placeholder="Ex: ABC-1234" class="w-full px-3 py-2 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black transition-colors hover:border-gray-400">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-gray-600 mb-1">Motorista do Veículo ${i+1}</label>
-                            <select name="nomeMotorista_${i}" class="w-full px-3 py-2 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black">
+                            <select name="nomeMotorista_${i}" class="w-full px-3 py-2 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black transition-colors hover:border-gray-400">
                                 ${getMotoristasOptionsHTML(val.motorista)}
                             </select>
                         </div>
@@ -825,14 +1040,14 @@
             for(let i=0; i<qtd; i++) {
                 const val = existingValues[i] || { placa: '', motorista: '' };
                 container.innerHTML += `
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pb-3 border-b border-gray-300 last:border-0 last:pb-0">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pb-3 border-b border-gray-300 last:border-0 last:pb-0 transition-opacity">
                         <div>
                             <label class="block text-xs font-bold text-gray-600 mb-1">Placa ${i+1}</label>
-                            <input type="text" name="editPlacaVeiculo_${i}" value="${val.placa}" class="w-full px-2 py-1.5 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
+                            <input type="text" name="editPlacaVeiculo_${i}" value="${val.placa}" class="w-full px-2 py-1.5 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black transition-colors">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-gray-600 mb-1">Motorista ${i+1}</label>
-                            <select name="editNomeMotorista_${i}" class="w-full px-2 py-1.5 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black">
+                            <select name="editNomeMotorista_${i}" class="w-full px-2 py-1.5 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black transition-colors">
                                 ${getMotoristasOptionsHTML(val.motorista)}
                             </select>
                         </div>
@@ -841,7 +1056,6 @@
             }
         }
 
-        // Funções para formatar múltiplas alocações nas tabelas
         function formatarAlocacoesView(demanda, htmlMode = true) {
             let alocs = demanda.alocacoes || [];
             if (alocs.length === 0 && (demanda.nomeMotorista || demanda.placaVeiculo)) { alocs = [{ motorista: demanda.nomeMotorista, placa: demanda.placaVeiculo }]; }
@@ -862,16 +1076,14 @@
         }
         // ===============================================
 
-        // Refreshes unificados
         function refreshDemandasViews() {
             updateDashboard(); updateTimeline(); updateEscala(); updateCalendario();
         }
         function refreshMotoristasViews() {
             updateListaMotoristas(); 
-            renderizarVeiculosCadastro(); // Reconstrói listagem de motoristas dentro dos selects dinâmicos atuais
+            renderizarVeiculosCadastro();
         }
 
-        // Auxiliares
         function criarDataBrasilia(dataString) {
             const [ano, mes, dia] = dataString.split('-');
             return new Date(parseInt(ano), parseInt(mes) - 1, parseInt(dia));
@@ -891,9 +1103,8 @@
             document.getElementById('dataDemanda').min = hoje;
             document.getElementById('dataDemanda').value = hoje;
             initializePhotoUpload();
-            renderizarVeiculosCadastro(); // Renderiza o primeiro conjunto no form ao iniciar
+            renderizarVeiculosCadastro();
             
-            // Verifica se já estava logado ao atualizar a página
             if (currentUserRole) {
                 iniciarApp(currentUserRole);
             }
@@ -903,14 +1114,25 @@
             document.getElementById('currentDate').textContent = new Date().toLocaleDateString('pt-BR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
         }
 
-        // Navegação de Abas
         function showTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+            // Remove active classes
+            document.querySelectorAll('.tab-content').forEach(c => {
+                c.classList.add('hidden');
+                // Force reflow para garantir a re-animação de fade in css
+                void c.offsetWidth;
+            });
             document.querySelectorAll('.tab-button').forEach(b => {
                 b.classList.remove('active', 'border-black', 'text-black');
                 b.classList.add('border-transparent', 'text-gray-500');
             });
-            document.getElementById(tabName + '-content').classList.remove('hidden');
+
+            // Show selected tab
+            const target = document.getElementById(tabName + '-content');
+            if (target) {
+                target.classList.remove('hidden');
+            }
+
+            // Highlight button
             const btn = document.getElementById('tab-' + tabName);
             if(btn){
                 btn.classList.add('active', 'border-black', 'text-black');
@@ -918,14 +1140,11 @@
             }
         }
 
-        // Cadastro Demanda
         document.getElementById('demandaForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            if(currentUserRole !== 'gestor') return; // Segurança extra
+            if(currentUserRole !== 'gestor') return;
 
             const formData = new FormData(e.target);
-            
-            // Coletar array dinâmico de veículos/motoristas alocados
             const qtd = parseInt(document.getElementById('qtdVeiculos').value) || 1;
             let alocacoes = [];
             for(let i=0; i<qtd; i++) {
@@ -940,7 +1159,7 @@
                 partida: formData.get('partida'), destino: formData.get('destino'),
                 dataDemanda: formData.get('dataDemanda'), horario: formData.get('horario'),
                 numeroSei: formData.get('numeroSei'), observacoes: formData.get('observacoes'),
-                alocacoes: alocacoes, // Salva matriz de frotas
+                alocacoes: alocacoes,
                 status: 'Pendente', dataCadastro: new Date().toISOString()
             };
             
@@ -976,10 +1195,9 @@
         function getStatusClasses(status) {
             if(status === 'Concluída') return 'bg-black text-white border-black';
             if(status === 'Em Andamento') return 'bg-gray-500 text-white border-gray-500';
-            return 'bg-white text-black border-gray-300'; // Pendente
+            return 'bg-white text-black border-gray-300';
         }
 
-        // Dashboard
         function updateDashboard() {
             const hoje = new Date().toISOString().split('T')[0];
             const demandasHoje = demandas.filter(d => d.dataDemanda === hoje);
@@ -996,21 +1214,20 @@
                 container.innerHTML = demandas.slice(0,5).map(demanda => {
                     const stClasses = getStatusClasses(demanda.status);
                     return `
-                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 mb-2 hover:bg-gray-100 transition-colors">
+                    <div class="hover-lift flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 mb-2 hover:bg-gray-100 transition-colors cursor-default">
                         <div>
                             <div class="font-bold text-black">${demanda.solicitante} <span class="font-normal text-sm text-gray-500">(${demanda.setor})</span></div>
                             <div class="text-sm text-gray-600 mt-1"><i class="fa-solid fa-route mr-1 text-gray-400"></i> ${demanda.partida} → ${demanda.destino}</div>
                             <div class="text-xs text-gray-500 mt-1"><i class="fa-regular fa-clock mr-1"></i> ${formatarDataBrasil(demanda.dataDemanda)} às ${demanda.horario}</div>
                         </div>
                         <div>
-                            <span class="px-3 py-1 text-xs font-bold rounded-full border ${stClasses}">${demanda.status}</span>
+                            <span class="px-3 py-1 text-xs font-bold rounded-full border shadow-sm ${stClasses}">${demanda.status}</span>
                         </div>
                     </div>`;
                 }).join('');
             }
         }
 
-        // Timeline
         function updateTimeline() {
             const demandasMesAtual = demandas.filter(d => isDataNoMesAtual(d.dataDemanda) && d.status !== 'Concluída');
             const demandasPorData = {};
@@ -1025,20 +1242,19 @@
                 const demandasDoDia = demandasPorData[data].sort((a,b) => a.horario.localeCompare(b.horario));
                 html += `
                     <div class="mb-8 border-l-2 border-black pl-6 relative">
-                        <div class="absolute w-4 h-4 bg-black rounded-full -left-[9px] top-1"></div>
+                        <div class="absolute w-4 h-4 bg-black rounded-full -left-[9px] top-1 transition-transform hover:scale-125"></div>
                         <h3 class="text-xl font-bold text-black mb-4 uppercase tracking-tight">${formatarDataCompletaBrasil(data)}</h3>
                         <div class="space-y-4">
                 `;
                 demandasDoDia.forEach(d => {
-                    // Botões de ação apenas para Gestor
                     const actionButtons = currentUserRole === 'gestor' ? `
-                        <button onclick="editarDemanda('${d.id}')" class="text-gray-400 hover:text-black transition-colors"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button onclick="editarDemanda('${d.id}')" class="text-gray-400 hover:text-black transition-transform hover:scale-110"><i class="fa-solid fa-pen-to-square"></i></button>
                     ` : '';
 
                     html += `
-                        <div class="bg-white border border-gray-200 p-4 rounded-lg shadow-sm">
+                        <div class="hover-lift bg-white border border-gray-200 p-4 rounded-lg shadow-sm">
                             <div class="flex justify-between items-center mb-2 border-b border-gray-100 pb-2">
-                                <span class="text-lg font-black text-black"><i class="fa-regular fa-clock mr-1 text-gray-400"></i> ${d.horario}</span>
+                                <span class="text-lg font-black text-black flex items-center gap-2"><i class="fa-regular fa-clock text-gray-400"></i> ${d.horario}</span>
                                 <div class="flex gap-2">
                                     <span class="px-2 py-1 text-xs font-bold border rounded bg-gray-100 text-gray-700">${d.status}</span>
                                     ${actionButtons}
@@ -1047,11 +1263,11 @@
                             <div class="grid grid-cols-2 gap-4 text-sm mt-3">
                                 <div>
                                     <p class="text-gray-800"><strong>Para:</strong> ${d.solicitante} (${d.setor})</p>
-                                    <p class="text-gray-600 mt-1"><i class="fa-solid fa-map-pin mr-1"></i> ${d.partida}</p>
+                                    <p class="text-gray-600 mt-1 flex items-center gap-1"><i class="fa-solid fa-map-pin text-gray-400"></i> ${d.partida}</p>
                                 </div>
                                 <div>
                                     <p class="text-gray-800"><strong>Equipe / Alocação:</strong><br/> <span class="leading-relaxed block mt-1">${formatarAlocacoesView(d, true)}</span></p>
-                                    <p class="text-gray-600 mt-2"><i class="fa-solid fa-flag-checkered mr-1"></i> ${d.destino}</p>
+                                    <p class="text-gray-600 mt-2 flex items-center gap-1"><i class="fa-solid fa-flag-checkered text-gray-400"></i> ${d.destino}</p>
                                 </div>
                             </div>
                         </div>
@@ -1062,37 +1278,35 @@
             container.innerHTML = html;
         }
 
-        // Escala
         function updateEscala() {
             const demandasOrdenadas = demandas.filter(d => isDataNoMesAtual(d.dataDemanda) && d.status !== 'Concluída')
                 .sort((a, b) => new Date(a.dataDemanda+'T'+a.horario) - new Date(b.dataDemanda+'T'+b.horario));
             
             const tbody = document.getElementById('escalaTableBody');
             if (demandasOrdenadas.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="px-6 py-12 text-center text-gray-500 font-medium">Escala Operacional Vazia.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" class="px-6 py-12 text-center text-gray-500 font-medium"><i class="fa-solid fa-folder-open text-4xl text-gray-300 mb-3 block"></i> Escala Operacional Vazia.</td></tr>`;
                 return;
             }
             
             tbody.innerHTML = demandasOrdenadas.map(d => {
-                // Ações condicionais de Gestor vs Visitante
                 const gestaoHTML = currentUserRole === 'gestor' ? `
-                    <select onchange="alterarStatus('${d.id}', this.value)" class="text-xs font-bold border border-gray-300 rounded bg-white px-2 py-1">
+                    <select onchange="alterarStatus('${d.id}', this.value)" class="text-xs font-bold border border-gray-300 rounded bg-white px-2 py-1 cursor-pointer hover:border-gray-400 transition-colors">
                         <option value="Pendente" ${d.status==='Pendente'?'selected':''}>Pendente</option>
                         <option value="Concluída" ${d.status==='Concluída'?'selected':''}>Concluir</option>
                     </select>
-                    <button onclick="editarDemanda('${d.id}')" class="text-gray-500 hover:text-black"><i class="fa-solid fa-edit"></i></button>
-                    <button onclick="excluirDemanda('${d.id}')" class="text-gray-400 hover:text-red-600"><i class="fa-solid fa-trash"></i></button>
+                    <button onclick="editarDemanda('${d.id}')" class="text-gray-500 hover:text-black transition-transform hover:scale-110"><i class="fa-solid fa-edit"></i></button>
+                    <button onclick="excluirDemanda('${d.id}')" class="text-gray-400 hover:text-red-600 transition-transform hover:scale-110"><i class="fa-solid fa-trash"></i></button>
                 ` : `
                     <span class="text-xs font-bold px-2 py-1 border border-gray-300 rounded bg-gray-50 text-gray-500">${d.status}</span>
                 `;
 
                 return `
-                <tr class="hover:bg-gray-50 transition-colors border-l-4 border-l-black">
+                <tr class="hover:bg-gray-100 transition-colors border-l-4 border-l-black group">
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="font-bold text-black">${d.horario}</div>
+                        <div class="font-bold text-black transition-colors group-hover:text-gray-800">${d.horario}</div>
                         <div class="text-xs text-gray-500">${formatarDataBrasil(d.dataDemanda)}</div>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap"><span class="bg-gray-200 text-gray-800 text-xs font-bold px-2 py-1 rounded">TR${(d.id || '').slice(0,4).toUpperCase()}</span></td>
+                    <td class="px-6 py-4 whitespace-nowrap"><span class="bg-gray-200 text-gray-800 text-xs font-bold px-2 py-1 rounded shadow-sm">TR${(d.id || '').slice(0,4).toUpperCase()}</span></td>
                     <td class="px-6 py-4">
                         <div class="font-bold text-gray-800">${d.destino}</div>
                         <div class="text-xs text-gray-500">de ${d.partida}</div>
@@ -1127,10 +1341,11 @@
             catch (e) { mostrarMensagem('Erro', 'error'); }
         }
 
-        // Calendário e Modal do Dia
+        // Calendário, Tooltips e Modal
         function navegarMes(dir) {
             mesAtual += dir; if(mesAtual>11){mesAtual=0;anoAtual++;} else if(mesAtual<0){mesAtual=11;anoAtual--;} updateCalendario();
         }
+        
         function updateCalendario() {
             const nomesMeses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
             document.getElementById('mesAnoAtual').textContent = `${nomesMeses[mesAtual]} ${anoAtual}`;
@@ -1143,16 +1358,32 @@
             for (let i = 0; i < diaSemanaInicio; i++) { grid.innerHTML += `<div class="h-24 bg-gray-50/50"></div>`; }
             
             for (let dia = 1; dia <= diasNoMes; dia++) {
-                // Adicionando padStart para garantir formato YYYY-MM-DD
                 const dataStr = `${anoAtual}-${String(mesAtual + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
-                const dDia = demandas.filter(d => d.dataDemanda === dataStr);
+                const dDia = demandas.filter(d => d.dataDemanda === dataStr).sort((a,b) => a.horario.localeCompare(b.horario));
                 
-                let b= `<div onclick="abrirModalDia('${dataStr}')" class="h-24 p-2 relative bg-white hover:bg-gray-100 transition-colors border-b border-r border-gray-200 cursor-pointer group">
-                            <div class="text-sm font-bold text-gray-700 group-hover:text-black">${dia}</div>`;
+                // Construção do Tooltip de Resumo Animado (CSS customizado em style: calendar-tooltip)
+                let tooltipHTML = '';
+                if(dDia.length > 0) {
+                    let linhas = dDia.slice(0, 5).map(d => `<li class="truncate"><span class="text-gray-400 font-bold">${d.horario}</span> - ${d.solicitante} (${d.destino})</li>`).join('');
+                    if(dDia.length > 5) linhas += `<li class="text-gray-400 italic text-center mt-1 border-t border-gray-800 pt-1">+ ${dDia.length-5} demandas</li>`;
+                    
+                    tooltipHTML = `
+                        <div class="calendar-tooltip absolute bottom-[110%] left-1/2 w-64 bg-black/95 backdrop-blur-sm border border-gray-700 text-white text-xs rounded-lg p-3 shadow-2xl">
+                            <p class="font-bold border-b border-gray-700 pb-1 mb-2 text-center uppercase tracking-wider text-gray-300">Resumo: ${formatarDataBrasil(dataStr)}</p>
+                            <ul class="text-left space-y-1.5">${linhas}</ul>
+                            <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-black/95"></div>
+                        </div>
+                    `;
+                }
+
+                let b = `<div onclick="abrirModalDia('${dataStr}')" class="h-24 p-2 relative bg-white hover:bg-gray-100 transition-colors border-b border-r border-gray-200 cursor-pointer group">
+                            <div class="text-sm font-bold text-gray-700 group-hover:text-black transition-colors">${dia}</div>
+                            ${tooltipHTML}`;
+                
                 if(dDia.length > 0) {
                     b += `<div class="mt-1 flex flex-wrap gap-1">`;
                     dDia.slice(0,3).forEach(d => {
-                        b += `<div class="text-[10px] bg-black text-white px-1 rounded flex-1 text-center font-bold" title="${d.horario}">${d.horario}</div>`;
+                        b += `<div class="text-[10px] bg-black text-white px-1 rounded flex-1 text-center font-bold shadow-sm transition-transform group-hover:scale-105" title="${d.horario}">${d.horario}</div>`;
                     });
                     if(dDia.length>3) b+= `<div class="text-[10px] text-gray-500 font-bold">+${dDia.length-3}</div>`;
                     b += `</div>`;
@@ -1162,7 +1393,6 @@
             }
         }
 
-        // NOVO: Funções do Modal do Dia (Calendário)
         function abrirModalDia(data) {
             document.getElementById('tituloModalDia').textContent = `Fretamentos: ${formatarDataBrasil(data)}`;
             
@@ -1170,31 +1400,30 @@
             const container = document.getElementById('conteudoModalDia');
             
             if(demandasDoDia.length === 0) {
-                container.innerHTML = '<div class="text-center py-10"><i class="fa-regular fa-calendar-xmark text-4xl text-gray-300 mb-3"></i><p class="text-gray-500 font-medium">Nenhuma demanda agendada para esta data.</p></div>';
+                container.innerHTML = '<div class="text-center py-10"><i class="fa-regular fa-calendar-xmark text-4xl text-gray-300 mb-3 transition-transform hover:scale-110"></i><p class="text-gray-500 font-medium">Nenhuma demanda agendada para esta data.</p></div>';
             } else {
                 let html = '<div class="space-y-4">';
                 demandasDoDia.forEach(d => {
                     const stClasses = getStatusClasses(d.status);
                     
-                    // Se for gestor, permite editar a demanda a partir do modal do dia
                     const botoesGestao = currentUserRole === 'gestor' ? `
                         <div class="mt-4 pt-3 border-t border-gray-100 flex justify-end">
-                            <button onclick="fecharModalDia(); editarDemanda('${d.id}')" class="text-xs bg-gray-100 hover:bg-gray-200 text-black px-3 py-1.5 rounded font-bold transition-colors flex items-center gap-1">
+                            <button onclick="fecharModalDia(); setTimeout(()=>editarDemanda('${d.id}'), 300)" class="btn-press text-xs bg-gray-100 hover:bg-gray-200 text-black px-3 py-1.5 rounded font-bold transition-colors flex items-center gap-1 shadow-sm">
                                 <i class="fa-solid fa-pen-to-square"></i> Editar Demanda
                             </button>
                         </div>
                     ` : '';
 
                     html += `
-                        <div class="bg-white border border-gray-200 p-5 rounded-lg shadow-sm border-l-4 border-l-black">
+                        <div class="bg-white border border-gray-200 p-5 rounded-lg shadow-sm border-l-4 border-l-black hover-lift">
                             <div class="flex justify-between items-start mb-3">
                                 <div>
                                     <span class="text-xl font-black text-black flex items-center gap-2"><i class="fa-regular fa-clock text-gray-400"></i> ${d.horario}</span>
                                     <p class="font-bold text-gray-800 mt-1">${d.solicitante} <span class="text-sm text-gray-500 font-normal">(${d.setor})</span></p>
                                 </div>
-                                <span class="px-3 py-1 text-xs font-bold rounded-full border ${stClasses}">${d.status}</span>
+                                <span class="px-3 py-1 text-xs font-bold rounded-full border shadow-sm ${stClasses}">${d.status}</span>
                             </div>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-600 mt-4 bg-gray-50 p-3 rounded">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-600 mt-4 bg-gray-50 p-3 rounded transition-colors hover:bg-gray-100/50">
                                 <div>
                                     <p class="font-semibold text-gray-800 mb-1"><i class="fa-solid fa-map-location-dot mr-1 text-gray-400"></i> Trajeto</p>
                                     <p>${d.partida}</p>
@@ -1223,7 +1452,6 @@
             document.getElementById('modalDia').classList.add('hidden');
         }
 
-        // Funções de Edição/Exclusão Padrões
         function editarDemanda(id) {
             if(currentUserRole !== 'gestor') return;
             const d = demandas.find(x => x.id === id); if(!d) return;
@@ -1233,7 +1461,6 @@
                 if(el) el.value = d[f.charAt(0).toLowerCase() + f.slice(1)] || '';
             });
             
-            // Reconstruir área de frotas e motoristas
             let alocs = d.alocacoes || [];
             if(alocs.length === 0 && (d.nomeMotorista || d.placaVeiculo)) { alocs = [{ motorista: d.nomeMotorista, placa: d.placaVeiculo }]; }
             if(alocs.length === 0) { alocs = [{ motorista: '', placa: '' }]; }
@@ -1251,7 +1478,6 @@
             const f = new FormData(document.getElementById('formEdicao'));
             const id = f.get('editId');
             
-            // Coletar array dinâmico durante a edição
             const qtd = parseInt(document.getElementById('editQtdVeiculos').value) || 1;
             let alocacoes = [];
             for(let i=0; i<qtd; i++) {
@@ -1296,7 +1522,6 @@
             }
         }
 
-        // Motoristas
         function initializePhotoUpload() {
             document.getElementById('fotoMotorista').addEventListener('change', e => {
                 if(e.target.files[0]) {
@@ -1355,15 +1580,14 @@
             const list = document.getElementById('listaMotoristas');
             if(!motoristas.length) { list.innerHTML = '<p class="col-span-2 text-gray-500 text-center">Nenhum registrado.</p>'; return; }
             list.innerHTML = motoristas.map(m => `
-                <div class="flex items-center gap-4 bg-gray-50 p-3 rounded border border-gray-200">
-                    ${m.foto ? `<img src="${m.foto}" class="w-10 h-10 rounded-full object-cover">` : `<div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center"><i class="fa-solid fa-user text-gray-600"></i></div>`}
+                <div class="hover-lift flex items-center gap-4 bg-gray-50 p-3 rounded border border-gray-200 transition-colors hover:bg-gray-100">
+                    ${m.foto ? `<img src="${m.foto}" class="w-10 h-10 rounded-full object-cover shadow-sm">` : `<div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center shadow-sm"><i class="fa-solid fa-user text-gray-600"></i></div>`}
                     <div class="flex-1"><p class="font-bold text-sm text-black">${m.nome}</p></div>
-                    ${currentUserRole === 'gestor' ? `<button onclick="excluirMotorista('${m.id}')" class="text-gray-400 hover:text-red-500"><i class="fa-solid fa-trash"></i></button>` : ''}
+                    ${currentUserRole === 'gestor' ? `<button onclick="excluirMotorista('${m.id}')" class="text-gray-400 hover:text-red-500 transition-transform hover:scale-110"><i class="fa-solid fa-trash"></i></button>` : ''}
                 </div>
             `).join('');
         }
 
-        // Relatórios
         function getDemandasConcluidas() { return demandas.filter(d => d.status === 'Concluída').sort((a, b) => new Date(b.dataCadastro) - new Date(a.dataCadastro)); }
 
         function gerarTabelaRelatorio() {
@@ -1401,7 +1625,7 @@
         function gerarRelatorioHTML() {
             if(currentUserRole !== 'gestor') return;
             const w = window.open('','_blank');
-            w.document.write(gerarEstruturaPagina('Demandas Corporativas Finalizadas', '<button onclick="window.print()" class="px-4 py-2 bg-black text-white font-bold rounded">Imprimir</button>')); w.document.close();
+            w.document.write(gerarEstruturaPagina('Demandas Corporativas Finalizadas', '<button onclick="window.print()" class="px-4 py-2 bg-black text-white font-bold rounded hover:bg-gray-800 transition-colors">Imprimir</button>')); w.document.close();
         }
         function gerarRelatorioPDF() {
             if(currentUserRole !== 'gestor') return;
@@ -1416,7 +1640,7 @@
                 a.download = 'MicroBusHub_Demandas.xls'; document.body.appendChild(a); a.click(); document.body.removeChild(a);
             }<\/script>`;
             const w = window.open('','_blank');
-            w.document.write(gerarEstruturaPagina('Exportação Excel', '<button onclick="bx()" class="px-4 py-2 bg-black text-white font-bold rounded">Baixar .xls</button>', script)); w.document.close();
+            w.document.write(gerarEstruturaPagina('Exportação Excel', '<button onclick="bx()" class="px-4 py-2 bg-black text-white font-bold rounded hover:bg-gray-800 transition-colors">Baixar .xls</button>', script)); w.document.close();
         }
     </script>
 </body>
