@@ -13,12 +13,12 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#000000',     // Preto
-                        secondary: '#4b5563',   // Cinza médio
-                        accent: '#9ca3af',      // Cinza claro
-                        success: '#111827',     // Preto suave (Concluído)
-                        warning: '#6b7280',     // Cinza (Em andamento)
-                        danger: '#e5e7eb'       // Cinza muito claro (Pendente)
+                        primary: '#1e3a8a',     // Azul Marinho (Blue 900)
+                        secondary: '#1e40af',   // Azul mais claro (Blue 800)
+                        accent: '#93c5fd',      // Azul claro
+                        success: '#1e3a8a',     // Azul Marinho (Concluído)
+                        warning: '#64748b',     // Slate (Em andamento)
+                        danger: '#f1f5f9'       // Cinza muito claro (Pendente)
                     },
                     screens: {
                         'tv-sm': '1366px',
@@ -36,31 +36,31 @@
             box-sizing: border-box;
             font-size: 16px;
             font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
-            background-color: #f3f4f6;
+            background-color: #f8fafc; /* Slate 50 para combinar com Azul */
         }
         
-        /* B&W Aesthetic - Cabeçalho do Sistema */
-        .bg-bw-photo {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), url('https://i.ibb.co/hFmx4zGs/1772839070965.png');
+        /* Navy Aesthetic - Cabeçalho do Sistema */
+        .bg-navy-photo {
+            background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(30, 58, 138, 0.95)), url('https://i.ibb.co/hFmx4zGs/1772839070965.png');
             background-size: cover;
             background-position: center;
-            filter: grayscale(100%);
+            background-blend-mode: multiply;
         }
 
-        /* B&W Aesthetic - Fundo Animado da Tela de Login */
+        /* Navy Aesthetic - Fundo Animado da Tela de Login */
         .bg-login-animated {
             position: relative;
-            background-color: #000;
+            background-color: #0f172a;
         }
         
         .bg-login-animated::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9)), url('https://i.ibb.co/nNCprjtG/1782309572639.jpg');
+            background-image: linear-gradient(rgba(15, 23, 42, 0.8), rgba(30, 58, 138, 0.95)), url('https://i.ibb.co/nNCprjtG/1782309572639.jpg');
             background-size: cover;
             background-position: center;
-            filter: grayscale(100%);
+            background-blend-mode: multiply;
             z-index: 0;
             animation: slowZoom 20s ease-in-out infinite alternate;
         }
@@ -73,7 +73,7 @@
         .glass-panel {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(0,0,0,0.1);
+            border: 1px solid rgba(30, 58, 138, 0.1);
         }
 
         /* Responsividade para Smart TVs */
@@ -121,7 +121,7 @@
         }
         
         .card-shadow {
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 25px rgba(30, 58, 138, 0.08);
         }
         
         .status-indicator {
@@ -144,27 +144,27 @@
             top: 0;
             bottom: 0;
             width: 2px;
-            background: #e5e7eb; /* Linha cinza clara */
+            background: #e2e8f0; /* Slate 200 */
         }
         
         .timeline-item:last-child::before {
             display: none;
         }
         
-        /* Scrollbar monocromática */
+        /* Scrollbar Navy */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #f1f5f9;
+            background: #f8fafc;
         }
         ::-webkit-scrollbar-thumb {
-            background: #9ca3af;
+            background: #94a3b8;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #4b5563;
+            background: #1e3a8a;
         }
 
         /* --- ANIMAÇÕES E EFEITOS HOVER NOVOS --- */
@@ -183,7 +183,7 @@
 
         .hover-lift:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 20px 25px -5px rgba(30, 58, 138, 0.15), 0 10px 10px -5px rgba(30, 58, 138, 0.08);
             z-index: 10;
         }
 
@@ -211,7 +211,7 @@
             transform: translateY(0) translateX(-50%);
         }
 
-        /* --- ENGRENAGENS (GEARBOX) DEV --- */
+        /* --- ENGRENAGENS (GEARBOX) DEV - TEMA NAVY --- */
         @keyframes clockwise {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
@@ -223,7 +223,7 @@
         }
 
         .gearbox {
-          background: #111;
+          background: #0f172a; /* Slate 900 */
           height: 150px;
           width: 200px;
           position: relative;
@@ -242,7 +242,7 @@
           width: 100%;
           height: 100%;
           z-index: 10;
-          box-shadow: inset 0px 0px 20px black;
+          box-shadow: inset 0px 0px 20px #020617;
           transition: background 0.2s;
           background: transparent;
         }
@@ -251,7 +251,7 @@
           position: absolute;
           height: 60px;
           width: 60px;
-          box-shadow: 0px -1px 0px 0px #888888, 0px 1px 0px 0px black;
+          box-shadow: 0px -1px 0px 0px #3b82f6, 0px 1px 0px 0px #020617;
           border-radius: 30px;
         }
 
@@ -280,20 +280,20 @@
           height: 36px;
           width: 36px;
           border-radius: 36px;
-          background: #111;
+          background: #0f172a;
           top: 50%;
           left: 50%;
           margin-left: -18px;
           margin-top: -18px;
           z-index: 3;
-          box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1), inset 0px 0px 10px rgba(0, 0, 0, 0.1), inset 0px 2px 0px 0px #090909, inset 0px -1px 0px 0px #888888;
+          box-shadow: 0px 0px 10px rgba(59, 130, 246, 0.2), inset 0px 0px 10px rgba(0, 0, 0, 0.3), inset 0px 2px 0px 0px #1e40af, inset 0px -1px 0px 0px #1e3a8a;
         }
 
         .gear-inner {
           position: relative;
           height: 100%;
           width: 100%;
-          background: #555;
+          background: #1e3a8a; /* Blue 900 */
           border-radius: 30px;
           border: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -305,7 +305,7 @@
         .gear.four .gear-inner { animation: counter-clockwise 6s infinite linear; }
 
         .gear-inner .bar {
-          background: #555;
+          background: #1e3a8a;
           height: 16px;
           width: 76px;
           position: absolute;
@@ -326,39 +326,39 @@
         .gear-inner .bar:nth-child(6) { transform: rotate(150deg); }
     </style>
 </head>
-<body class="h-full text-gray-800">
+<body class="h-full text-slate-800">
 
     <!-- LOGIN SCREEN -->
     <div id="login-container" class="min-h-screen flex items-center justify-center relative overflow-hidden bg-login-animated z-50">
-        <div class="bg-white/30 backdrop-blur-xl p-8 sm:p-12 rounded-2xl shadow-2xl z-10 w-full max-w-md border border-white/30 mx-4 relative hover-lift">
+        <div class="bg-white/95 backdrop-blur-xl p-8 sm:p-12 rounded-2xl shadow-2xl z-10 w-full max-w-md border border-blue-900/30 mx-4 relative hover-lift">
             <div class="text-center mb-8">
-                <div class="w-24 h-24 flex items-center justify-center mx-auto mb-4">
-                    <img src="https://i.ibb.co/LDNS5Zxd/339699-removebg-preview.png" alt="MicroBus Logo" class="w-full h-full object-contain drop-shadow-[0_5px_15px_rgba(255,255,255,0.4)]">
+                <div class="w-24 h-24 flex items-center justify-center mx-auto mb-4 bg-blue-900 rounded-full shadow-lg p-2">
+                    <img src="https://i.ibb.co/LDNS5Zxd/339699-removebg-preview.png" alt="MicroBus Logo" class="w-full h-full object-contain filter drop-shadow-md">
                 </div>
-                <h2 class="text-3xl font-bold text-black uppercase tracking-tight">MicroBus Hub</h2>
-                <p class="text-gray-900 mt-2 font-medium">Acesso ao Sistema Corporativo</p>
+                <h2 class="text-3xl font-bold text-blue-900 uppercase tracking-tight">MicroBus Hub</h2>
+                <p class="text-slate-600 mt-2 font-medium">Acesso ao Sistema Corporativo</p>
             </div>
             
             <form id="loginForm" class="space-y-5" onsubmit="event.preventDefault(); fazerLoginGestor();">
                 <div>
-                    <label class="block text-sm font-bold text-gray-900 mb-2">Usuário (Gestor)</label>
-                    <input type="text" id="loginUser" class="w-full px-4 py-3 bg-white/40 border border-white/40 rounded-md focus:ring-2 focus:ring-black focus:bg-white/90 outline-none transition-all placeholder-gray-700 font-medium text-black" placeholder="Digite seu usuário">
+                    <label class="block text-sm font-bold text-blue-950 mb-2">Usuário (Gestor)</label>
+                    <input type="text" id="loginUser" class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-900 outline-none transition-all placeholder-slate-400 font-medium text-blue-950" placeholder="Digite seu usuário">
                 </div>
                 <div>
-                    <label class="block text-sm font-bold text-gray-900 mb-2">Senha</label>
-                    <input type="password" id="loginPass" class="w-full px-4 py-3 bg-white/40 border border-white/40 rounded-md focus:ring-2 focus:ring-black focus:bg-white/90 outline-none transition-all placeholder-gray-700 font-medium text-black" placeholder="••••••••">
+                    <label class="block text-sm font-bold text-blue-950 mb-2">Senha</label>
+                    <input type="password" id="loginPass" class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-900 outline-none transition-all placeholder-slate-400 font-medium text-blue-950" placeholder="••••••••">
                 </div>
-                <button type="submit" class="btn-press w-full py-3 mt-2 bg-black/90 hover:bg-black text-white font-bold rounded-md transition-colors shadow-lg flex items-center justify-center gap-2 backdrop-blur-sm">
+                <button type="submit" class="btn-press w-full py-3 mt-2 bg-blue-900 hover:bg-blue-800 text-white font-bold rounded-md transition-colors shadow-lg flex items-center justify-center gap-2 backdrop-blur-sm">
                     <i class="fa-solid fa-user-tie"></i> Entrar como Gestor
                 </button>
                 
                 <div class="relative flex items-center py-4">
-                    <div class="flex-grow border-t border-gray-600/30"></div>
-                    <span class="flex-shrink-0 mx-4 text-gray-900 text-xs font-bold uppercase tracking-wider">Acesso de Leitura</span>
-                    <div class="flex-grow border-t border-gray-600/30"></div>
+                    <div class="flex-grow border-t border-slate-300"></div>
+                    <span class="flex-shrink-0 mx-4 text-slate-500 text-xs font-bold uppercase tracking-wider">Acesso de Leitura</span>
+                    <div class="flex-grow border-t border-slate-300"></div>
                 </div>
                 
-                <button type="button" onclick="fazerLoginVisitante()" class="btn-press w-full py-3 bg-white/20 hover:bg-white/40 text-black font-bold rounded-md border border-black/60 hover:border-black transition-colors flex items-center justify-center gap-2 backdrop-blur-sm">
+                <button type="button" onclick="fazerLoginVisitante()" class="btn-press w-full py-3 bg-white hover:bg-slate-50 text-blue-900 font-bold rounded-md border-2 border-blue-900/40 hover:border-blue-900 transition-colors flex items-center justify-center gap-2">
                     <i class="fa-regular fa-eye"></i> Entrar como Visitante
                 </button>
             </form>
@@ -366,37 +366,37 @@
     </div>
 
     <!-- MAIN APP WRAPPER -->
-    <div id="app-container" class="hidden min-h-full bg-gray-100 flex flex-col">
+    <div id="app-container" class="hidden min-h-full bg-slate-50 flex flex-col">
         
-        <!-- Header Fotográfico P&B -->
-        <header class="bg-bw-photo shadow-lg border-b-4 border-black">
+        <!-- Header Fotográfico Navy -->
+        <header class="bg-navy-photo shadow-lg border-b-4 border-blue-900">
             <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center py-4 sm:py-6 tv-sm:py-8 tv-md:py-10">
                     <div class="flex items-center gap-4 hover-lift cursor-pointer">
-                        <div class="flex-shrink-0 transition-transform duration-300 flex items-center justify-center">
+                        <div class="flex-shrink-0 transition-transform duration-300 flex items-center justify-center bg-white/10 p-2 rounded-xl backdrop-blur-sm">
                             <img src="https://i.ibb.co/LDNS5Zxd/339699-removebg-preview.png" alt="MicroBus Logo" class="w-14 h-14 tv-sm:w-20 tv-sm:h-20 object-contain drop-shadow-[0_2px_10px_rgba(255,255,255,0.3)]">
                         </div>
                         <div>
-                            <h1 class="text-xl tv-sm:text-3xl tv-md:text-4xl font-bold text-white tracking-tight uppercase">MicroBus Hub</h1>
-                            <p class="text-sm tv-sm:text-lg text-gray-300 font-light">Gestão Centralizada de Demandas Corporativas</p>
+                            <h1 class="text-xl tv-sm:text-3xl tv-md:text-4xl font-bold text-white tracking-tight uppercase drop-shadow-md">MicroBus Hub</h1>
+                            <p class="text-sm tv-sm:text-lg text-blue-200 font-light drop-shadow-sm">Gestão Centralizada de Demandas Corporativas</p>
                         </div>
                     </div>
                     <div class="flex items-center space-x-4">
                         <!-- DEV BADGE NO CABEÇALHO -->
-                        <div class="hidden md:flex items-center gap-3 bg-white/10 p-1.5 pr-4 rounded-full border border-white/20 backdrop-blur-md hover:bg-white/20 transition-colors">
+                        <div class="hidden md:flex items-center gap-3 bg-white/10 p-1.5 pr-4 rounded-full border border-white/20 backdrop-blur-md hover:bg-white/20 transition-colors shadow-lg">
                             <img src="https://i.ibb.co/204hGBJ6/Screenshot-20260624-092626-Photos.jpg" alt="Dev" class="w-8 h-8 rounded-full object-cover border border-white/50">
                             <div class="flex flex-col">
-                                <span class="text-[10px] text-gray-300 uppercase font-bold leading-none">Developer</span>
+                                <span class="text-[10px] text-blue-200 uppercase font-bold leading-none">Developer</span>
                                 <span class="text-xs text-white font-bold leading-tight">Welligton Ferreira</span>
                             </div>
                         </div>
 
                         <div class="text-white text-right hidden sm:block">
-                            <p id="userNameDisplay" class="text-xs tv-sm:text-sm text-gray-400 uppercase tracking-widest font-bold"></p>
-                            <p class="text-sm tv-sm:text-lg font-semibold" id="currentDate"></p>
+                            <p id="userNameDisplay" class="text-xs tv-sm:text-sm text-blue-300 uppercase tracking-widest font-bold drop-shadow-sm"></p>
+                            <p class="text-sm tv-sm:text-lg font-semibold drop-shadow-md" id="currentDate"></p>
                         </div>
                         <!-- Botão Sair -->
-                        <button onclick="fazerLogout()" class="btn-press px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/30 rounded-md text-white font-bold transition-all shadow-sm ml-2 flex items-center gap-2">
+                        <button onclick="fazerLogout()" class="btn-press px-4 py-2 bg-blue-950/40 hover:bg-blue-900/60 border border-blue-400/30 rounded-md text-white font-bold transition-all shadow-sm ml-2 flex items-center gap-2 backdrop-blur-sm">
                             <i class="fa-solid fa-right-from-bracket"></i> <span class="hidden sm:inline">Sair</span>
                         </button>
                     </div>
@@ -405,25 +405,25 @@
         </header>
 
         <!-- Navegação / Tabs -->
-        <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40">
+        <nav class="bg-white shadow-md border-b border-slate-200 sticky top-0 z-40">
             <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 tv-padding tablet-padding mobile-padding">
                 <div class="flex flex-wrap justify-center tv-sm:justify-start space-x-2 tv-sm:space-x-4 tv-md:space-x-8 mobile-scroll">
-                    <button onclick="showTab('dashboard')" id="tab-dashboard" class="tab-button tv-button active py-4 px-4 border-b-4 border-black text-black font-bold text-sm tv-sm:text-base whitespace-nowrap transition-colors">
+                    <button onclick="showTab('dashboard')" id="tab-dashboard" class="tab-button tv-button active py-4 px-4 border-b-4 border-blue-900 text-blue-900 font-bold text-sm tv-sm:text-base whitespace-nowrap transition-colors">
                         <i class="fa-solid fa-chart-pie mr-2"></i> Dashboard
                     </button>
-                    <button onclick="showTab('cadastro')" id="tab-cadastro" class="tab-button tv-button py-4 px-4 border-b-4 border-transparent text-gray-500 hover:text-black hover:border-gray-300 font-medium text-sm tv-sm:text-base whitespace-nowrap transition-colors">
+                    <button onclick="showTab('cadastro')" id="tab-cadastro" class="tab-button tv-button py-4 px-4 border-b-4 border-transparent text-slate-500 hover:text-blue-900 hover:border-blue-300 font-medium text-sm tv-sm:text-base whitespace-nowrap transition-colors">
                         <i class="fa-solid fa-plus-circle mr-2"></i> Nova Demanda
                     </button>
-                    <button onclick="showTab('timeline')" id="tab-timeline" class="tab-button tv-button py-4 px-4 border-b-4 border-transparent text-gray-500 hover:text-black hover:border-gray-300 font-medium text-sm tv-sm:text-base whitespace-nowrap transition-colors">
+                    <button onclick="showTab('timeline')" id="tab-timeline" class="tab-button tv-button py-4 px-4 border-b-4 border-transparent text-slate-500 hover:text-blue-900 hover:border-blue-300 font-medium text-sm tv-sm:text-base whitespace-nowrap transition-colors">
                         <i class="fa-solid fa-route mr-2"></i> Timeline
                     </button>
-                    <button onclick="showTab('motoristas')" id="tab-motoristas" class="tab-button tv-button py-4 px-4 border-b-4 border-transparent text-gray-500 hover:text-black hover:border-gray-300 font-medium text-sm tv-sm:text-base whitespace-nowrap transition-colors">
+                    <button onclick="showTab('motoristas')" id="tab-motoristas" class="tab-button tv-button py-4 px-4 border-b-4 border-transparent text-slate-500 hover:text-blue-900 hover:border-blue-300 font-medium text-sm tv-sm:text-base whitespace-nowrap transition-colors">
                         <i class="fa-solid fa-id-card-clip mr-2"></i> Motoristas
                     </button>
-                    <button onclick="showTab('escala')" id="tab-escala" class="tab-button tv-button py-4 px-4 border-b-4 border-transparent text-gray-500 hover:text-black hover:border-gray-300 font-medium text-sm tv-sm:text-base whitespace-nowrap transition-colors">
+                    <button onclick="showTab('escala')" id="tab-escala" class="tab-button tv-button py-4 px-4 border-b-4 border-transparent text-slate-500 hover:text-blue-900 hover:border-blue-300 font-medium text-sm tv-sm:text-base whitespace-nowrap transition-colors">
                         <i class="fa-solid fa-list-check mr-2"></i> Escala
                     </button>
-                    <button onclick="showTab('calendario')" id="tab-calendario" class="tab-button tv-button py-4 px-4 border-b-4 border-transparent text-gray-500 hover:text-black hover:border-gray-300 font-medium text-sm tv-sm:text-base whitespace-nowrap transition-colors">
+                    <button onclick="showTab('calendario')" id="tab-calendario" class="tab-button tv-button py-4 px-4 border-b-4 border-transparent text-slate-500 hover:text-blue-900 hover:border-blue-300 font-medium text-sm tv-sm:text-base whitespace-nowrap transition-colors">
                         <i class="fa-solid fa-calendar-days mr-2"></i> Calendário
                     </button>
                 </div>
@@ -435,165 +435,267 @@
             <!-- Dashboard Content -->
             <div id="dashboard-content" class="tab-content">
                 
-                <!-- KPI Cards (B&W Theme) -->
+                <!-- KPI Cards (Navy Theme) -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6">
                     
                     <!-- Card: Total Hoje -->
-                    <div class="bg-black rounded-xl card-shadow p-6 text-white border border-gray-800 hover-lift cursor-default">
+                    <div class="bg-blue-900 rounded-xl card-shadow p-6 text-white border border-blue-950 hover-lift cursor-default shadow-lg shadow-blue-900/20">
                         <div class="flex items-center">
-                            <div class="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center transition-transform hover:scale-110">
+                            <div class="w-12 h-12 bg-blue-800 rounded-lg flex items-center justify-center transition-transform hover:scale-110 shadow-inner">
                                 <i class="fa-solid fa-van-shuttle text-xl text-white"></i>
                             </div>
                             <div class="ml-4 flex-1">
-                                <p class="text-sm font-medium text-gray-400 uppercase tracking-wider">Demandas Hoje</p>
-                                <p class="text-3xl font-bold text-white" id="totalDemandas">0</p>
+                                <p class="text-sm font-medium text-blue-200 uppercase tracking-wider">Demandas Hoje</p>
+                                <p class="text-3xl font-bold text-white drop-shadow-md" id="totalDemandas">0</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Card: Concluídas -->
-                    <div class="bg-gray-800 rounded-xl card-shadow p-6 text-white border border-gray-700 hover-lift cursor-default">
+                    <div class="bg-blue-800 rounded-xl card-shadow p-6 text-white border border-blue-900 hover-lift cursor-default shadow-lg shadow-blue-800/20">
                         <div class="flex items-center">
-                            <div class="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center transition-transform hover:scale-110">
-                                <i class="fa-solid fa-check-circle text-xl text-gray-300"></i>
+                            <div class="w-12 h-12 bg-blue-700 rounded-lg flex items-center justify-center transition-transform hover:scale-110 shadow-inner">
+                                <i class="fa-solid fa-check-circle text-xl text-blue-100"></i>
                             </div>
                             <div class="ml-4 flex-1">
-                                <p class="text-sm font-medium text-gray-400 uppercase tracking-wider">Concluídas (Hoje)</p>
-                                <p class="text-3xl font-bold text-white" id="concluidas">0</p>
+                                <p class="text-sm font-medium text-blue-200 uppercase tracking-wider">Concluídas (Hoje)</p>
+                                <p class="text-3xl font-bold text-white drop-shadow-md" id="concluidas">0</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Card: Pendentes -->
-                    <div class="bg-white rounded-xl card-shadow p-6 text-black border-2 border-black hover-lift cursor-default">
+                    <div class="bg-white rounded-xl card-shadow p-6 text-blue-900 border-2 border-blue-900 hover-lift cursor-default">
                         <div class="flex items-center">
-                            <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-300 transition-transform hover:scale-110">
-                                <i class="fa-solid fa-clock text-xl text-black"></i>
+                            <div class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center border border-blue-200 transition-transform hover:scale-110">
+                                <i class="fa-solid fa-clock text-xl text-blue-900"></i>
                             </div>
                             <div class="ml-4 flex-1">
-                                <p class="text-sm font-bold text-gray-500 uppercase tracking-wider">Pendentes</p>
-                                <p class="text-3xl font-black text-black" id="pendentes">0</p>
+                                <p class="text-sm font-bold text-slate-500 uppercase tracking-wider">Pendentes</p>
+                                <p class="text-3xl font-black text-blue-900" id="pendentes">0</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Card: Total Geral -->
-                    <div class="bg-gray-100 rounded-xl card-shadow p-6 text-black border border-gray-300 hover-lift cursor-default">
+                    <div class="bg-white rounded-xl card-shadow p-6 text-blue-900 border border-slate-200 hover-lift cursor-default">
                         <div class="flex items-center">
-                            <div class="w-12 h-12 bg-gray-300 rounded-lg flex items-center justify-center transition-transform hover:scale-110">
-                                <i class="fa-solid fa-layer-group text-xl text-gray-700"></i>
+                            <div class="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center transition-transform hover:scale-110">
+                                <i class="fa-solid fa-layer-group text-xl text-blue-900"></i>
                             </div>
                             <div class="ml-4 flex-1">
-                                <p class="text-sm font-medium text-gray-600 uppercase tracking-wider">Histórico Total</p>
-                                <p class="text-3xl font-bold text-black" id="totalHistorico">0</p>
+                                <p class="text-sm font-medium text-slate-500 uppercase tracking-wider">Histórico Total</p>
+                                <p class="text-3xl font-bold text-blue-900" id="totalHistorico">0</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Relatórios -->
-                <div id="relatorios-section" class="bg-white rounded-xl card-shadow p-6 mb-6 border border-gray-200">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
+                <div id="relatorios-section" class="bg-white rounded-xl card-shadow p-6 mb-6 border border-slate-200">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0 mb-4 border-b border-slate-100 pb-4">
                         <div>
-                            <h3 class="text-lg font-bold text-black flex items-center gap-2">
-                                <i class="fa-solid fa-file-invoice text-gray-400"></i> Emissão de Relatórios
+                            <h3 class="text-lg font-bold text-blue-950 flex items-center gap-2">
+                                <i class="fa-solid fa-file-invoice text-blue-400"></i> Emissão de Relatórios
                             </h3>
-                            <p class="text-sm text-gray-500 mt-1">Exporte o histórico consolidado de viagens executadas em frotas de micro-ônibus.</p>
+                            <p class="text-sm text-slate-500 mt-1">Filtre e exporte o histórico consolidado de viagens.</p>
                         </div>
                         <div class="flex flex-wrap gap-3">
-                            <button onclick="gerarRelatorioHTML()" class="btn-press flex items-center px-4 py-2 bg-white border border-gray-300 text-black rounded-md hover:bg-gray-50 hover:shadow-md text-sm font-medium transition-all">
+                            <button onclick="gerarRelatorioHTML()" class="btn-press flex items-center px-4 py-2 bg-white border border-slate-300 text-blue-900 rounded-md hover:bg-slate-50 hover:border-blue-900 hover:shadow-md text-sm font-bold transition-all">
                                 <i class="fa-solid fa-eye mr-2"></i> Visualizar
                             </button>
-                            <button onclick="gerarRelatorioPDF()" class="btn-press flex items-center px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 hover:shadow-lg text-sm font-medium transition-all shadow-md">
+                            <button onclick="gerarRelatorioPDF()" class="btn-press flex items-center px-4 py-2 bg-blue-900 text-white rounded-md hover:bg-blue-800 hover:shadow-lg text-sm font-bold transition-all shadow-md">
                                 <i class="fa-solid fa-file-pdf mr-2"></i> Gerar PDF
                             </button>
-                            <button onclick="gerarViewExcel()" class="btn-press flex items-center px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 hover:shadow-lg text-sm font-medium transition-all shadow-md">
-                                <i class="fa-solid fa-file-excel mr-2"></i> Exportar Planilha
+                            <button onclick="gerarViewExcel()" class="btn-press flex items-center px-4 py-2 bg-blue-800 text-white rounded-md hover:bg-blue-700 hover:shadow-lg text-sm font-bold transition-all shadow-md">
+                                <i class="fa-solid fa-file-excel mr-2"></i> Exportar
                             </button>
+                        </div>
+                    </div>
+
+                    <!-- Filtros do Relatório -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                        <div>
+                            <label class="block text-xs font-bold text-blue-900 mb-1">Data Início</label>
+                            <input type="date" id="filtroDataInicio" class="w-full px-3 py-1.5 border border-slate-300 rounded focus:ring-1 focus:ring-blue-900 text-sm bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-blue-900 mb-1">Data Fim</label>
+                            <input type="date" id="filtroDataFim" class="w-full px-3 py-1.5 border border-slate-300 rounded focus:ring-1 focus:ring-blue-900 text-sm bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-blue-900 mb-1">Setor</label>
+                            <input type="text" id="filtroSetor" placeholder="Todos" class="w-full px-3 py-1.5 border border-slate-300 rounded focus:ring-1 focus:ring-blue-900 text-sm bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-blue-900 mb-1">Motorista</label>
+                            <select id="filtroMotorista" class="w-full px-3 py-1.5 border border-slate-300 rounded focus:ring-1 focus:ring-blue-900 text-sm bg-white">
+                                <option value="">Todos</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-blue-900 mb-1">Placa / Veículo</label>
+                            <input type="text" id="filtroPlaca" placeholder="Todas" class="w-full px-3 py-1.5 border border-slate-300 rounded focus:ring-1 focus:ring-blue-900 text-sm bg-white">
                         </div>
                     </div>
                 </div>
 
                 <!-- Demandas Recentes -->
-                <div class="bg-white rounded-xl card-shadow p-6 border border-gray-200">
-                    <h3 class="text-lg font-bold text-black mb-6 border-b border-gray-100 pb-2">Últimos Registros</h3>
+                <div class="bg-white rounded-xl card-shadow p-6 border border-slate-200">
+                    <h3 class="text-lg font-bold text-blue-950 mb-6 border-b border-slate-100 pb-2">Últimos Registros</h3>
                     <div id="demandasRecentes" class="space-y-3">
-                        <p class="text-gray-500 text-center py-6 text-sm">Nenhuma demanda corporativa registrada.</p>
+                        <p class="text-slate-500 text-center py-6 text-sm">Nenhuma demanda corporativa registrada.</p>
                     </div>
                 </div>
             </div>
 
             <!-- Cadastro Content -->
             <div id="cadastro-content" class="tab-content hidden">
-                <div class="bg-white rounded-xl card-shadow p-6 sm:p-8 border border-gray-200 max-w-5xl mx-auto hover-lift">
-                    <div class="border-b border-gray-200 pb-5 mb-6">
-                        <h2 class="text-2xl font-bold text-black">Nova Demanda de Micro-ônibus</h2>
-                        <p class="text-gray-500 mt-1">Preencha os dados logísticos para o fretamento.</p>
-                    </div>
+                <div class="bg-white rounded-xl card-shadow p-6 sm:p-8 border border-slate-200 max-w-5xl mx-auto hover-lift">
                     
-                    <form id="demandaForm" class="space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Solicitante</label>
-                                <input type="text" id="solicitante" name="solicitante" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all hover:border-gray-400">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Setor</label>
-                                <input type="text" id="setor" name="setor" required placeholder="Ex: Diretoria / Eventos" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all hover:border-gray-400">
-                            </div>
-                        </div>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-4 rounded-lg border border-gray-100 transition-colors hover:bg-gray-100/50">
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fa-solid fa-map-pin mr-1 text-gray-400"></i> Endereço de Partida</label>
-                                <input type="text" id="partida" name="partida" required class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all hover:border-gray-400">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fa-solid fa-flag-checkered mr-1 text-gray-400"></i> Destino Final</label>
-                                <input type="text" id="destino" name="destino" required class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all hover:border-gray-400">
-                            </div>
-                        </div>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Data da demanda</label>
-                                <input type="date" id="dataDemanda" name="dataDemanda" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all hover:border-gray-400">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Horário da demanda</label>
-                                <input type="time" id="horario" name="horario" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all hover:border-gray-400">
-                            </div>
-                        </div>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Nº SEI</label>
-                                <input type="text" id="numeroSei" name="numeroSei" placeholder="Opcional" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all hover:border-gray-400">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Quantidade de Veículos/Motoristas</label>
-                                <input type="number" id="qtdVeiculos" name="qtdVeiculos" min="1" value="1" onchange="renderizarVeiculosCadastro()" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all hover:border-gray-400">
-                            </div>
-                        </div>
-                        
-                        <div id="containerVeiculos" class="space-y-4 bg-gray-50 p-4 rounded-lg border border-gray-200 mt-2 transition-all">
-                            <!-- Campos de motoristas e placas injetados dinamicamente via JS -->
-                        </div>
-                        
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2">Observações (Pax, Roteiro, Franquia)</label>
-                            <textarea id="observacoes" name="observacoes" rows="3" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all hover:border-gray-400" placeholder="Informações sobre capacidade (ex: Micro-ônibus 26 lugares), particularidades..."></textarea>
-                        </div>
-                        
-                        <div class="flex flex-col sm:flex-row justify-end gap-4 pt-4 border-t border-gray-200">
-                            <button type="button" onclick="limparFormulario()" class="btn-press px-6 py-3 border border-gray-300 rounded-md text-black font-bold hover:bg-gray-100 transition-colors">
-                                Cancelar
+                    <!-- Toggle Switch: Individual vs Lote -->
+                    <div class="flex flex-col sm:flex-row justify-center mb-8">
+                        <div class="inline-flex bg-slate-100 rounded-lg p-1 border border-slate-200 shadow-inner w-full sm:w-auto">
+                            <button onclick="alternarModoCadastro('individual')" id="btnModoIndividual" class="flex-1 sm:w-48 py-2.5 px-4 rounded-md font-bold text-sm transition-all bg-white text-blue-900 shadow-sm border border-slate-200 flex justify-center items-center gap-2">
+                                <i class="fa-solid fa-user"></i> Individual
                             </button>
-                            <button type="submit" class="btn-press px-8 py-3 bg-black text-white font-bold rounded-md hover:bg-gray-800 shadow-lg transition-all hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center">
-                                Registrar Demanda no Hub <i class="fa-solid fa-arrow-right ml-2"></i>
+                            <button onclick="alternarModoCadastro('lote')" id="btnModoLote" class="flex-1 sm:w-48 py-2.5 px-4 rounded-md font-bold text-sm transition-all text-slate-500 hover:text-blue-900 flex justify-center items-center gap-2">
+                                <i class="fa-solid fa-users-rectangle"></i> Em Lote
                             </button>
                         </div>
-                    </form>
+                    </div>
+
+                    <!-- FORMULÁRIO INDIVIDUAL -->
+                    <div id="formIndividualContainer">
+                        <div class="border-b border-slate-200 pb-5 mb-6">
+                            <h2 class="text-2xl font-bold text-blue-950">Nova Demanda Individual</h2>
+                            <p class="text-slate-500 mt-1">Preencha os dados logísticos para um fretamento específico.</p>
+                        </div>
+                        
+                        <form id="demandaForm" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-bold text-blue-900 mb-2">Solicitante</label>
+                                    <input type="text" id="solicitante" name="solicitante" required class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-blue-900 transition-all hover:border-slate-400">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-blue-900 mb-2">Setor</label>
+                                    <input type="text" id="setor" name="setor" required placeholder="Ex: Diretoria / Eventos" class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-blue-900 transition-all hover:border-slate-400">
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50 p-4 rounded-lg border border-slate-200 transition-colors hover:bg-slate-100">
+                                <div>
+                                    <label class="block text-sm font-bold text-blue-900 mb-2"><i class="fa-solid fa-map-pin mr-1 text-blue-500"></i> Endereço de Partida</label>
+                                    <input type="text" id="partida" name="partida" required class="w-full px-4 py-3 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-blue-900 transition-all hover:border-slate-400">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-blue-900 mb-2"><i class="fa-solid fa-flag-checkered mr-1 text-blue-500"></i> Destino Final</label>
+                                    <input type="text" id="destino" name="destino" required class="w-full px-4 py-3 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-blue-900 transition-all hover:border-slate-400">
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-bold text-blue-900 mb-2">Data da demanda</label>
+                                    <input type="date" id="dataDemanda" name="dataDemanda" required class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-blue-900 transition-all hover:border-slate-400">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-blue-900 mb-2">Horário da demanda</label>
+                                    <input type="time" id="horario" name="horario" required class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-blue-900 transition-all hover:border-slate-400">
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-bold text-blue-900 mb-2">Nº SEI</label>
+                                    <input type="text" id="numeroSei" name="numeroSei" placeholder="Opcional" class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-blue-900 transition-all hover:border-slate-400">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-blue-900 mb-2">Quantidade de Veículos/Motoristas</label>
+                                    <input type="number" id="qtdVeiculos" name="qtdVeiculos" min="1" value="1" onchange="renderizarVeiculosCadastro()" class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-blue-900 transition-all hover:border-slate-400">
+                                </div>
+                            </div>
+                            
+                            <div id="containerVeiculos" class="space-y-4 bg-blue-50/50 p-4 rounded-lg border border-blue-100 mt-2 transition-all">
+                                <!-- Campos de motoristas e placas injetados dinamicamente via JS -->
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-bold text-blue-900 mb-2">Observações (Pax, Roteiro, Franquia)</label>
+                                <textarea id="observacoes" name="observacoes" rows="3" class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-blue-900 transition-all hover:border-slate-400" placeholder="Informações sobre capacidade (ex: Micro-ônibus 26 lugares), particularidades..."></textarea>
+                            </div>
+                            
+                            <div class="flex flex-col sm:flex-row justify-end gap-4 pt-4 border-t border-slate-200">
+                                <button type="button" onclick="limparFormulario()" class="btn-press px-6 py-3 border border-slate-300 rounded-md text-slate-700 font-bold hover:bg-slate-100 transition-colors">
+                                    Cancelar
+                                </button>
+                                <button type="submit" class="btn-press px-8 py-3 bg-blue-900 text-white font-bold rounded-md hover:bg-blue-800 shadow-lg transition-all hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center">
+                                    Registrar Demanda <i class="fa-solid fa-arrow-right ml-2"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- FORMULÁRIO EM LOTE (NOVO) -->
+                    <div id="formLoteContainer" class="hidden">
+                        <div class="border-b border-slate-200 pb-5 mb-6">
+                            <h2 class="text-2xl font-bold text-blue-950 flex items-center gap-2"><i class="fa-solid fa-layer-group text-blue-700"></i> Cadastro em Lote</h2>
+                            <p class="text-slate-500 mt-1">Crie múltiplas viagens para o mesmo setor/solicitante de uma só vez, alterando apenas datas, destinos e veículos.</p>
+                        </div>
+
+                        <form id="loteForm" class="space-y-6">
+                            <!-- Bloco Padrão (Dados Comuns) -->
+                            <div class="bg-blue-50/50 p-5 rounded-lg border border-blue-200">
+                                <h3 class="text-sm font-bold text-blue-900 uppercase tracking-wider mb-4 border-b border-blue-200 pb-2">1. Informações Comuns do Lote</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-4">
+                                    <div>
+                                        <label class="block text-sm font-bold text-blue-900 mb-1">Solicitante Base</label>
+                                        <input type="text" id="loteSolicitante" required class="w-full px-4 py-2 border border-blue-300 rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-900 bg-white">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-bold text-blue-900 mb-1">Setor Base</label>
+                                        <input type="text" id="loteSetor" required class="w-full px-4 py-2 border border-blue-300 rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-900 bg-white">
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div>
+                                        <label class="block text-sm font-bold text-blue-900 mb-1">Nº SEI (Aplicado a todos - Opcional)</label>
+                                        <input type="text" id="loteNumeroSei" class="w-full px-4 py-2 border border-blue-300 rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-900 bg-white">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-bold text-blue-900 mb-1">Observações Comuns</label>
+                                        <input type="text" id="loteObservacoes" class="w-full px-4 py-2 border border-blue-300 rounded-md focus:ring-2 focus:ring-blue-900 focus:border-blue-900 bg-white">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Lista de Viagens Dinâmica -->
+                            <div>
+                                <h3 class="text-sm font-bold text-blue-900 uppercase tracking-wider mb-4 border-b border-slate-200 pb-2 flex justify-between items-center">
+                                    2. Roteiros e Datas
+                                </h3>
+                                <div id="loteItemsContainer" class="space-y-4">
+                                    <!-- Itens do lote serão injetados aqui -->
+                                </div>
+                                <div class="mt-4">
+                                    <button type="button" onclick="adicionarItemLote()" class="btn-press w-full border-2 border-dashed border-blue-300 text-blue-700 bg-blue-50/50 hover:bg-blue-100 hover:border-blue-500 font-bold py-4 rounded-lg transition-all flex justify-center items-center gap-2">
+                                        <i class="fa-solid fa-plus"></i> Adicionar Nova Viagem ao Lote
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col sm:flex-row justify-end gap-4 pt-6 border-t border-slate-200 mt-8">
+                                <button type="button" onclick="limparFormularioLote()" class="btn-press px-6 py-3 border border-slate-300 rounded-md text-slate-700 font-bold hover:bg-slate-100 transition-colors">
+                                    Limpar Tudo
+                                </button>
+                                <button type="submit" class="btn-press px-8 py-3 bg-blue-900 text-white font-bold rounded-md hover:bg-blue-800 shadow-lg transition-all hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-layer-group"></i> Salvar Lote Completo
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
                 </div>
             </div>
 
@@ -601,43 +703,43 @@
             <div id="motoristas-content" class="tab-content hidden">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
                     
-                    <div class="bg-white rounded-xl card-shadow p-6 border border-gray-200 lg:col-span-1 hover-lift">
-                        <h2 class="text-xl font-bold text-black mb-6 pb-2 border-b border-gray-100">Homologar Motorista</h2>
+                    <div class="bg-white rounded-xl card-shadow p-6 border border-slate-200 lg:col-span-1 hover-lift">
+                        <h2 class="text-xl font-bold text-blue-950 mb-6 pb-2 border-b border-slate-100">Homologar Motorista</h2>
                         <form id="motoristaForm" class="space-y-6">
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Nome Completo</label>
-                                <input type="text" id="nomeMotoristaForm" name="nomeMotoristaForm" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black hover:border-gray-400 transition-colors">
+                                <label class="block text-sm font-bold text-blue-900 mb-2">Nome Completo</label>
+                                <input type="text" id="nomeMotoristaForm" name="nomeMotoristaForm" required class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-900 hover:border-slate-400 transition-colors">
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Foto / CNH (Opcional)</label>
-                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md bg-gray-50 hover:bg-gray-100 transition-colors">
+                                <label class="block text-sm font-bold text-blue-900 mb-2">Foto / CNH (Opcional)</label>
+                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-md bg-slate-50 hover:bg-slate-100 transition-colors">
                                     <div class="space-y-1 text-center">
                                         <div id="previewContainer" class="hidden">
-                                            <img id="previewImage" class="mx-auto h-24 w-24 rounded-full object-cover border-2 border-black shadow-md transition-transform hover:scale-105" src="" alt="Preview">
+                                            <img id="previewImage" class="mx-auto h-24 w-24 rounded-full object-cover border-2 border-blue-900 shadow-md transition-transform hover:scale-105" src="" alt="Preview">
                                         </div>
                                         <div id="uploadPlaceholder">
-                                            <i class="fa-solid fa-image text-3xl text-gray-400 mb-2 transition-transform hover:scale-110"></i>
-                                            <div class="flex justify-center text-sm text-gray-600">
-                                                <label for="fotoMotorista" class="relative cursor-pointer bg-white px-2 py-1 rounded font-medium text-black border border-gray-300 hover:bg-gray-100 transition-colors">
+                                            <i class="fa-solid fa-image text-3xl text-slate-400 mb-2 transition-transform hover:scale-110"></i>
+                                            <div class="flex justify-center text-sm text-slate-600">
+                                                <label for="fotoMotorista" class="relative cursor-pointer bg-white px-2 py-1 rounded font-medium text-blue-900 border border-slate-300 hover:bg-slate-100 transition-colors">
                                                     <span>Fazer Upload</span>
                                                     <input id="fotoMotorista" name="fotoMotorista" type="file" accept="image/*" class="sr-only">
                                                 </label>
                                             </div>
-                                            <p class="text-xs text-gray-500 mt-2">Formatos padrões de imagem</p>
+                                            <p class="text-xs text-slate-500 mt-2">Formatos padrões de imagem</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn-press w-full px-6 py-3 bg-black text-white font-bold rounded-md hover:bg-gray-800 transition-all shadow hover:shadow-lg">
+                            <button type="submit" class="btn-press w-full px-6 py-3 bg-blue-900 text-white font-bold rounded-md hover:bg-blue-800 transition-all shadow hover:shadow-lg">
                                 Cadastrar
                             </button>
                         </form>
                     </div>
 
-                    <div class="bg-white rounded-xl card-shadow p-6 border border-gray-200 lg:col-span-2">
-                        <h3 class="text-xl font-bold text-black mb-6 pb-2 border-b border-gray-100">Profissionais Homologados (Hub)</h3>
+                    <div class="bg-white rounded-xl card-shadow p-6 border border-slate-200 lg:col-span-2">
+                        <h3 class="text-xl font-bold text-blue-950 mb-6 pb-2 border-b border-slate-100">Profissionais Homologados (Hub)</h3>
                         <div id="listaMotoristas" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <p class="text-gray-500 text-center py-8 col-span-2">Nenhum profissional listado.</p>
+                            <p class="text-slate-500 text-center py-8 col-span-2">Nenhum profissional listado.</p>
                         </div>
                     </div>
                 </div>
@@ -645,49 +747,47 @@
 
             <!-- Timeline Content -->
             <div id="timeline-content" class="tab-content hidden">
-                <div class="bg-white rounded-xl card-shadow p-6 border border-gray-200 max-w-5xl mx-auto">
-                    <div class="flex justify-between items-center mb-8 pb-4 border-b border-gray-100">
+                <div class="bg-white rounded-xl card-shadow p-6 border border-slate-200 max-w-5xl mx-auto">
+                    <div class="flex justify-between items-center mb-8 pb-4 border-b border-slate-100">
                         <div>
-                            <h2 class="text-2xl font-bold text-black">Acompanhamento Logístico</h2>
-                            <p class="text-gray-500 text-sm">Visualização temporal de despachos de micro-ônibus.</p>
+                            <h2 class="text-2xl font-bold text-blue-950">Acompanhamento Logístico</h2>
+                            <p class="text-slate-500 text-sm">Visualização temporal de despachos de micro-ônibus.</p>
                         </div>
-                        <div class="flex items-center space-x-2 bg-gray-100 px-3 py-1 rounded-full border border-gray-200 hover:bg-gray-200 transition-colors cursor-default">
-                            <div id="statusBadgeColor" class="w-2.5 h-2.5 bg-black rounded-full status-indicator"></div>
-                            <span id="statusBadgeText" class="text-xs font-bold text-black tracking-wide">AO VIVO</span>
+                        <div class="flex items-center space-x-2 bg-slate-100 px-3 py-1 rounded-full border border-slate-200 hover:bg-slate-200 transition-colors cursor-default shadow-inner">
+                            <div id="statusBadgeColor" class="w-2.5 h-2.5 bg-blue-600 rounded-full status-indicator shadow-[0_0_8px_rgba(37,99,235,0.8)]"></div>
+                            <span id="statusBadgeText" class="text-xs font-bold text-blue-900 tracking-wide">AO VIVO</span>
                         </div>
                     </div>
                     <div id="timelineContainer" class="space-y-6">
-                        <p class="text-gray-500 text-center py-8">Sem rotas ativas no mês.</p>
+                        <p class="text-slate-500 text-center py-8">Sem rotas ativas no mês.</p>
                     </div>
                 </div>
             </div>
 
             <!-- Calendario Content -->
             <div id="calendario-content" class="tab-content hidden">
-                <div class="bg-white rounded-xl card-shadow border border-gray-200 max-w-6xl mx-auto relative hover-lift">
-                    <div class="bg-black px-6 py-5 flex justify-between items-center rounded-t-xl">
+                <div class="bg-white rounded-xl card-shadow border border-slate-200 max-w-6xl mx-auto relative hover-lift">
+                    <div class="bg-blue-900 px-6 py-5 flex justify-between items-center rounded-t-xl">
                         <h2 class="text-xl font-bold text-white"><i class="fa-regular fa-calendar mr-2 transition-transform hover:rotate-12"></i> Grade Mensal</h2>
-                        <div class="flex items-center space-x-4 bg-gray-800 p-1 rounded-lg">
-                            <button onclick="navegarMes(-1)" class="btn-press px-3 py-1 bg-transparent hover:bg-gray-700 text-white rounded transition-colors"><i class="fa-solid fa-chevron-left"></i></button>
+                        <div class="flex items-center space-x-4 bg-blue-950 p-1 rounded-lg shadow-inner border border-blue-800">
+                            <button onclick="navegarMes(-1)" class="btn-press px-3 py-1 bg-transparent hover:bg-blue-800 text-white rounded transition-colors"><i class="fa-solid fa-chevron-left"></i></button>
                             <h3 id="mesAnoAtual" class="text-white font-bold text-sm min-w-[120px] text-center uppercase tracking-wider transition-all"></h3>
-                            <button onclick="navegarMes(1)" class="btn-press px-3 py-1 bg-transparent hover:bg-gray-700 text-white rounded transition-colors"><i class="fa-solid fa-chevron-right"></i></button>
+                            <button onclick="navegarMes(1)" class="btn-press px-3 py-1 bg-transparent hover:bg-blue-800 text-white rounded transition-colors"><i class="fa-solid fa-chevron-right"></i></button>
                         </div>
                     </div>
                     
-                    <div class="p-6 bg-gray-50 rounded-b-xl">
-                        <!-- Removido o overflow-hidden para não cortar o tooltip hover -->
-                        <div class="bg-white rounded-lg border border-gray-200 shadow-sm relative z-0">
-                            <div class="grid grid-cols-7 bg-gray-100 border-b border-gray-200 rounded-t-lg">
-                                <div class="p-3 text-center text-black font-bold text-xs uppercase tracking-wider">Dom</div>
-                                <div class="p-3 text-center text-black font-bold text-xs uppercase tracking-wider border-l border-gray-200">Seg</div>
-                                <div class="p-3 text-center text-black font-bold text-xs uppercase tracking-wider border-l border-gray-200">Ter</div>
-                                <div class="p-3 text-center text-black font-bold text-xs uppercase tracking-wider border-l border-gray-200">Qua</div>
-                                <div class="p-3 text-center text-black font-bold text-xs uppercase tracking-wider border-l border-gray-200">Qui</div>
-                                <div class="p-3 text-center text-black font-bold text-xs uppercase tracking-wider border-l border-gray-200">Sex</div>
-                                <div class="p-3 text-center text-black font-bold text-xs uppercase tracking-wider border-l border-gray-200">Sáb</div>
+                    <div class="p-6 bg-slate-50 rounded-b-xl">
+                        <div class="bg-white rounded-lg border border-slate-200 shadow-sm relative z-0">
+                            <div class="grid grid-cols-7 bg-slate-100 border-b border-slate-200 rounded-t-lg">
+                                <div class="p-3 text-center text-blue-900 font-bold text-xs uppercase tracking-wider">Dom</div>
+                                <div class="p-3 text-center text-blue-900 font-bold text-xs uppercase tracking-wider border-l border-slate-200">Seg</div>
+                                <div class="p-3 text-center text-blue-900 font-bold text-xs uppercase tracking-wider border-l border-slate-200">Ter</div>
+                                <div class="p-3 text-center text-blue-900 font-bold text-xs uppercase tracking-wider border-l border-slate-200">Qua</div>
+                                <div class="p-3 text-center text-blue-900 font-bold text-xs uppercase tracking-wider border-l border-slate-200">Qui</div>
+                                <div class="p-3 text-center text-blue-900 font-bold text-xs uppercase tracking-wider border-l border-slate-200">Sex</div>
+                                <div class="p-3 text-center text-blue-900 font-bold text-xs uppercase tracking-wider border-l border-slate-200">Sáb</div>
                             </div>
-                            <!-- O border radius é mantido aqui nas extremidades do grid no final via CSS dinâmico ou classes, mas para simplicidade manteremos o visual B&W padrão -->
-                            <div id="calendarioGrid" class="grid grid-cols-7 divide-x divide-y divide-gray-200"></div>
+                            <div id="calendarioGrid" class="grid grid-cols-7 divide-x divide-y divide-slate-200"></div>
                         </div>
                     </div>
                 </div>
@@ -695,33 +795,33 @@
 
             <!-- Escala Content -->
             <div id="escala-content" class="tab-content hidden">
-                <div class="bg-white rounded-xl card-shadow overflow-hidden border border-gray-200 max-w-full mx-auto hover-lift">
-                    <div class="bg-black px-6 py-5 flex justify-between items-center">
+                <div class="bg-white rounded-xl card-shadow overflow-hidden border border-slate-200 max-w-full mx-auto hover-lift">
+                    <div class="bg-blue-900 px-6 py-5 flex justify-between items-center">
                         <div>
                             <h2 class="text-xl font-bold text-white">Escala Operacional</h2>
-                            <p class="text-gray-400 text-sm">Controle de saídas e alocação de frota.</p>
+                            <p class="text-blue-200 text-sm">Controle de saídas e alocação de frota.</p>
                         </div>
-                        <i class="fa-solid fa-table-list text-2xl text-gray-500 transition-transform hover:scale-110"></i>
+                        <i class="fa-solid fa-table-list text-2xl text-blue-300 transition-transform hover:scale-110"></i>
                     </div>
                     
                     <div class="p-0 overflow-x-auto">
-                        <table class="min-w-full bg-white divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
+                        <table class="min-w-full bg-white divide-y divide-slate-200">
+                            <thead class="bg-slate-50">
                                 <tr>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider hover:text-gray-600 transition-colors">Data/Hora</th>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider hover:text-gray-600 transition-colors">Cód</th>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider hover:text-gray-600 transition-colors">Trajeto</th>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider hidden md:table-cell hover:text-gray-600 transition-colors">Cliente / Setor</th>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider hidden lg:table-cell hover:text-gray-600 transition-colors">Placa</th>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider hover:text-gray-600 transition-colors">Motorista</th>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider" id="escalaThGestao">Gestão</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-blue-900 uppercase tracking-wider hover:text-blue-700 transition-colors">Data/Hora</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-blue-900 uppercase tracking-wider hover:text-blue-700 transition-colors">Cód</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-blue-900 uppercase tracking-wider hover:text-blue-700 transition-colors">Trajeto</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-blue-900 uppercase tracking-wider hidden md:table-cell hover:text-blue-700 transition-colors">Cliente / Setor</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-blue-900 uppercase tracking-wider hidden lg:table-cell hover:text-blue-700 transition-colors">Placa</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-blue-900 uppercase tracking-wider hover:text-blue-700 transition-colors">Motorista</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-blue-900 uppercase tracking-wider" id="escalaThGestao">Gestão</th>
                                 </tr>
                             </thead>
-                            <tbody id="escalaTableBody" class="bg-white divide-y divide-gray-200">
+                            <tbody id="escalaTableBody" class="bg-white divide-y divide-slate-200">
                                 <tr>
                                     <td colspan="7" class="px-6 py-12 text-center">
-                                        <i class="fa-solid fa-folder-open text-4xl text-gray-300 mb-3 block transition-transform hover:scale-110"></i>
-                                        <p class="text-gray-500 font-medium">Lista de escala vazia.</p>
+                                        <i class="fa-solid fa-folder-open text-4xl text-slate-300 mb-3 block transition-transform hover:scale-110"></i>
+                                        <p class="text-slate-500 font-medium">Lista de escala vazia.</p>
                                     </td>
                                 </tr>
                             </tbody>
@@ -733,20 +833,20 @@
         </main>
 
         <!-- FOOTER / RODAPÉ DO DESENVOLVEDOR -->
-        <footer class="bg-black text-white border-t border-gray-800 mt-auto shadow-2xl relative z-40 overflow-hidden">
+        <footer class="bg-blue-950 text-white border-t border-blue-900 mt-auto shadow-2xl relative z-40 overflow-hidden">
             <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-6">
                 
                 <!-- Perfil do Dev -->
                 <div class="flex items-center gap-4 z-10 hover-lift cursor-default">
-                    <img src="https://i.ibb.co/204hGBJ6/Screenshot-20260624-092626-Photos.jpg" alt="Welligton Ferreira" class="w-16 h-16 rounded-full object-cover border-2 border-gray-600 shadow-xl transition-transform hover:border-white">
+                    <img src="https://i.ibb.co/204hGBJ6/Screenshot-20260624-092626-Photos.jpg" alt="Welligton Ferreira" class="w-16 h-16 rounded-full object-cover border-2 border-blue-700 shadow-xl transition-transform hover:border-blue-400">
                     <div>
-                        <p class="text-[10px] text-gray-400 uppercase tracking-widest font-bold mb-1">Engenharia & Desenvolvimento</p>
-                        <h3 class="text-xl font-black tracking-tight text-white uppercase transition-colors hover:text-gray-300">Welligton Ferreira</h3>
-                        <p class="text-xs text-gray-500 mt-1"><i class="fa-solid fa-code text-gray-600 mr-1"></i> MicroBus Hub Sys</p>
+                        <p class="text-[10px] text-blue-300 uppercase tracking-widest font-bold mb-1">Engenharia & Desenvolvimento</p>
+                        <h3 class="text-xl font-black tracking-tight text-white uppercase transition-colors hover:text-blue-200">Welligton Ferreira</h3>
+                        <p class="text-xs text-blue-400 mt-1"><i class="fa-solid fa-code text-blue-500 mr-1"></i> MicroBus Hub Sys</p>
                     </div>
                 </div>
 
-                <!-- ANIMAÇÃO DE ENGRENAGENS (GEARBOX) -->
+                <!-- ANIMAÇÃO DE ENGRENAGENS (GEARBOX) - TEMA NAVY -->
                 <div class="transform scale-75 origin-center md:origin-right opacity-80 hover:opacity-100 transition-opacity z-10">
                     <div class="gearbox">
                         <div class="overlay"></div>
@@ -779,97 +879,97 @@
     </div>
 
     <!-- Modal Edição -->
-    <div id="modalEdicao" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4 hidden glass-panel">
-        <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-300 transition-transform duration-300 transform scale-95 hover:scale-100">
-            <div class="bg-black px-6 py-4 flex justify-between items-center sticky top-0 z-10">
+    <div id="modalEdicao" class="fixed inset-0 bg-blue-950 bg-opacity-80 flex items-center justify-center z-50 p-4 hidden glass-panel">
+        <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-blue-200 transition-transform duration-300 transform scale-95 hover:scale-100">
+            <div class="bg-blue-900 px-6 py-4 flex justify-between items-center sticky top-0 z-10">
                 <h3 class="text-xl font-bold text-white">Modificar Demanda</h3>
-                <button onclick="fecharModalEdicao()" class="text-gray-400 hover:text-white transition-colors transform hover:rotate-90"><i class="fa-solid fa-xmark text-xl"></i></button>
+                <button onclick="fecharModalEdicao()" class="text-blue-300 hover:text-white transition-colors transform hover:rotate-90"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             
-            <div class="p-6 bg-gray-50">
+            <div class="p-6 bg-slate-50">
                 <form id="formEdicao" class="space-y-5">
                     <input type="hidden" id="editId" name="editId">
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Solicitante</label>
-                            <input type="text" id="editSolicitante" name="editSolicitante" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black transition-colors">
+                            <label class="block text-sm font-bold text-blue-900 mb-1">Solicitante</label>
+                            <input type="text" id="editSolicitante" name="editSolicitante" required class="w-full px-3 py-2 border border-slate-300 rounded focus:border-blue-900 focus:ring-1 focus:ring-blue-900 transition-colors">
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Setor</label>
-                            <input type="text" id="editSetor" name="editSetor" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black transition-colors">
+                            <label class="block text-sm font-bold text-blue-900 mb-1">Setor</label>
+                            <input type="text" id="editSetor" name="editSetor" required class="w-full px-3 py-2 border border-slate-300 rounded focus:border-blue-900 focus:ring-1 focus:ring-blue-900 transition-colors">
                         </div>
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Partida</label>
-                            <input type="text" id="editPartida" name="editPartida" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black transition-colors">
+                            <label class="block text-sm font-bold text-blue-900 mb-1">Partida</label>
+                            <input type="text" id="editPartida" name="editPartida" required class="w-full px-3 py-2 border border-slate-300 rounded focus:border-blue-900 focus:ring-1 focus:ring-blue-900 transition-colors">
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Destino</label>
-                            <input type="text" id="editDestino" name="editDestino" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black transition-colors">
+                            <label class="block text-sm font-bold text-blue-900 mb-1">Destino</label>
+                            <input type="text" id="editDestino" name="editDestino" required class="w-full px-3 py-2 border border-slate-300 rounded focus:border-blue-900 focus:ring-1 focus:ring-blue-900 transition-colors">
                         </div>
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Data da demanda</label>
-                            <input type="date" id="editDataDemanda" name="editDataDemanda" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black transition-colors">
+                            <label class="block text-sm font-bold text-blue-900 mb-1">Data da demanda</label>
+                            <input type="date" id="editDataDemanda" name="editDataDemanda" required class="w-full px-3 py-2 border border-slate-300 rounded focus:border-blue-900 focus:ring-1 focus:ring-blue-900 transition-colors">
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Horário da demanda</label>
-                            <input type="time" id="editHorario" name="editHorario" required class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black transition-colors">
+                            <label class="block text-sm font-bold text-blue-900 mb-1">Horário da demanda</label>
+                            <input type="time" id="editHorario" name="editHorario" required class="w-full px-3 py-2 border border-slate-300 rounded focus:border-blue-900 focus:ring-1 focus:ring-blue-900 transition-colors">
                         </div>
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Nº SEI</label>
-                            <input type="text" id="editNumeroSei" name="editNumeroSei" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black transition-colors">
+                            <label class="block text-sm font-bold text-blue-900 mb-1">Nº SEI</label>
+                            <input type="text" id="editNumeroSei" name="editNumeroSei" class="w-full px-3 py-2 border border-slate-300 rounded focus:border-blue-900 focus:ring-1 focus:ring-blue-900 transition-colors">
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Qtd. de Veículos</label>
-                            <input type="number" id="editQtdVeiculos" name="editQtdVeiculos" min="1" value="1" onchange="renderizarVeiculosEdicao()" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black transition-colors">
+                            <label class="block text-sm font-bold text-blue-900 mb-1">Qtd. de Veículos</label>
+                            <input type="number" id="editQtdVeiculos" name="editQtdVeiculos" min="1" value="1" onchange="renderizarVeiculosEdicao()" class="w-full px-3 py-2 border border-slate-300 rounded focus:border-blue-900 focus:ring-1 focus:ring-blue-900 transition-colors">
                         </div>
                     </div>
-                    <div id="editContainerVeiculos" class="space-y-3 bg-gray-100 p-3 rounded border border-gray-200 mt-2 mb-4">
+                    <div id="editContainerVeiculos" class="space-y-3 bg-blue-50 p-3 rounded border border-blue-200 mt-2 mb-4">
                         <!-- Será injetado via JS -->
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Observações</label>
-                        <textarea id="editObservacoes" name="editObservacoes" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black transition-colors"></textarea>
+                        <label class="block text-sm font-bold text-blue-900 mb-1">Observações</label>
+                        <textarea id="editObservacoes" name="editObservacoes" rows="2" class="w-full px-3 py-2 border border-slate-300 rounded focus:border-blue-900 focus:ring-1 focus:ring-blue-900 transition-colors"></textarea>
                     </div>
                 </form>
             </div>
-            <div class="px-6 py-4 bg-white border-t border-gray-200 flex justify-end gap-3 rounded-b-xl">
-                <button onclick="fecharModalEdicao()" class="btn-press px-5 py-2 border border-gray-300 rounded-md text-black font-bold hover:bg-gray-100 transition-colors">Cancelar</button>
-                <button onclick="salvarEdicao()" class="btn-press px-5 py-2 bg-black text-white rounded-md font-bold hover:bg-gray-800 transition-all shadow hover:shadow-lg">Salvar Alterações</button>
+            <div class="px-6 py-4 bg-white border-t border-slate-200 flex justify-end gap-3 rounded-b-xl">
+                <button onclick="fecharModalEdicao()" class="btn-press px-5 py-2 border border-slate-300 rounded-md text-slate-700 font-bold hover:bg-slate-100 transition-colors">Cancelar</button>
+                <button onclick="salvarEdicao()" class="btn-press px-5 py-2 bg-blue-900 text-white rounded-md font-bold hover:bg-blue-800 transition-all shadow hover:shadow-lg">Salvar Alterações</button>
             </div>
         </div>
     </div>
 
     <!-- Modal Visualização do Dia (Calendário) -->
-    <div id="modalDia" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4 hidden glass-panel">
-        <div class="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-gray-300 transition-transform duration-300 transform scale-95 hover:scale-100">
-            <div class="bg-black px-6 py-4 flex justify-between items-center rounded-t-xl shrink-0">
+    <div id="modalDia" class="fixed inset-0 bg-blue-950 bg-opacity-80 flex items-center justify-center z-50 p-4 hidden glass-panel">
+        <div class="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-blue-200 transition-transform duration-300 transform scale-95 hover:scale-100">
+            <div class="bg-blue-900 px-6 py-4 flex justify-between items-center rounded-t-xl shrink-0">
                 <h3 class="text-xl font-bold text-white" id="tituloModalDia">Demandas do Dia</h3>
-                <button onclick="fecharModalDia()" class="text-gray-400 hover:text-white transition-colors transform hover:rotate-90"><i class="fa-solid fa-xmark text-xl"></i></button>
+                <button onclick="fecharModalDia()" class="text-blue-300 hover:text-white transition-colors transform hover:rotate-90"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             
-            <div class="p-6 bg-gray-50 overflow-y-auto flex-1" id="conteudoModalDia">
+            <div class="p-6 bg-slate-50 overflow-y-auto flex-1" id="conteudoModalDia">
                 <!-- Conteúdo injetado via JS -->
             </div>
             
-            <div class="px-6 py-4 bg-white border-t border-gray-200 flex justify-end rounded-b-xl shrink-0">
-                <button onclick="fecharModalDia()" class="btn-press px-6 py-2 bg-black text-white rounded-md font-bold hover:bg-gray-800 transition-colors shadow hover:shadow-lg">Fechar Calendário</button>
+            <div class="px-6 py-4 bg-white border-t border-slate-200 flex justify-end rounded-b-xl shrink-0">
+                <button onclick="fecharModalDia()" class="btn-press px-6 py-2 bg-blue-900 text-white rounded-md font-bold hover:bg-blue-800 transition-colors shadow hover:shadow-lg">Fechar Calendário</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Configuração do seu Firebase atualizada
+        // Configuração do Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyDEvUYtoX6I1UCwDj3cGg83uIcUtJ0yCBU",
             authDomain: "demandas-de-micro-onibus.firebaseapp.com",
@@ -887,6 +987,7 @@
         let motoristas = [];
         let mesAtual = new Date().getMonth();
         let anoAtual = new Date().getFullYear();
+        let loteIndex = 0; // Índice de viagens no cadastro em lote
         
         // CONTROLE DE ACESSO
         let currentUserRole = sessionStorage.getItem('userRole') || null;
@@ -913,8 +1014,8 @@
                 const statusBadgeColor = document.getElementById('statusBadgeColor');
                 if(statusBadgeText) statusBadgeText.innerText = "MODO LOCAL (OFFLINE)";
                 if(statusBadgeColor) {
-                    statusBadgeColor.classList.remove('bg-black');
-                    statusBadgeColor.classList.add('bg-yellow-500');
+                    statusBadgeColor.classList.remove('bg-blue-600', 'shadow-[0_0_8px_rgba(37,99,235,0.8)]');
+                    statusBadgeColor.classList.add('bg-yellow-500', 'shadow-[0_0_8px_rgba(234,179,8,0.8)]');
                 }
             });
         }
@@ -943,13 +1044,12 @@
             
             document.getElementById('login-container').classList.add('hidden');
             document.getElementById('app-container').classList.remove('hidden');
-            // Remove the hard flex-col class from index to animate smoothly, adding dynamically
             document.getElementById('app-container').classList.add('flex', 'flex-col');
             
             aplicarRestricoesDeAcesso();
             refreshDemandasViews();
             refreshMotoristasViews();
-            showTab('dashboard'); // Forçar ir para dashboard após login
+            showTab('dashboard'); 
         }
 
         function fazerLogout() {
@@ -981,9 +1081,169 @@
             }
         }
 
-        // === LOGICA DINÂMICA DE MÚLTIPLOS VEÍCULOS ===
-        function getMotoristasOptionsHTML(selectedVal = '') {
-            let options = '<option value="">Selecione o motorista...</option>';
+        // ==========================================
+        // LÓGICA DE CADASTRO (INDIVIDUAL E LOTE)
+        // ==========================================
+        
+        function alternarModoCadastro(modo) {
+            const btnInd = document.getElementById('btnModoIndividual');
+            const btnLot = document.getElementById('btnModoLote');
+            const formInd = document.getElementById('formIndividualContainer');
+            const formLot = document.getElementById('formLoteContainer');
+
+            if (modo === 'individual') {
+                btnInd.classList.add('bg-white', 'text-blue-900', 'shadow-sm', 'border-slate-200');
+                btnInd.classList.remove('text-slate-500');
+                btnLot.classList.add('text-slate-500');
+                btnLot.classList.remove('bg-white', 'text-blue-900', 'shadow-sm', 'border-slate-200');
+                
+                formInd.classList.remove('hidden');
+                formLot.classList.add('hidden');
+            } else {
+                btnLot.classList.add('bg-white', 'text-blue-900', 'shadow-sm', 'border-slate-200');
+                btnLot.classList.remove('text-slate-500');
+                btnInd.classList.add('text-slate-500');
+                btnInd.classList.remove('bg-white', 'text-blue-900', 'shadow-sm', 'border-slate-200');
+                
+                formLot.classList.remove('hidden');
+                formInd.classList.add('hidden');
+
+                // Adiciona o primeiro item vazio no lote se não houver nenhum
+                if (document.getElementById('loteItemsContainer').children.length === 0) {
+                    adicionarItemLote();
+                }
+            }
+        }
+
+        // FUNÇÕES DO MODO LOTE
+        function adicionarItemLote() {
+            const container = document.getElementById('loteItemsContainer');
+            const dataHoje = new Date().toISOString().split('T')[0];
+            
+            const html = `
+                <div class="lote-item relative bg-white p-5 rounded-lg border border-blue-200 shadow-sm mb-4 transition-all animate-fade-in" id="lote_item_${loteIndex}">
+                    <button type="button" onclick="removerItemLote(${loteIndex})" class="absolute top-3 right-3 text-red-400 hover:text-red-600 transition-colors bg-red-50 hover:bg-red-100 p-1.5 rounded-full" title="Remover Viagem">
+                        <i class="fa-solid fa-trash w-4 h-4 flex items-center justify-center"></i>
+                    </button>
+                    
+                    <h4 class="font-bold text-blue-800 mb-4 border-b border-blue-100 pb-2"><i class="fa-solid fa-route mr-1"></i> Destino ${loteIndex + 1}</h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-xs font-bold text-blue-900 mb-1">Partida</label>
+                            <input type="text" name="lotePartida" required class="w-full px-3 py-2 border border-slate-300 rounded focus:ring-1 focus:ring-blue-900 focus:border-blue-900">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-blue-900 mb-1">Destino Final</label>
+                            <input type="text" name="loteDestino" required class="w-full px-3 py-2 border border-slate-300 rounded focus:ring-1 focus:ring-blue-900 focus:border-blue-900">
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-xs font-bold text-blue-900 mb-1">Data</label>
+                            <input type="date" name="loteData" value="${dataHoje}" min="${dataHoje}" required class="w-full px-3 py-2 border border-slate-300 rounded focus:ring-1 focus:ring-blue-900 focus:border-blue-900">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-blue-900 mb-1">Horário</label>
+                            <input type="time" name="loteHorario" required class="w-full px-3 py-2 border border-slate-300 rounded focus:ring-1 focus:ring-blue-900 focus:border-blue-900">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50 p-3 rounded border border-slate-200">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Motorista</label>
+                            <select name="loteMotorista" class="w-full px-3 py-2 border border-slate-300 rounded focus:ring-1 focus:ring-blue-900 focus:border-blue-900">
+                                ${getMotoristasOptionsHTML()}
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Placa do Veículo</label>
+                            <input type="text" name="lotePlaca" placeholder="Opcional" class="w-full px-3 py-2 border border-slate-300 rounded focus:ring-1 focus:ring-blue-900 focus:border-blue-900">
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', html);
+            loteIndex++;
+        }
+
+        function removerItemLote(id) {
+            const item = document.getElementById(`lote_item_${id}`);
+            if(item) {
+                item.style.opacity = '0';
+                item.style.transform = 'scale(0.95)';
+                setTimeout(() => item.remove(), 200);
+            }
+        }
+
+        function limparFormularioLote() {
+            document.getElementById('loteForm').reset();
+            document.getElementById('loteItemsContainer').innerHTML = '';
+            loteIndex = 0;
+            adicionarItemLote();
+        }
+
+        // Evento de Submissão Lote
+        document.getElementById('loteForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            if(currentUserRole !== 'gestor') return;
+
+            const items = document.querySelectorAll('.lote-item');
+            if(items.length === 0) {
+                mostrarMensagem('Adicione ao menos uma viagem ao lote.', 'error');
+                return;
+            }
+
+            const solicitante = document.getElementById('loteSolicitante').value;
+            const setor = document.getElementById('loteSetor').value;
+            const numeroSei = document.getElementById('loteNumeroSei').value;
+            const observacoes = document.getElementById('loteObservacoes').value;
+            const dataCadastro = new Date().toISOString();
+            
+            const listaDemandas = [];
+
+            items.forEach(item => {
+                const partida = item.querySelector('input[name="lotePartida"]').value;
+                const destino = item.querySelector('input[name="loteDestino"]').value;
+                const dataDemanda = item.querySelector('input[name="loteData"]').value;
+                const horario = item.querySelector('input[name="loteHorario"]').value;
+                const motorista = item.querySelector('select[name="loteMotorista"]').value;
+                const placa = item.querySelector('input[name="lotePlaca"]').value;
+
+                listaDemandas.push({
+                    solicitante, setor, numeroSei, observacoes,
+                    partida, destino, dataDemanda, horario,
+                    alocacoes: [{ placa, motorista }],
+                    status: 'Pendente', dataCadastro
+                });
+            });
+
+            try {
+                if (isFirebaseConfigured) {
+                    const batch = db.batch();
+                    listaDemandas.forEach(demanda => {
+                        const docRef = db.collection('demandas').doc();
+                        batch.set(docRef, demanda);
+                    });
+                    await batch.commit();
+                } else {
+                    listaDemandas.forEach((d, index) => {
+                        d.id = 'sim_lote_' + Date.now() + '_' + index;
+                        demandas.unshift(d); 
+                    });
+                    refreshDemandasViews();
+                }
+                
+                mostrarMensagem(`Lote com ${listaDemandas.length} viagens registrado!`, 'success');
+                limparFormularioLote();
+            } catch (error) {
+                mostrarMensagem('Erro ao registrar lote', 'error');
+            }
+        });
+
+        function getMotoristasOptionsHTML(selectedVal = '', isFiltro = false) {
+            let options = isFiltro ? '<option value="">Todos os Motoristas</option>' : '<option value="">Selecione o motorista...</option>';
             motoristas.forEach(m => {
                 options += `<option value="${m.nome}" ${m.nome === selectedVal ? 'selected' : ''}>${m.nome}</option>`;
             });
@@ -1005,14 +1265,14 @@
             for(let i=0; i<qtd; i++) {
                 const val = existingValues[i] || { placa: '', motorista: '' };
                 container.innerHTML += `
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4 border-b border-gray-200 last:border-0 last:pb-0 transition-opacity animate-fade-in">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4 border-b border-blue-200 last:border-0 last:pb-0 transition-opacity animate-fade-in">
                         <div>
-                            <label class="block text-xs font-bold text-gray-600 mb-1">Placa do Veículo ${i+1}</label>
-                            <input type="text" name="placaVeiculo_${i}" value="${val.placa}" placeholder="Ex: ABC-1234" class="w-full px-3 py-2 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black transition-colors hover:border-gray-400">
+                            <label class="block text-xs font-bold text-blue-900 mb-1">Placa do Veículo ${i+1}</label>
+                            <input type="text" name="placaVeiculo_${i}" value="${val.placa}" placeholder="Ex: ABC-1234" class="w-full px-3 py-2 bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-900 transition-colors hover:border-slate-400">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-600 mb-1">Motorista do Veículo ${i+1}</label>
-                            <select name="nomeMotorista_${i}" class="w-full px-3 py-2 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black transition-colors hover:border-gray-400">
+                            <label class="block text-xs font-bold text-blue-900 mb-1">Motorista do Veículo ${i+1}</label>
+                            <select name="nomeMotorista_${i}" class="w-full px-3 py-2 bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-900 transition-colors hover:border-slate-400">
                                 ${getMotoristasOptionsHTML(val.motorista)}
                             </select>
                         </div>
@@ -1040,14 +1300,14 @@
             for(let i=0; i<qtd; i++) {
                 const val = existingValues[i] || { placa: '', motorista: '' };
                 container.innerHTML += `
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pb-3 border-b border-gray-300 last:border-0 last:pb-0 transition-opacity">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pb-3 border-b border-blue-200 last:border-0 last:pb-0 transition-opacity">
                         <div>
-                            <label class="block text-xs font-bold text-gray-600 mb-1">Placa ${i+1}</label>
-                            <input type="text" name="editPlacaVeiculo_${i}" value="${val.placa}" class="w-full px-2 py-1.5 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black transition-colors">
+                            <label class="block text-xs font-bold text-blue-900 mb-1">Placa ${i+1}</label>
+                            <input type="text" name="editPlacaVeiculo_${i}" value="${val.placa}" class="w-full px-2 py-1.5 border border-slate-300 rounded focus:border-blue-900 focus:ring-1 focus:ring-blue-900 transition-colors bg-white">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-600 mb-1">Motorista ${i+1}</label>
-                            <select name="editNomeMotorista_${i}" class="w-full px-2 py-1.5 border border-gray-300 rounded focus:border-black focus:ring-1 focus:ring-black transition-colors">
+                            <label class="block text-xs font-bold text-blue-900 mb-1">Motorista ${i+1}</label>
+                            <select name="editNomeMotorista_${i}" class="w-full px-2 py-1.5 border border-slate-300 rounded focus:border-blue-900 focus:ring-1 focus:ring-blue-900 transition-colors bg-white">
                                 ${getMotoristasOptionsHTML(val.motorista)}
                             </select>
                         </div>
@@ -1062,7 +1322,7 @@
             if (alocs.length === 0) return 'A definir';
 
             if (htmlMode) {
-                return alocs.map(a => `${a.motorista || 'A definir'} <span class="text-xs font-normal text-gray-500">[${a.placa || 'S/Placa'}]</span>`).join('<br>');
+                return alocs.map(a => `${a.motorista || 'A definir'} <span class="text-xs font-normal text-slate-500">[${a.placa || 'S/Placa'}]</span>`).join('<br>');
             } else {
                 return alocs.map(a => `${a.motorista || 'A definir'} [${a.placa || 'S/Placa'}]`).join(', ');
             }
@@ -1074,14 +1334,15 @@
             if (alocs.length === 0) return '-';
             return alocs.map(a => a[campo] || '-').join('<br>');
         }
-        // ===============================================
-
+        
         function refreshDemandasViews() {
             updateDashboard(); updateTimeline(); updateEscala(); updateCalendario();
         }
         function refreshMotoristasViews() {
             updateListaMotoristas(); 
             renderizarVeiculosCadastro();
+            const filtroMot = document.getElementById('filtroMotorista');
+            if (filtroMot) filtroMot.innerHTML = getMotoristasOptionsHTML('', true);
         }
 
         function criarDataBrasilia(dataString) {
@@ -1115,31 +1376,28 @@
         }
 
         function showTab(tabName) {
-            // Remove active classes
             document.querySelectorAll('.tab-content').forEach(c => {
                 c.classList.add('hidden');
-                // Force reflow para garantir a re-animação de fade in css
                 void c.offsetWidth;
             });
             document.querySelectorAll('.tab-button').forEach(b => {
-                b.classList.remove('active', 'border-black', 'text-black');
-                b.classList.add('border-transparent', 'text-gray-500');
+                b.classList.remove('active', 'border-blue-900', 'text-blue-900');
+                b.classList.add('border-transparent', 'text-slate-500');
             });
 
-            // Show selected tab
             const target = document.getElementById(tabName + '-content');
             if (target) {
                 target.classList.remove('hidden');
             }
 
-            // Highlight button
             const btn = document.getElementById('tab-' + tabName);
             if(btn){
-                btn.classList.add('active', 'border-black', 'text-black');
-                btn.classList.remove('border-transparent', 'text-gray-500');
+                btn.classList.add('active', 'border-blue-900', 'text-blue-900');
+                btn.classList.remove('border-transparent', 'text-slate-500');
             }
         }
 
+        // Submissão do Form Individual
         document.getElementById('demandaForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             if(currentUserRole !== 'gestor') return;
@@ -1184,7 +1442,7 @@
         }
 
         function mostrarMensagem(texto, tipo) {
-            const cor = tipo === 'success' ? 'bg-black text-white border-white' : 'bg-white text-black border-black';
+            const cor = tipo === 'success' ? 'bg-blue-900 text-white border-white' : 'bg-white text-blue-900 border-blue-900';
             const msg = document.createElement('div');
             msg.className = `fixed top-4 right-4 ${cor} border-2 px-6 py-4 rounded-lg shadow-xl z-50 transform transition-all font-bold`;
             msg.innerHTML = `<i class="fa-solid ${tipo==='success'?'fa-check':'fa-triangle-exclamation'} mr-2"></i> ${texto}`;
@@ -1193,9 +1451,10 @@
         }
 
         function getStatusClasses(status) {
-            if(status === 'Concluída') return 'bg-black text-white border-black';
-            if(status === 'Em Andamento') return 'bg-gray-500 text-white border-gray-500';
-            return 'bg-white text-black border-gray-300';
+            if(status === 'Concluída') return 'bg-blue-900 text-white border-blue-900';
+            if(status === 'Cancelada pelo Solicitante') return 'bg-red-100 text-red-800 border-red-300';
+            if(status === 'Em Andamento') return 'bg-blue-600 text-white border-blue-600';
+            return 'bg-white text-blue-900 border-slate-300';
         }
 
         function updateDashboard() {
@@ -1209,16 +1468,16 @@
             
             const container = document.getElementById('demandasRecentes');
             if (demandas.length === 0) {
-                container.innerHTML = '<p class="text-gray-500 text-center py-6 text-sm">Nenhum fretamento registrado.</p>';
+                container.innerHTML = '<p class="text-slate-500 text-center py-6 text-sm">Nenhum fretamento registrado.</p>';
             } else {
                 container.innerHTML = demandas.slice(0,5).map(demanda => {
                     const stClasses = getStatusClasses(demanda.status);
                     return `
-                    <div class="hover-lift flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 mb-2 hover:bg-gray-100 transition-colors cursor-default">
+                    <div class="hover-lift flex items-center justify-between p-4 bg-slate-50 rounded-lg border border-slate-200 mb-2 hover:bg-slate-100 transition-colors cursor-default">
                         <div>
-                            <div class="font-bold text-black">${demanda.solicitante} <span class="font-normal text-sm text-gray-500">(${demanda.setor})</span></div>
-                            <div class="text-sm text-gray-600 mt-1"><i class="fa-solid fa-route mr-1 text-gray-400"></i> ${demanda.partida} → ${demanda.destino}</div>
-                            <div class="text-xs text-gray-500 mt-1"><i class="fa-regular fa-clock mr-1"></i> ${formatarDataBrasil(demanda.dataDemanda)} às ${demanda.horario}</div>
+                            <div class="font-bold text-blue-950">${demanda.solicitante} <span class="font-normal text-sm text-slate-500">(${demanda.setor})</span></div>
+                            <div class="text-sm text-slate-600 mt-1"><i class="fa-solid fa-route mr-1 text-blue-400"></i> ${demanda.partida} → ${demanda.destino}</div>
+                            <div class="text-xs text-slate-500 mt-1"><i class="fa-regular fa-clock mr-1 text-blue-400"></i> ${formatarDataBrasil(demanda.dataDemanda)} às ${demanda.horario}</div>
                         </div>
                         <div>
                             <span class="px-3 py-1 text-xs font-bold rounded-full border shadow-sm ${stClasses}">${demanda.status}</span>
@@ -1229,45 +1488,45 @@
         }
 
         function updateTimeline() {
-            const demandasMesAtual = demandas.filter(d => isDataNoMesAtual(d.dataDemanda) && d.status !== 'Concluída');
+            const demandasMesAtual = demandas.filter(d => isDataNoMesAtual(d.dataDemanda) && !['Concluída', 'Cancelada pelo Solicitante'].includes(d.status));
             const demandasPorData = {};
             demandasMesAtual.forEach(d => { if(!demandasPorData[d.dataDemanda]) demandasPorData[d.dataDemanda]=[]; demandasPorData[d.dataDemanda].push(d); });
             const datasOrdenadas = Object.keys(demandasPorData).sort();
             
             const container = document.getElementById('timelineContainer');
-            if (datasOrdenadas.length === 0) { container.innerHTML = '<p class="text-gray-500 text-center py-8">Sem despachos pendentes no mês.</p>'; return; }
+            if (datasOrdenadas.length === 0) { container.innerHTML = '<p class="text-slate-500 text-center py-8">Sem despachos pendentes no mês.</p>'; return; }
             
             let html = '';
             datasOrdenadas.forEach(data => {
                 const demandasDoDia = demandasPorData[data].sort((a,b) => a.horario.localeCompare(b.horario));
                 html += `
-                    <div class="mb-8 border-l-2 border-black pl-6 relative">
-                        <div class="absolute w-4 h-4 bg-black rounded-full -left-[9px] top-1 transition-transform hover:scale-125"></div>
-                        <h3 class="text-xl font-bold text-black mb-4 uppercase tracking-tight">${formatarDataCompletaBrasil(data)}</h3>
+                    <div class="mb-8 border-l-2 border-blue-900 pl-6 relative">
+                        <div class="absolute w-4 h-4 bg-blue-900 rounded-full -left-[9px] top-1 transition-transform hover:scale-125 shadow-[0_0_5px_rgba(30,58,138,0.5)]"></div>
+                        <h3 class="text-xl font-bold text-blue-950 mb-4 uppercase tracking-tight">${formatarDataCompletaBrasil(data)}</h3>
                         <div class="space-y-4">
                 `;
                 demandasDoDia.forEach(d => {
                     const actionButtons = currentUserRole === 'gestor' ? `
-                        <button onclick="editarDemanda('${d.id}')" class="text-gray-400 hover:text-black transition-transform hover:scale-110"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button onclick="editarDemanda('${d.id}')" class="text-slate-400 hover:text-blue-900 transition-transform hover:scale-110"><i class="fa-solid fa-pen-to-square"></i></button>
                     ` : '';
 
                     html += `
-                        <div class="hover-lift bg-white border border-gray-200 p-4 rounded-lg shadow-sm">
-                            <div class="flex justify-between items-center mb-2 border-b border-gray-100 pb-2">
-                                <span class="text-lg font-black text-black flex items-center gap-2"><i class="fa-regular fa-clock text-gray-400"></i> ${d.horario}</span>
+                        <div class="hover-lift bg-white border border-slate-200 p-4 rounded-lg shadow-sm">
+                            <div class="flex justify-between items-center mb-2 border-b border-slate-100 pb-2">
+                                <span class="text-lg font-black text-blue-950 flex items-center gap-2"><i class="fa-regular fa-clock text-blue-500"></i> ${d.horario}</span>
                                 <div class="flex gap-2">
-                                    <span class="px-2 py-1 text-xs font-bold border rounded bg-gray-100 text-gray-700">${d.status}</span>
+                                    <span class="px-2 py-1 text-xs font-bold border rounded bg-slate-100 text-slate-700">${d.status}</span>
                                     ${actionButtons}
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 gap-4 text-sm mt-3">
                                 <div>
-                                    <p class="text-gray-800"><strong>Para:</strong> ${d.solicitante} (${d.setor})</p>
-                                    <p class="text-gray-600 mt-1 flex items-center gap-1"><i class="fa-solid fa-map-pin text-gray-400"></i> ${d.partida}</p>
+                                    <p class="text-slate-800"><strong>Para:</strong> ${d.solicitante} (${d.setor})</p>
+                                    <p class="text-slate-600 mt-1 flex items-center gap-1"><i class="fa-solid fa-map-pin text-blue-400"></i> ${d.partida}</p>
                                 </div>
                                 <div>
-                                    <p class="text-gray-800"><strong>Equipe / Alocação:</strong><br/> <span class="leading-relaxed block mt-1">${formatarAlocacoesView(d, true)}</span></p>
-                                    <p class="text-gray-600 mt-2 flex items-center gap-1"><i class="fa-solid fa-flag-checkered text-gray-400"></i> ${d.destino}</p>
+                                    <p class="text-slate-800"><strong>Equipe / Alocação:</strong><br/> <span class="leading-relaxed block mt-1">${formatarAlocacoesView(d, true)}</span></p>
+                                    <p class="text-slate-600 mt-2 flex items-center gap-1"><i class="fa-solid fa-flag-checkered text-blue-400"></i> ${d.destino}</p>
                                 </div>
                             </div>
                         </div>
@@ -1279,46 +1538,49 @@
         }
 
         function updateEscala() {
-            const demandasOrdenadas = demandas.filter(d => isDataNoMesAtual(d.dataDemanda) && d.status !== 'Concluída')
+            const demandasOrdenadas = demandas.filter(d => isDataNoMesAtual(d.dataDemanda) && !['Concluída', 'Cancelada pelo Solicitante'].includes(d.status))
                 .sort((a, b) => new Date(a.dataDemanda+'T'+a.horario) - new Date(b.dataDemanda+'T'+b.horario));
             
             const tbody = document.getElementById('escalaTableBody');
             if (demandasOrdenadas.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="px-6 py-12 text-center text-gray-500 font-medium"><i class="fa-solid fa-folder-open text-4xl text-gray-300 mb-3 block"></i> Escala Operacional Vazia.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" class="px-6 py-12 text-center text-slate-500 font-medium"><i class="fa-solid fa-folder-open text-4xl text-slate-300 mb-3 block"></i> Escala Operacional Vazia.</td></tr>`;
                 return;
             }
             
-            tbody.innerHTML = demandasOrdenadas.map(d => {
+            tbody.innerHTML = demandasOrdenadas.map((d, index) => {
+                const bgRowClass = index % 2 === 0 ? 'bg-white' : 'bg-slate-50'; // Cores intermitentes
+
                 const gestaoHTML = currentUserRole === 'gestor' ? `
-                    <select onchange="alterarStatus('${d.id}', this.value)" class="text-xs font-bold border border-gray-300 rounded bg-white px-2 py-1 cursor-pointer hover:border-gray-400 transition-colors">
+                    <select onchange="alterarStatus('${d.id}', this.value)" class="text-xs font-bold border border-slate-300 rounded bg-white px-2 py-1 cursor-pointer hover:border-blue-900 transition-colors">
                         <option value="Pendente" ${d.status==='Pendente'?'selected':''}>Pendente</option>
                         <option value="Concluída" ${d.status==='Concluída'?'selected':''}>Concluir</option>
+                        <option value="Cancelada pelo Solicitante" ${d.status==='Cancelada pelo Solicitante'?'selected':''}>Cancelar (Setor)</option>
                     </select>
-                    <button onclick="editarDemanda('${d.id}')" class="text-gray-500 hover:text-black transition-transform hover:scale-110"><i class="fa-solid fa-edit"></i></button>
-                    <button onclick="excluirDemanda('${d.id}')" class="text-gray-400 hover:text-red-600 transition-transform hover:scale-110"><i class="fa-solid fa-trash"></i></button>
+                    <button onclick="editarDemanda('${d.id}')" class="text-slate-500 hover:text-blue-900 transition-transform hover:scale-110 ml-1"><i class="fa-solid fa-edit"></i></button>
+                    <button onclick="excluirDemanda('${d.id}')" class="text-slate-400 hover:text-red-600 transition-transform hover:scale-110 ml-1"><i class="fa-solid fa-trash"></i></button>
                 ` : `
-                    <span class="text-xs font-bold px-2 py-1 border border-gray-300 rounded bg-gray-50 text-gray-500">${d.status}</span>
+                    <span class="text-xs font-bold px-2 py-1 border border-slate-300 rounded bg-slate-50 text-slate-500">${d.status}</span>
                 `;
 
                 return `
-                <tr class="hover:bg-gray-100 transition-colors border-l-4 border-l-black group">
+                <tr class="${bgRowClass} hover:bg-blue-100 transition-colors border-l-4 border-l-blue-900 group">
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="font-bold text-black transition-colors group-hover:text-gray-800">${d.horario}</div>
-                        <div class="text-xs text-gray-500">${formatarDataBrasil(d.dataDemanda)}</div>
+                        <div class="font-bold text-blue-950 transition-colors group-hover:text-blue-900">${d.horario}</div>
+                        <div class="text-xs text-slate-500">${formatarDataBrasil(d.dataDemanda)}</div>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap"><span class="bg-gray-200 text-gray-800 text-xs font-bold px-2 py-1 rounded shadow-sm">TR${(d.id || '').slice(0,4).toUpperCase()}</span></td>
+                    <td class="px-6 py-4 whitespace-nowrap"><span class="bg-slate-200 text-slate-800 text-xs font-bold px-2 py-1 rounded shadow-sm">TR${(d.id || '').slice(0,4).toUpperCase()}</span></td>
                     <td class="px-6 py-4">
-                        <div class="font-bold text-gray-800">${d.destino}</div>
-                        <div class="text-xs text-gray-500">de ${d.partida}</div>
+                        <div class="font-bold text-slate-800">${d.destino}</div>
+                        <div class="text-xs text-slate-500">de ${d.partida}</div>
                     </td>
                     <td class="px-6 py-4 hidden md:table-cell">
-                        <div class="font-bold text-gray-800">${d.solicitante}</div>
-                        <div class="text-xs text-gray-500">${d.setor}</div>
+                        <div class="font-bold text-slate-800">${d.solicitante}</div>
+                        <div class="text-xs text-slate-500">${d.setor}</div>
                     </td>
                     <td class="px-6 py-4 hidden lg:table-cell text-sm font-bold leading-relaxed">${formatarAlocacoesSeparadas(d, 'placa')}</td>
-                    <td class="px-6 py-4 text-sm font-bold text-gray-700 leading-relaxed">${formatarAlocacoesSeparadas(d, 'motorista')}</td>
+                    <td class="px-6 py-4 text-sm font-bold text-slate-700 leading-relaxed">${formatarAlocacoesSeparadas(d, 'motorista')}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="flex items-center space-x-2">
+                        <div class="flex items-center space-x-1">
                             ${gestaoHTML}
                         </div>
                     </td>
@@ -1341,11 +1603,24 @@
             catch (e) { mostrarMensagem('Erro', 'error'); }
         }
 
-        // Calendário, Tooltips e Modal
         function navegarMes(dir) {
             mesAtual += dir; if(mesAtual>11){mesAtual=0;anoAtual++;} else if(mesAtual<0){mesAtual=11;anoAtual--;} updateCalendario();
         }
         
+        function getCorProximidade(dataStr) {
+            const hojeObj = new Date(); hojeObj.setHours(0,0,0,0);
+            const dataAlvo = criarDataBrasilia(dataStr);
+            const diffTempo = dataAlvo - hojeObj;
+            const diffDias = Math.ceil(diffTempo / (1000 * 60 * 60 * 24));
+
+            if (diffDias < 0) return 'bg-slate-400 text-white'; // Passado
+            if (diffDias === 0) return 'bg-red-700 text-white'; // Hoje
+            if (diffDias === 1 || diffDias === 2) return 'bg-red-500 text-white'; // Muito próximo
+            if (diffDias === 3 || diffDias === 4) return 'bg-orange-500 text-white'; // Próximo
+            if (diffDias === 5 || diffDias === 6) return 'bg-yellow-400 text-blue-950'; // Atenção
+            return 'bg-green-600 text-white'; // Confortável / Longe
+        }
+
         function updateCalendario() {
             const nomesMeses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
             document.getElementById('mesAnoAtual').textContent = `${nomesMeses[mesAtual]} ${anoAtual}`;
@@ -1355,37 +1630,37 @@
             
             const grid = document.getElementById('calendarioGrid'); grid.innerHTML = '';
             
-            for (let i = 0; i < diaSemanaInicio; i++) { grid.innerHTML += `<div class="h-24 bg-gray-50/50"></div>`; }
+            for (let i = 0; i < diaSemanaInicio; i++) { grid.innerHTML += `<div class="h-24 bg-slate-50/50"></div>`; }
             
             for (let dia = 1; dia <= diasNoMes; dia++) {
                 const dataStr = `${anoAtual}-${String(mesAtual + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
                 const dDia = demandas.filter(d => d.dataDemanda === dataStr).sort((a,b) => a.horario.localeCompare(b.horario));
                 
-                // Construção do Tooltip de Resumo Animado (CSS customizado em style: calendar-tooltip)
                 let tooltipHTML = '';
                 if(dDia.length > 0) {
-                    let linhas = dDia.slice(0, 5).map(d => `<li class="truncate"><span class="text-gray-400 font-bold">${d.horario}</span> - ${d.solicitante} (${d.destino})</li>`).join('');
-                    if(dDia.length > 5) linhas += `<li class="text-gray-400 italic text-center mt-1 border-t border-gray-800 pt-1">+ ${dDia.length-5} demandas</li>`;
+                    let linhas = dDia.slice(0, 5).map(d => `<li class="truncate"><span class="text-blue-300 font-bold">${d.horario}</span> - ${d.solicitante} (${d.destino})</li>`).join('');
+                    if(dDia.length > 5) linhas += `<li class="text-blue-400 italic text-center mt-1 border-t border-blue-800 pt-1">+ ${dDia.length-5} demandas</li>`;
                     
                     tooltipHTML = `
-                        <div class="calendar-tooltip absolute bottom-[110%] left-1/2 w-64 bg-black/95 backdrop-blur-sm border border-gray-700 text-white text-xs rounded-lg p-3 shadow-2xl">
-                            <p class="font-bold border-b border-gray-700 pb-1 mb-2 text-center uppercase tracking-wider text-gray-300">Resumo: ${formatarDataBrasil(dataStr)}</p>
+                        <div class="calendar-tooltip absolute bottom-[110%] left-1/2 w-64 bg-blue-950/95 backdrop-blur-sm border border-blue-800 text-white text-xs rounded-lg p-3 shadow-2xl">
+                            <p class="font-bold border-b border-blue-800 pb-1 mb-2 text-center uppercase tracking-wider text-blue-200">Resumo: ${formatarDataBrasil(dataStr)}</p>
                             <ul class="text-left space-y-1.5">${linhas}</ul>
-                            <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-black/95"></div>
+                            <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-blue-950/95"></div>
                         </div>
                     `;
                 }
 
-                let b = `<div onclick="abrirModalDia('${dataStr}')" class="h-24 p-2 relative bg-white hover:bg-gray-100 transition-colors border-b border-r border-gray-200 cursor-pointer group">
-                            <div class="text-sm font-bold text-gray-700 group-hover:text-black transition-colors">${dia}</div>
+                let b = `<div onclick="abrirModalDia('${dataStr}')" class="h-24 p-2 relative bg-white hover:bg-slate-100 transition-colors border-b border-r border-slate-200 cursor-pointer group">
+                            <div class="text-sm font-bold text-slate-700 group-hover:text-blue-900 transition-colors">${dia}</div>
                             ${tooltipHTML}`;
                 
                 if(dDia.length > 0) {
                     b += `<div class="mt-1 flex flex-wrap gap-1">`;
                     dDia.slice(0,3).forEach(d => {
-                        b += `<div class="text-[10px] bg-black text-white px-1 rounded flex-1 text-center font-bold shadow-sm transition-transform group-hover:scale-105" title="${d.horario}">${d.horario}</div>`;
+                        const corClass = getCorProximidade(dataStr);
+                        b += `<div class="text-[10px] ${corClass} px-1 rounded flex-1 text-center font-bold shadow-sm transition-transform group-hover:scale-105" title="${d.horario}">${d.horario}</div>`;
                     });
-                    if(dDia.length>3) b+= `<div class="text-[10px] text-gray-500 font-bold">+${dDia.length-3}</div>`;
+                    if(dDia.length>3) b+= `<div class="text-[10px] text-slate-500 font-bold">+${dDia.length-3}</div>`;
                     b += `</div>`;
                 }
                 b += `</div>`;
@@ -1400,39 +1675,39 @@
             const container = document.getElementById('conteudoModalDia');
             
             if(demandasDoDia.length === 0) {
-                container.innerHTML = '<div class="text-center py-10"><i class="fa-regular fa-calendar-xmark text-4xl text-gray-300 mb-3 transition-transform hover:scale-110"></i><p class="text-gray-500 font-medium">Nenhuma demanda agendada para esta data.</p></div>';
+                container.innerHTML = '<div class="text-center py-10"><i class="fa-regular fa-calendar-xmark text-4xl text-slate-300 mb-3 transition-transform hover:scale-110"></i><p class="text-slate-500 font-medium">Nenhuma demanda agendada para esta data.</p></div>';
             } else {
                 let html = '<div class="space-y-4">';
                 demandasDoDia.forEach(d => {
                     const stClasses = getStatusClasses(d.status);
                     
                     const botoesGestao = currentUserRole === 'gestor' ? `
-                        <div class="mt-4 pt-3 border-t border-gray-100 flex justify-end">
-                            <button onclick="fecharModalDia(); setTimeout(()=>editarDemanda('${d.id}'), 300)" class="btn-press text-xs bg-gray-100 hover:bg-gray-200 text-black px-3 py-1.5 rounded font-bold transition-colors flex items-center gap-1 shadow-sm">
+                        <div class="mt-4 pt-3 border-t border-slate-100 flex justify-end">
+                            <button onclick="fecharModalDia(); setTimeout(()=>editarDemanda('${d.id}'), 300)" class="btn-press text-xs bg-slate-100 hover:bg-slate-200 text-blue-900 px-3 py-1.5 rounded font-bold transition-colors flex items-center gap-1 shadow-sm">
                                 <i class="fa-solid fa-pen-to-square"></i> Editar Demanda
                             </button>
                         </div>
                     ` : '';
 
                     html += `
-                        <div class="bg-white border border-gray-200 p-5 rounded-lg shadow-sm border-l-4 border-l-black hover-lift">
+                        <div class="bg-white border border-slate-200 p-5 rounded-lg shadow-sm border-l-4 border-l-blue-900 hover-lift">
                             <div class="flex justify-between items-start mb-3">
                                 <div>
-                                    <span class="text-xl font-black text-black flex items-center gap-2"><i class="fa-regular fa-clock text-gray-400"></i> ${d.horario}</span>
-                                    <p class="font-bold text-gray-800 mt-1">${d.solicitante} <span class="text-sm text-gray-500 font-normal">(${d.setor})</span></p>
+                                    <span class="text-xl font-black text-blue-950 flex items-center gap-2"><i class="fa-regular fa-clock text-blue-400"></i> ${d.horario}</span>
+                                    <p class="font-bold text-slate-800 mt-1">${d.solicitante} <span class="text-sm text-slate-500 font-normal">(${d.setor})</span></p>
                                 </div>
                                 <span class="px-3 py-1 text-xs font-bold rounded-full border shadow-sm ${stClasses}">${d.status}</span>
                             </div>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-600 mt-4 bg-gray-50 p-3 rounded transition-colors hover:bg-gray-100/50">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-600 mt-4 bg-slate-50 p-3 rounded transition-colors hover:bg-slate-100">
                                 <div>
-                                    <p class="font-semibold text-gray-800 mb-1"><i class="fa-solid fa-map-location-dot mr-1 text-gray-400"></i> Trajeto</p>
+                                    <p class="font-semibold text-slate-800 mb-1"><i class="fa-solid fa-map-location-dot mr-1 text-blue-400"></i> Trajeto</p>
                                     <p>${d.partida}</p>
-                                    <p class="text-xs text-gray-400 my-0.5">até</p>
+                                    <p class="text-xs text-slate-400 my-0.5">até</p>
                                     <p>${d.destino}</p>
                                 </div>
                                 <div>
-                                    <p class="font-semibold text-gray-800 mb-1"><i class="fa-solid fa-users mr-1 text-gray-400"></i> Profissionais & Frotas</p>
-                                    <div class="leading-relaxed mt-1 text-gray-800 font-medium">
+                                    <p class="font-semibold text-slate-800 mb-1"><i class="fa-solid fa-users mr-1 text-blue-400"></i> Profissionais & Frotas</p>
+                                    <div class="leading-relaxed mt-1 text-slate-800 font-medium">
                                         ${formatarAlocacoesView(d, true)}
                                     </div>
                                 </div>
@@ -1578,54 +1853,110 @@
 
         function updateListaMotoristas() {
             const list = document.getElementById('listaMotoristas');
-            if(!motoristas.length) { list.innerHTML = '<p class="col-span-2 text-gray-500 text-center">Nenhum registrado.</p>'; return; }
+            if(!motoristas.length) { list.innerHTML = '<p class="col-span-2 text-slate-500 text-center">Nenhum registrado.</p>'; return; }
             list.innerHTML = motoristas.map(m => `
-                <div class="hover-lift flex items-center gap-4 bg-gray-50 p-3 rounded border border-gray-200 transition-colors hover:bg-gray-100">
-                    ${m.foto ? `<img src="${m.foto}" class="w-10 h-10 rounded-full object-cover shadow-sm">` : `<div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center shadow-sm"><i class="fa-solid fa-user text-gray-600"></i></div>`}
-                    <div class="flex-1"><p class="font-bold text-sm text-black">${m.nome}</p></div>
-                    ${currentUserRole === 'gestor' ? `<button onclick="excluirMotorista('${m.id}')" class="text-gray-400 hover:text-red-500 transition-transform hover:scale-110"><i class="fa-solid fa-trash"></i></button>` : ''}
+                <div class="hover-lift flex items-center gap-4 bg-slate-50 p-3 rounded border border-slate-200 transition-colors hover:bg-slate-100">
+                    ${m.foto ? `<img src="${m.foto}" class="w-10 h-10 rounded-full object-cover shadow-sm">` : `<div class="w-10 h-10 rounded-full bg-blue-200 flex items-center justify-center shadow-sm"><i class="fa-solid fa-user text-blue-900"></i></div>`}
+                    <div class="flex-1"><p class="font-bold text-sm text-blue-950">${m.nome}</p></div>
+                    ${currentUserRole === 'gestor' ? `<button onclick="excluirMotorista('${m.id}')" class="text-slate-400 hover:text-red-500 transition-transform hover:scale-110"><i class="fa-solid fa-trash"></i></button>` : ''}
                 </div>
             `).join('');
         }
 
-        function getDemandasConcluidas() { return demandas.filter(d => d.status === 'Concluída').sort((a, b) => new Date(b.dataCadastro) - new Date(a.dataCadastro)); }
+        // Relatórios
+        function getDemandasConcluidas() { 
+            const dtInicio = document.getElementById('filtroDataInicio').value;
+            const dtFim = document.getElementById('filtroDataFim').value;
+            const setor = document.getElementById('filtroSetor').value.toLowerCase();
+            const motorista = document.getElementById('filtroMotorista').value.toLowerCase();
+            const placa = document.getElementById('filtroPlaca').value.toLowerCase();
+
+            return demandas.filter(d => {
+                const isFinalizada = d.status === 'Concluída' || d.status === 'Cancelada pelo Solicitante';
+                if (!isFinalizada) return false;
+
+                if (dtInicio && d.dataDemanda < dtInicio) return false;
+                if (dtFim && d.dataDemanda > dtFim) return false;
+                if (setor && !(d.setor || '').toLowerCase().includes(setor)) return false;
+
+                let matchMot = !motorista;
+                let matchPlaca = !placa;
+                
+                if (motorista || placa) {
+                    let alocs = d.alocacoes || [];
+                    if(alocs.length === 0 && (d.nomeMotorista || d.placaVeiculo)) { alocs = [{ motorista: d.nomeMotorista, placa: d.placaVeiculo }]; }
+                    if(alocs.length === 0) { alocs = [{ motorista: '', placa: '' }]; }
+                    
+                    if (motorista) matchMot = alocs.some(a => (a.motorista || '').toLowerCase().includes(motorista));
+                    if (placa) matchPlaca = alocs.some(a => (a.placa || '').toLowerCase().includes(placa));
+                }
+
+                return matchMot && matchPlaca;
+            }).sort((a, b) => new Date(b.dataDemanda) - new Date(a.dataDemanda) || b.horario.localeCompare(a.horario));
+        }
 
         function gerarTabelaRelatorio() {
             const c = getDemandasConcluidas(); let tb = '';
-            if(!c.length) tb = '<tr><td colspan="8" style="padding:15px;text-align:center;">Nenhuma executada.</td></tr>';
+            if(!c.length) tb = '<tr><td colspan="9" style="padding:20px;text-align:center;color:#64748b;font-weight:bold;">Nenhuma viagem encontrada para os filtros aplicados.</td></tr>';
             else c.forEach(d => {
-                tb += `<tr style="border-bottom: 1px solid #e5e7eb;">
-                    <td style="padding:12px;">${formatarDataBrasil(d.dataDemanda)}</td><td style="padding:12px;"><b>${d.horario}</b></td>
-                    <td style="padding:12px;">${d.solicitante}<br><small>${d.setor}</small></td><td style="padding:12px;">${d.partida}</td>
-                    <td style="padding:12px;">${d.destino}</td>
-                    <td style="padding:12px;">${formatarAlocacoesSeparadas(d, 'motorista')}</td>
-                    <td style="padding:12px;">${formatarAlocacoesSeparadas(d, 'placa')}</td>
-                    <td style="padding:12px;">${d.numeroSei||'-'}</td>
+                const stColor = d.status === 'Cancelada pelo Solicitante' ? 'color: #dc2626;' : 'color: #16a34a;';
+                const stText = d.status === 'Cancelada pelo Solicitante' ? 'Cancelada' : 'Concluída';
+                tb += `<tr style="border-bottom: 1px solid #e2e8f0; font-size: 11px;">
+                    <td style="padding:10px 8px;">${formatarDataBrasil(d.dataDemanda)}</td><td style="padding:10px 8px;"><b>${d.horario}</b></td>
+                    <td style="padding:10px 8px;color:#1e3a8a;font-weight:bold;">${d.solicitante}<br><small style="color:#64748b;font-weight:normal;">${d.setor}</small></td>
+                    <td style="padding:10px 8px;">${d.partida}</td>
+                    <td style="padding:10px 8px;">${d.destino}</td>
+                    <td style="padding:10px 8px;font-weight:bold;">${formatarAlocacoesSeparadas(d, 'motorista')}</td>
+                    <td style="padding:10px 8px;">${formatarAlocacoesSeparadas(d, 'placa')}</td>
+                    <td style="padding:10px 8px;">${d.numeroSei||'-'}</td>
+                    <td style="padding:10px 8px; font-weight:bold; ${stColor}">${stText}</td>
                 </tr>`;
             });
-            return `<table style="width:100%;border-collapse:collapse;font-family:sans-serif;text-align:left;background:#fff;border:1px solid #ccc;">
-                <thead style="background:#000;color:#fff;"><tr>
-                <th style="padding:12px;">Data</th><th style="padding:12px;">Hora</th><th style="padding:12px;">Empresa/Setor</th>
-                <th style="padding:12px;">Partida</th><th style="padding:12px;">Destino</th><th style="padding:12px;">Motorista</th>
-                <th style="padding:12px;">Placa</th><th style="padding:12px;">Cód/SEI</th>
+            return `<table style="width:100%;border-collapse:collapse;font-family:sans-serif;text-align:left;background:#fff;border:1px solid #cbd5e1;">
+                <thead style="background:#1e3a8a;color:#fff;font-size:12px;"><tr>
+                <th style="padding:12px 8px;">Data</th><th style="padding:12px 8px;">Hora</th><th style="padding:12px 8px;">Empresa/Setor</th>
+                <th style="padding:12px 8px;">Partida</th><th style="padding:12px 8px;">Destino</th><th style="padding:12px 8px;">Motorista</th>
+                <th style="padding:12px 8px;">Placa</th><th style="padding:12px 8px;">Cód/SEI</th><th style="padding:12px 8px;">Status</th>
                 </tr></thead><tbody>${tb}</tbody></table>`;
         }
 
         function gerarEstruturaPagina(titulo, botoes, script) {
-            return `<html><head><title>${titulo}</title><script src="https://cdn.tailwindcss.com"><\/script></head>
-            <body class="bg-gray-100 p-8 font-sans"><div class="max-w-6xl mx-auto bg-white p-8 shadow-lg border-t-8 border-black">
-            <div class="flex justify-between border-b pb-4 mb-6">
-                <div><h1 class="text-2xl font-black uppercase">MicroBus Hub - Logística</h1><p class="text-gray-500">${titulo}</p></div>
-                <div class="flex gap-2 no-print">${botoes}<button onclick="window.close()" class="px-4 py-2 border rounded bg-white text-black font-bold">Fechar</button></div>
+            return `<html><head><title>${titulo}</title>
+            <style>
+                @media print {
+                    @page { size: landscape; margin: 10mm; }
+                    body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+                    .no-print { display: none !important; }
+                }
+                body { font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; background: #f8fafc; padding: 20px; margin: 0; }
+                .container { max-width: 100%; margin: 0 auto; background: #fff; padding: 25px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); border-top: 6px solid #1e3a8a; border-radius: 6px; }
+                .header { display: flex; justify-content: space-between; border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; margin-bottom: 20px; }
+                .title h1 { margin: 0; color: #1e3a8a; font-size: 22px; text-transform: uppercase; font-weight: 900; letter-spacing: -0.025em; }
+                .title p { margin: 5px 0 0; color: #64748b; font-size: 14px; font-weight: bold; }
+                .btn { padding: 8px 16px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 13px; transition: 0.2s; }
+                .btn-primary { background: #1e3a8a; color: white; }
+                .btn-primary:hover { background: #1e40af; }
+                .btn-outline { background: white; border: 1px solid #cbd5e1; color: #334155; }
+                .btn-outline:hover { background: #f1f5f9; }
+            </style>
+            </head>
+            <body><div class="container">
+            <div class="header">
+                <div class="title"><h1>MicroBus Hub - COORDENAÇÃO DE SUPORTE E LOGÍSTICA</h1><p>${titulo}</p></div>
+                <div class="no-print" style="display:flex; gap:10px; align-items:flex-start;">${botoes || ''}<button onclick="window.close()" class="btn btn-outline">Fechar Aba</button></div>
             </div>
-            ${gerarTabelaRelatorio()}<div class="mt-4 text-sm text-gray-500 text-center">Total listado: <b>${getDemandasConcluidas().length}</b></div>
+            ${gerarTabelaRelatorio()}
+            <div style="margin-top:20px; font-size:12px; color:#64748b; text-align:right;">
+                Total consolidado: <b>${getDemandasConcluidas().length}</b> logísticas.<br>
+                Gerado em: ${new Date().toLocaleString('pt-BR')}
+            </div>
             </div>${script||''}</body></html>`;
         }
 
         function gerarRelatorioHTML() {
             if(currentUserRole !== 'gestor') return;
             const w = window.open('','_blank');
-            w.document.write(gerarEstruturaPagina('Demandas Corporativas Finalizadas', '<button onclick="window.print()" class="px-4 py-2 bg-black text-white font-bold rounded hover:bg-gray-800 transition-colors">Imprimir</button>')); w.document.close();
+            w.document.write(gerarEstruturaPagina('Logísticas Finalizadas (Filtradas)', '<button onclick="window.print()" class="btn btn-primary">Imprimir Relatório</button>')); w.document.close();
         }
         function gerarRelatorioPDF() {
             if(currentUserRole !== 'gestor') return;
@@ -1637,10 +1968,10 @@
             const script = `<script>function bx(){
                 const tb = document.querySelector('table').outerHTML;
                 const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['<html xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="utf-8"></head><body>'+tb+'</body></html>'], {type:'application/vnd.ms-excel'}));
-                a.download = 'MicroBusHub_Demandas.xls'; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+                a.download = 'MicroBusHub_Relatorio.xls'; document.body.appendChild(a); a.click(); document.body.removeChild(a);
             }<\/script>`;
             const w = window.open('','_blank');
-            w.document.write(gerarEstruturaPagina('Exportação Excel', '<button onclick="bx()" class="px-4 py-2 bg-black text-white font-bold rounded hover:bg-gray-800 transition-colors">Baixar .xls</button>', script)); w.document.close();
+            w.document.write(gerarEstruturaPagina('Exportação Excel', '<button onclick="bx()" class="btn btn-primary">Baixar Arquivo .xls</button>', script)); w.document.close();
         }
     </script>
 </body>
