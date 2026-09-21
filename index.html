@@ -384,10 +384,10 @@
                     <div class="flex items-center space-x-4">
                         <!-- DEV BADGE NO CABEÇALHO -->
                         <div class="hidden md:flex items-center gap-3 bg-white/10 p-1.5 pr-4 rounded-full border border-white/20 backdrop-blur-md hover:bg-white/20 transition-colors shadow-lg">
-                            <img src="https://i.ibb.co/204hGBJ6/Screenshot-20260624-092626-Photos.jpg" alt="Dev" class="w-8 h-8 rounded-full object-cover border border-white/50">
+                            <img id="headerProfilePic" src="https://i.ibb.co/204hGBJ6/Screenshot-20260624-092626-Photos.jpg" alt="Perfil" class="w-8 h-8 rounded-full object-cover border border-white/50">
                             <div class="flex flex-col">
-                                <span class="text-[10px] text-blue-200 uppercase font-bold leading-none">Developer</span>
-                                <span class="text-xs text-white font-bold leading-tight">Welligton Ferreira</span>
+                                <span id="headerProfileRole" class="text-[10px] text-blue-200 uppercase font-bold leading-none">Developer</span>
+                                <span id="headerProfileName" class="text-xs text-white font-bold leading-tight">Welligton Ferreira</span>
                             </div>
                         </div>
 
@@ -767,12 +767,17 @@
             <!-- Calendario Content -->
             <div id="calendario-content" class="tab-content hidden">
                 <div class="bg-white rounded-xl card-shadow border border-slate-200 max-w-6xl mx-auto relative hover-lift">
-                    <div class="bg-blue-900 px-6 py-5 flex justify-between items-center rounded-t-xl">
-                        <h2 class="text-xl font-bold text-white"><i class="fa-regular fa-calendar mr-2 transition-transform hover:rotate-12"></i> Grade Mensal</h2>
-                        <div class="flex items-center space-x-4 bg-blue-950 p-1 rounded-lg shadow-inner border border-blue-800">
-                            <button onclick="navegarMes(-1)" class="btn-press px-3 py-1 bg-transparent hover:bg-blue-800 text-white rounded transition-colors"><i class="fa-solid fa-chevron-left"></i></button>
-                            <h3 id="mesAnoAtual" class="text-white font-bold text-sm min-w-[120px] text-center uppercase tracking-wider transition-all"></h3>
-                            <button onclick="navegarMes(1)" class="btn-press px-3 py-1 bg-transparent hover:bg-blue-800 text-white rounded transition-colors"><i class="fa-solid fa-chevron-right"></i></button>
+                    <div class="bg-blue-900 px-4 sm:px-6 py-4 flex flex-col sm:flex-row justify-between items-center rounded-t-xl gap-4">
+                        <h2 class="text-xl font-bold text-white flex-shrink-0"><i class="fa-regular fa-calendar mr-2 transition-transform hover:rotate-12"></i> Grade Mensal</h2>
+                        <div class="flex flex-wrap items-center justify-center gap-3">
+                            <div class="flex items-center space-x-2 bg-blue-950 p-1 rounded-lg shadow-inner border border-blue-800">
+                                <button onclick="navegarMes(-1)" class="btn-press px-3 py-1 bg-transparent hover:bg-blue-800 text-white rounded transition-colors"><i class="fa-solid fa-chevron-left"></i></button>
+                                <h3 id="mesAnoAtual" class="text-white font-bold text-sm min-w-[110px] text-center uppercase tracking-wider transition-all"></h3>
+                                <button onclick="navegarMes(1)" class="btn-press px-3 py-1 bg-transparent hover:bg-blue-800 text-white rounded transition-colors"><i class="fa-solid fa-chevron-right"></i></button>
+                            </div>
+                            <button onclick="gerarRelatorioCronogramaMes()" class="btn-press px-4 py-2 bg-blue-700 hover:bg-blue-600 border border-blue-500 text-white rounded shadow-md transition-colors text-sm font-bold flex items-center gap-2">
+                                <i class="fa-solid fa-file-pdf"></i> <span class="hidden sm:inline">Gerar Cronograma</span><span class="sm:hidden">PDF</span>
+                            </button>
                         </div>
                     </div>
                     
@@ -838,10 +843,10 @@
                 
                 <!-- Perfil do Dev -->
                 <div class="flex items-center gap-4 z-10 hover-lift cursor-default">
-                    <img src="https://i.ibb.co/204hGBJ6/Screenshot-20260624-092626-Photos.jpg" alt="Welligton Ferreira" class="w-16 h-16 rounded-full object-cover border-2 border-blue-700 shadow-xl transition-transform hover:border-blue-400">
+                    <img id="footerProfilePic" src="https://i.ibb.co/204hGBJ6/Screenshot-20260624-092626-Photos.jpg" alt="Perfil" class="w-16 h-16 rounded-full object-cover border-2 border-blue-700 shadow-xl transition-transform hover:border-blue-400">
                     <div>
-                        <p class="text-[10px] text-blue-300 uppercase tracking-widest font-bold mb-1">Engenharia & Desenvolvimento</p>
-                        <h3 class="text-xl font-black tracking-tight text-white uppercase transition-colors hover:text-blue-200">Welligton Ferreira</h3>
+                        <p id="footerProfileRole" class="text-[10px] text-blue-300 uppercase tracking-widest font-bold mb-1">Engenharia & Desenvolvimento</p>
+                        <h3 id="footerProfileName" class="text-xl font-black tracking-tight text-white uppercase transition-colors hover:text-blue-200">Welligton Ferreira</h3>
                         <p class="text-xs text-blue-400 mt-1"><i class="fa-solid fa-code text-blue-500 mr-1"></i> MicroBus Hub Sys</p>
                     </div>
                 </div>
@@ -1023,11 +1028,23 @@
         // ==========================================
         // LÓGICA DE LOGIN
         // ==========================================
+        const validUsers = {
+            'welligton ferreira': { pass: '020519', nome: 'Welligton Ferreira', roleBadge: 'Developer', footerRole: 'Engenharia & Desenvolvimento', foto: 'https://i.ibb.co/204hGBJ6/Screenshot-20260624-092626-Photos.jpg' },
+            'joyce': { pass: '9360', nome: 'Joyce', roleBadge: 'Gestora', footerRole: 'Gestão de Logística', foto: 'https://i.ibb.co/nqYFgk96/user-joyce.jpg' }
+        };
+
         function fazerLoginGestor() {
-            const user = document.getElementById('loginUser').value;
+            const user = document.getElementById('loginUser').value.trim().toLowerCase();
             const pass = document.getElementById('loginPass').value;
             
-            if (user.trim().toLowerCase() === 'welligton ferreira' && pass === '020519') {
+            if (validUsers[user] && validUsers[user].pass === pass) {
+                const loggedUser = validUsers[user];
+                // Salvar dados do usuário para persistência
+                sessionStorage.setItem('loggedUserName', loggedUser.nome);
+                sessionStorage.setItem('loggedUserFoto', loggedUser.foto);
+                sessionStorage.setItem('loggedUserRoleBadge', loggedUser.roleBadge);
+                sessionStorage.setItem('loggedUserFooterRole', loggedUser.footerRole);
+                
                 iniciarApp('gestor');
             } else {
                 mostrarMensagem('Credenciais incorretas!', 'error');
@@ -1055,6 +1072,10 @@
         function fazerLogout() {
             currentUserRole = null;
             sessionStorage.removeItem('userRole');
+            sessionStorage.removeItem('loggedUserName');
+            sessionStorage.removeItem('loggedUserFoto');
+            sessionStorage.removeItem('loggedUserRoleBadge');
+            sessionStorage.removeItem('loggedUserFooterRole');
             
             document.getElementById('app-container').classList.add('hidden');
             document.getElementById('app-container').classList.remove('flex', 'flex-col');
@@ -1068,16 +1089,48 @@
             const tabMotoristas = document.getElementById('tab-motoristas');
             const userNameDisplay = document.getElementById('userNameDisplay');
 
+            // Elementos de Perfil (Header e Footer) dinâmicos
+            const hpPic = document.getElementById('headerProfilePic');
+            const hpRole = document.getElementById('headerProfileRole');
+            const hpName = document.getElementById('headerProfileName');
+            const fpPic = document.getElementById('footerProfilePic');
+            const fpRole = document.getElementById('footerProfileRole');
+            const fpName = document.getElementById('footerProfileName');
+
             if (currentUserRole === 'visitante') {
                 if(relatoriosSection) relatoriosSection.classList.add('hidden');
                 if(tabCadastro) tabCadastro.classList.add('hidden');
                 if(tabMotoristas) tabMotoristas.classList.add('hidden');
                 if(userNameDisplay) userNameDisplay.textContent = "Visitante (Apenas Leitura)";
+                
+                // Aplicar dados visuais padrão para Visitante
+                const avatarVisitante = 'https://ui-avatars.com/api/?name=Visitante&background=1e3a8a&color=fff';
+                if(hpPic) hpPic.src = avatarVisitante;
+                if(hpRole) hpRole.textContent = 'Acesso';
+                if(hpName) hpName.textContent = 'Visitante';
+                if(fpPic) fpPic.src = avatarVisitante;
+                if(fpRole) fpRole.textContent = 'Visualização e Acompanhamento';
+                if(fpName) fpName.textContent = 'Acesso Visitante';
             } else {
                 if(relatoriosSection) relatoriosSection.classList.remove('hidden');
                 if(tabCadastro) tabCadastro.classList.remove('hidden');
                 if(tabMotoristas) tabMotoristas.classList.remove('hidden');
-                if(userNameDisplay) userNameDisplay.textContent = "Gestor: Welligton Ferreira";
+                
+                // Resgatar dados de quem logou (Fallbacks caso recarregue sem o Storage perfeitamente gravado)
+                const nome = sessionStorage.getItem('loggedUserName') || 'Gestor Logística';
+                const foto = sessionStorage.getItem('loggedUserFoto') || 'https://i.ibb.co/204hGBJ6/Screenshot-20260624-092626-Photos.jpg';
+                const roleBadge = sessionStorage.getItem('loggedUserRoleBadge') || 'Gestor';
+                const footerRole = sessionStorage.getItem('loggedUserFooterRole') || 'Operações & Logística';
+
+                if(userNameDisplay) userNameDisplay.textContent = `Gestor(a): ${nome}`;
+                
+                // Aplicar os dados resgatados ao Cabeçalho e Rodapé
+                if(hpPic) hpPic.src = foto;
+                if(hpRole) hpRole.textContent = roleBadge;
+                if(hpName) hpName.textContent = nome;
+                if(fpPic) fpPic.src = foto;
+                if(fpRole) fpRole.textContent = footerRole;
+                if(fpName) fpName.textContent = nome;
             }
         }
 
@@ -1200,6 +1253,7 @@
             const numeroSei = document.getElementById('loteNumeroSei').value;
             const observacoes = document.getElementById('loteObservacoes').value;
             const dataCadastro = new Date().toISOString();
+            const registradoPor = sessionStorage.getItem('loggedUserName') || 'Desconhecido';
             
             const listaDemandas = [];
 
@@ -1215,7 +1269,7 @@
                     solicitante, setor, numeroSei, observacoes,
                     partida, destino, dataDemanda, horario,
                     alocacoes: [{ placa, motorista }],
-                    status: 'Pendente', dataCadastro
+                    status: 'Pendente', dataCadastro, registradoPor
                 });
             });
 
@@ -1418,7 +1472,8 @@
                 dataDemanda: formData.get('dataDemanda'), horario: formData.get('horario'),
                 numeroSei: formData.get('numeroSei'), observacoes: formData.get('observacoes'),
                 alocacoes: alocacoes,
-                status: 'Pendente', dataCadastro: new Date().toISOString()
+                status: 'Pendente', dataCadastro: new Date().toISOString(),
+                registradoPor: sessionStorage.getItem('loggedUserName') || 'Desconhecido'
             };
             
             try {
@@ -1528,6 +1583,9 @@
                                     <p class="text-slate-800"><strong>Equipe / Alocação:</strong><br/> <span class="leading-relaxed block mt-1">${formatarAlocacoesView(d, true)}</span></p>
                                     <p class="text-slate-600 mt-2 flex items-center gap-1"><i class="fa-solid fa-flag-checkered text-blue-400"></i> ${d.destino}</p>
                                 </div>
+                            </div>
+                            <div class="mt-3 pt-2 border-t border-slate-100 flex justify-end text-[10px] text-slate-400">
+                                <span>Registrado por: <strong>${d.registradoPor || 'Sistema/Desconhecido'}</strong></span>
                             </div>
                         </div>
                     `;
@@ -1669,7 +1727,7 @@
         }
 
         function abrirModalDia(data) {
-            document.getElementById('tituloModalDia').textContent = `Fretamentos: ${formatarDataBrasil(data)}`;
+            document.getElementById('tituloModalDia').textContent = `Demandas: ${formatarDataBrasil(data)}`;
             
             const demandasDoDia = demandas.filter(d => d.dataDemanda === data).sort((a,b) => a.horario.localeCompare(b.horario));
             const container = document.getElementById('conteudoModalDia');
@@ -1711,6 +1769,9 @@
                                         ${formatarAlocacoesView(d, true)}
                                     </div>
                                 </div>
+                            </div>
+                            <div class="mt-2 text-right">
+                                <span class="text-[10px] text-slate-400 uppercase">Inserido por: <strong>${d.registradoPor || 'Sistema'}</strong></span>
                             </div>
                             ${botoesGestao}
                         </div>
@@ -1942,7 +2003,7 @@
             </head>
             <body><div class="container">
             <div class="header">
-                <div class="title"><h1>MicroBus Hub - COORDENAÇÃO DE SUPORTE E LOGÍSTICA</h1><p>${titulo}</p></div>
+                <div class="title"><h1>COORDENAÇÃO DE SUPORTE E LOGÍSTICA</h1><p>${titulo}</p></div>
                 <div class="no-print" style="display:flex; gap:10px; align-items:flex-start;">${botoes || ''}<button onclick="window.close()" class="btn btn-outline">Fechar Aba</button></div>
             </div>
             ${gerarTabelaRelatorio()}
@@ -1972,6 +2033,141 @@
             }<\/script>`;
             const w = window.open('','_blank');
             w.document.write(gerarEstruturaPagina('Exportação Excel', '<button onclick="bx()" class="btn btn-primary">Baixar Arquivo .xls</button>', script)); w.document.close();
+        }
+
+        // Relatório de Cronograma Mensal do Calendário
+        function gerarRelatorioCronogramaMes() {
+            if(currentUserRole !== 'gestor') return;
+            
+            const nomesMeses = ['JANEIRO', 'FEVEREIRO', 'MARÇO', 'ABRIL', 'MAIO', 'JUNHO', 'JULHO', 'AGOSTO', 'SETEMBRO', 'OUTUBRO', 'NOVEMBRO', 'DEZEMBRO'];
+            const mesNome = nomesMeses[mesAtual];
+            const titulo = `CRONOGRAMA DE DEMANDAS - ${mesNome} / ${anoAtual}`;
+
+            // Filtrar demandas do mês atual que não estejam canceladas
+            const demandasMes = demandas.filter(d => {
+                const dataObj = criarDataBrasilia(d.dataDemanda);
+                return dataObj.getMonth() === mesAtual && dataObj.getFullYear() === anoAtual && d.status !== 'Cancelada pelo Solicitante';
+            });
+
+            // Configuração matemática do calendário
+            const diasNoMes = new Date(anoAtual, mesAtual + 1, 0).getDate();
+            const diaSemanaInicio = new Date(anoAtual, mesAtual, 1).getDay();
+
+            let tbodyHTML = '<tr>';
+            let celulasTotais = 0;
+
+            // Preenche as células vazias antes do dia 1
+            for (let i = 0; i < diaSemanaInicio; i++) {
+                tbodyHTML += '<td class="empty-cell"></td>';
+                celulasTotais++;
+            }
+
+            // Preenche os dias do mês
+            for (let dia = 1; dia <= diasNoMes; dia++) {
+                const dataStr = `${anoAtual}-${String(mesAtual + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
+                const dDia = demandasMes.filter(d => d.dataDemanda === dataStr).sort((a,b) => a.horario.localeCompare(b.horario));
+
+                let itensHTML = '';
+                dDia.forEach(d => {
+                    // Extrai apenas o primeiro nome do motorista para economizar espaço
+                    const motorista = (d.alocacoes && d.alocacoes.length > 0 && d.alocacoes[0].motorista) ? d.alocacoes[0].motorista.split(' ')[0] : 'A def.';
+                    
+                    itensHTML += `
+                        <div class="task-item">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span class="task-time">${d.horario}</span>
+                                <span class="task-driver">${motorista}</span>
+                            </div>
+                            <div class="task-dest">${d.destino}</div>
+                        </div>`;
+                });
+
+                tbodyHTML += `
+                    <td>
+                        <div class="day-number">${dia}</div>
+                        <div class="task-container">${itensHTML}</div>
+                    </td>
+                `;
+                celulasTotais++;
+
+                // Quebra a linha ao chegar no sábado (7 células)
+                if (celulasTotais % 7 === 0 && dia < diasNoMes) {
+                    tbodyHTML += '</tr><tr>';
+                }
+            }
+
+            // Preenche as células vazias no final do mês para completar o grid
+            while (celulasTotais % 7 !== 0) {
+                tbodyHTML += '<td class="empty-cell"></td>';
+                celulasTotais++;
+            }
+            tbodyHTML += '</tr>';
+
+            const htmlEstrutura = `<html><head><title>Calendário ${mesNome} ${anoAtual}</title>
+            <style>
+                @media print {
+                    @page { size: landscape; margin: 8mm; }
+                    body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+                    .no-print { display: none !important; }
+                }
+                body { font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; background: #fff; padding: 20px; margin: 0; }
+                .container { max-width: 100%; margin: 0 auto; }
+                
+                /* Cabeçalho */
+                .header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 3px solid #1e3a8a; padding-bottom: 10px; margin-bottom: 15px; }
+                .title h1 { margin: 0; color: #1e3a8a; font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.025em; }
+                .title p { margin: 2px 0 0; color: #64748b; font-size: 14px; font-weight: bold; }
+                .btn { padding: 8px 16px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 13px; }
+                .btn-primary { background: #1e3a8a; color: white; transition: 0.2s; }
+                .btn-primary:hover { background: #1e40af; }
+                
+                /* Grid do Calendário */
+                .calendar-table { width: 100%; border-collapse: collapse; table-layout: fixed; margin-bottom: 15px; }
+                .calendar-table th { background: #1e3a8a; color: white; padding: 6px; font-size: 11px; border: 1px solid #1e3a8a; text-transform: uppercase; text-align: center; }
+                .calendar-table td { border: 1px solid #cbd5e1; height: 110px; vertical-align: top; padding: 4px; }
+                .empty-cell { background: #f8fafc; }
+                
+                /* Elementos Internos do Dia */
+                .day-number { font-weight: bold; font-size: 14px; color: #1e3a8a; text-align: right; margin-bottom: 4px; border-bottom: 1px solid #f1f5f9; padding-bottom: 2px; }
+                .task-item { font-size: 9px; line-height: 1.2; margin-bottom: 3px; border-left: 3px solid #3b82f6; padding-left: 4px; background: #f0f9ff; padding-top: 3px; padding-bottom: 3px; border-radius: 0 3px 3px 0; overflow: hidden; }
+                .task-time { font-weight: 900; color: #1e3a8a; }
+                .task-driver { font-weight: bold; color: #64748b; font-size: 8px; text-transform: uppercase; }
+                .task-dest { margin-top: 1px; color: #334155; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            </style>
+            </head>
+            <body>
+                <div class="container">
+                    <div class="header">
+                        <div class="title">
+                            <h1>COORDENAÇÃO DE SUPORTE E LOGÍSTICA</h1>
+                            <p>${titulo}</p>
+                        </div>
+                        <div class="no-print">
+                            <button onclick="window.print()" class="btn btn-primary">🖨️ Imprimir Grade Mensal</button>
+                        </div>
+                    </div>
+                    
+                    <table class="calendar-table">
+                        <thead>
+                            <tr>
+                                <th>Domingo</th><th>Segunda</th><th>Terça</th><th>Quarta</th><th>Quinta</th><th>Sexta</th><th>Sábado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${tbodyHTML}
+                        </tbody>
+                    </table>
+
+                    <div style="font-size:10px; color:#64748b; text-align:right;">
+                        Total de Demandas no Mês: <b>${demandasMes.length}</b> &bull; Emitido em: ${new Date().toLocaleString('pt-BR')}
+                    </div>
+                </div>
+                <script>setTimeout(() => window.print(), 800);<\/script>
+            </body></html>`;
+
+            const w = window.open('','_blank');
+            w.document.write(htmlEstrutura);
+            w.document.close();
         }
     </script>
 </body>
