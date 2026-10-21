@@ -1,0 +1,26 @@
+{
+  "id": "./",
+  "name": "MicroBus Hub | Gestão de Demandas",
+  "short_name": "MicroBus",
+  "description": "Gestão centralizada de demandas corporativas da SEMCAS.",
+  "lang": "pt-BR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#1e3a8a",
+  "icons": [
+    {
+      "src": "./icons/microbus-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/microbus-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
