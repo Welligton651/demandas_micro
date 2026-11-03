@@ -997,6 +997,14 @@
         const isFirebaseConfigured = firebaseConfig.projectId !== "SEU_PROJECT_ID";
         let db = null;
 
+        // Evita que o cadastro fique "travado" se o servidor não responder
+        function comTimeout(promessa, ms = 10000) {
+            return Promise.race([
+                promessa,
+                new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))
+            ]);
+        }
+
         let demandas = [];
         let motoristas = [];
         let mesAtual = new Date().getMonth();
@@ -1009,6 +1017,8 @@
         if (isFirebaseConfigured) {
             firebase.initializeApp(firebaseConfig);
             db = firebase.firestore();
+            // Redes com proxy/firewall bloqueiam o WebChannel: força long polling
+            db.settings({ experimentalForceLongPolling: true, merge: true });
 
             db.collection('demandas').orderBy('dataCadastro', 'desc').onSnapshot((querySnapshot) => {
                 demandas = []; 
@@ -1289,7 +1299,7 @@
                         const docRef = db.collection('demandas').doc();
                         batch.set(docRef, demanda);
                     });
-                    await batch.commit();
+                    await comTimeout(batch.commit());
                 } else {
                     listaDemandas.forEach((d, index) => {
                         d.id = 'sim_lote_' + Date.now() + '_' + index;
@@ -1301,7 +1311,7 @@
                 mostrarMensagem(`Lote com ${listaDemandas.length} viagens registrado!`, 'success');
                 limparFormularioLote();
             } catch (error) {
-                mostrarMensagem('Erro ao registrar lote', 'error');
+                mostrarMensagem('Falha ao salvar o lote. Verifique a conexão.', 'error');
             }
         });
 
@@ -1487,7 +1497,7 @@
             
             try {
                 if (isFirebaseConfigured) {
-                    await db.collection('demandas').add(demanda);
+                    await comTimeout(db.collection('demandas').add(demanda));
                 } else {
                     demanda.id = 'sim_' + Date.now();
                     demandas.unshift(demanda); 
@@ -1495,7 +1505,7 @@
                 }
                 mostrarMensagem('Viagem registrada!', 'success');
                 limparFormulario();
-            } catch (error) { mostrarMensagem('Erro ao registrar', 'error'); }
+            } catch (error) { mostrarMensagem('Falha ao salvar. Verifique a conexão e tente novamente.', 'error'); }
         });
 
         function limparFormulario() {
@@ -1659,7 +1669,7 @@
             if(currentUserRole !== 'gestor') return;
             try { 
                 if (isFirebaseConfigured) {
-                    await db.collection('demandas').doc(id).update({ status: novoStatus }); 
+                    await comTimeout(db.collection('demandas').doc(id).update({ status: novoStatus })); 
                 } else {
                     const idx = demandas.findIndex(d => d.id === id);
                     if(idx > -1) demandas[idx].status = novoStatus;
@@ -1839,7 +1849,7 @@
             };
             try { 
                 if (isFirebaseConfigured) {
-                    await db.collection('demandas').doc(id).update(upd); 
+                    await comTimeout(db.collection('demandas').doc(id).update(upd)); 
                 } else {
                     const idx = demandas.findIndex(d => d.id === id);
                     if(idx > -1) demandas[idx] = { ...demandas[idx], ...upd };
@@ -1856,7 +1866,7 @@
             if(confirm('Atenção: A exclusão dessa logística é permanente. Confirmar?')) {
                 try { 
                     if (isFirebaseConfigured) {
-                        await db.collection('demandas').doc(id).delete(); 
+                        await comTimeout(db.collection('demandas').doc(id).delete()); 
                     } else {
                         demandas = demandas.filter(d => d.id !== id);
                         refreshDemandasViews();
@@ -1894,7 +1904,7 @@
             try {
                 const m = { nome, foto, dataCadastro: new Date().toISOString() };
                 if (isFirebaseConfigured) {
-                    await db.collection('motoristas').add(m);
+                    await comTimeout(db.collection('motoristas').add(m));
                 } else {
                     m.id = 'mot_' + Date.now();
                     motoristas.push(m);
@@ -1911,7 +1921,7 @@
             if(confirm('Remover profissional da homologação?')) {
                 try {
                     if (isFirebaseConfigured) {
-                        await db.collection('motoristas').doc(id).delete();
+                        await comTimeout(db.collection('motoristas').doc(id).delete());
                     } else {
                         motoristas = motoristas.filter(m => m.id !== id);
                         refreshMotoristasViews();
@@ -2182,10 +2192,12 @@
 
 
     <script>
-      // Permite que o navegador reconheça a aplicação como instalável quando hospedada em HTTPS.
+      // Service worker (v2): não intercepta Firestore nem outros domínios.
       if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
         window.addEventListener("load", function () {
-          navigator.serviceWorker.register("./service-worker.js").catch(function (err) {
+          navigator.serviceWorker.register("./service-worker.js?v=2").then(function (reg) {
+            reg.update();
+          }).catch(function (err) {
             console.warn("Service worker não registrado:", err);
           });
         });
